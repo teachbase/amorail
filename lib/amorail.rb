@@ -1,6 +1,7 @@
 require "amorail/version"
 require "amorail/config"
 require "amorail/client"
+require "amorail/exceptions"
 
 module Amorail
   
