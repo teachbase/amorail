@@ -2,6 +2,10 @@ require "amorail/version"
 require "amorail/config"
 require "amorail/client"
 require "amorail/exceptions"
+require "amorail/entity"
+
+# require "amorail/entities/contact"
+Gem.find_files("amorail/entities/*.rb").each { |path| require path }
 
 module Amorail
   

@@ -24,5 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "anyway_config", "~> 0.3"
   spec.add_dependency "faraday"
   spec.add_dependency "faraday_middleware"
-  spec.add_dependency 'faraday-cookie_jar'
+  spec.add_dependency 'activemodel'
+  spec.add_dependency 'json'
 end
