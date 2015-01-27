@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Amorail::VERSION
   spec.authors       = ["alekseenkoss"]
   spec.email         = ["alekseenkoss@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Ruby API client for AmoCRM}}
+  spec.description   = %q{Ruby API client for AmoCRM. You can integrate your system with it.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
