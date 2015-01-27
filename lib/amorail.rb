@@ -25,4 +25,6 @@ module Amorail
     @config = nil
     @client = nil
   end
+
+  require 'amorail/engine' if defined?(Rails)
 end
