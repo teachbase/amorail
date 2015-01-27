@@ -23,7 +23,7 @@ module Amorail
             add: [
               {
                 name: self.name,
-                linked_leads_id: self.linked_leads_id,
+                linked_leads_id: [self.linked_leads_id],
                 company_name: self.company_name,
                 custom_fields: [
                   {
@@ -57,7 +57,7 @@ EOS
 company_class = <<-EOS
 module Amorail
   class AmoCompany < Amorail::AmoEntity
-    attr_accessor :url, :name, :linked_leads_id, :email, :phone, :address, :website, :id, :request_id
+    attr_accessor :url, :name, :linked_leads_id, :email, :phone, :address, :website, :id, :request_id, :company_name
 
     def request_attributes
       {
@@ -66,8 +66,9 @@ module Amorail
             add: [
               {
                 name: self.name,
-                linked_leads_id: self.linked_leads_id,
+                linked_leads_id: [self.linked_leads_id],
                 type: 'contact',
+                company_name: self.company_name,
                 custom_fields: [
                   {
                     id: #{companies['ADDRESS']},
@@ -131,10 +132,37 @@ module Amorail
   end
 end
 EOS
+
+task_class = <<-EOS
+module Amorail
+  class AmoTask < Amorail::AmoEntity
+    attr_accessor :url, :name, :element_id, :element_type, :text, :complete_till, :task_type
+
+    def request_attributes
+      {
+        request: {
+          tasks: {
+            add: [
+              {
+                text: self.text,
+                element_id: self.element_id,
+                element_type: self.element_type,
+                task_type: self.task_type,
+                complete_till: self.complete_till
+              }
+            ]
+          }
+        }
+      }
+    end 
+  end
+end
+EOS
     
     puts_to_file(FOLDER+'/lib/amorail/entities/contact.rb', contact_class)
     puts_to_file(FOLDER+'/lib/amorail/entities/company.rb', company_class)
     puts_to_file(FOLDER+'/lib/amorail/entities/lead.rb', lead_class)
+    puts_to_file(FOLDER+'/lib/amorail/entities/task.rb', task_class)
   end
 end
 

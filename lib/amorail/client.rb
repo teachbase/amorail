@@ -31,7 +31,6 @@ module Amorail
       response = get('/private/api/v2/json/accounts/current')
       contacts = {}
       companies = {}
-      
       fields = response.body["response"]["account"]["custom_fields"]
       statuses = response.body["response"]["account"]["leads_statuses"]
       fields["contacts"].each do |field|

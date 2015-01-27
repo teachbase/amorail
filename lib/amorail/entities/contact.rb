@@ -11,7 +11,7 @@ module Amorail
             add: [
               {
                 name: self.name,
-                linked_leads_id: self.linked_leads_id,
+                linked_leads_id: [self.linked_leads_id],
                 company_name: self.company_name,
                 custom_fields: [
                   {
