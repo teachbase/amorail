@@ -28,6 +28,7 @@ module Amorail
     end
 
     def load_custom_fields
+      client.authorize
       response = get('/private/api/v2/json/accounts/current')
       contacts = {}
       companies = {}
