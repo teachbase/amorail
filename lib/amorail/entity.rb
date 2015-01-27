@@ -44,12 +44,7 @@ module Amorail
 
     def save
       if valid?
-        begin
-          create
-        rescue AmoUnauthorizedError => e 
-          client.authorize
-          create
-        end
+        safe_create
       else
         false
       end
@@ -57,8 +52,7 @@ module Amorail
 
     def save!
       if valid?
-        response = client.post(url, request_attributes)
-        true if response.status == 200 or response.status == 204
+        create
       else
         false
       end
@@ -66,6 +60,13 @@ module Amorail
 
     def create
       response = client.post(url, request_attributes)
+      true if response.status == 200 or response.status == 204
+    end
+
+    # call safe method <safe_request>. safe_request call authorize
+    # if current session undefined or expires.
+    def safe_create
+      response = client.safe_request(:post, url, request_attributes)
       if response.status == 200 or response.status == 204
         reload_model(response.body["response"])
         true

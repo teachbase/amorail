@@ -1,6 +1,6 @@
 require 'amorail'
 
-FOLDER = Gem::Specification.find_by_name('amorail').gem_dir
+FOLDER_AMORAIL = Gem::Specification.find_by_name('amorail').gem_dir
 
 namespace :class_generator do
   task :create do
@@ -159,10 +159,10 @@ module Amorail
 end
 EOS
     
-    puts_to_file(FOLDER+'/lib/amorail/entities/contact.rb', contact_class)
-    puts_to_file(FOLDER+'/lib/amorail/entities/company.rb', company_class)
-    puts_to_file(FOLDER+'/lib/amorail/entities/lead.rb', lead_class)
-    puts_to_file(FOLDER+'/lib/amorail/entities/task.rb', task_class)
+    puts_to_file(FOLDER_AMORAIL+'/lib/amorail/entities/contact.rb', contact_class)
+    puts_to_file(FOLDER_AMORAIL+'/lib/amorail/entities/company.rb', company_class)
+    puts_to_file(FOLDER_AMORAIL+'/lib/amorail/entities/lead.rb', lead_class)
+    puts_to_file(FOLDER_AMORAIL+'/lib/amorail/entities/task.rb', task_class)
   end
 end
 

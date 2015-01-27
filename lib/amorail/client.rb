@@ -20,7 +20,7 @@ module Amorail
     def connect
       @connect || self.class.new
     end
-
+    
     def authorize
       response = post(Amorail.config.auth_url, {'USER_LOGIN' => Amorail.config.usermail, 'USER_HASH' => Amorail.config.api_key})
       cookie_handler(response)
@@ -42,6 +42,13 @@ module Amorail
       [contacts, companies, statuses]
     end
 
+    def safe_request(method, url, params={}) 
+      self.send(method, url, params)
+    rescue AmoUnauthorizedError => e
+      authorize
+      self.send(method, url, params)
+    end
+
     def get(url, params={})
       response = connect.get(url) do |request|
         request.headers['Cookie'] = self.cookies if self.cookies.present?
@@ -58,7 +65,6 @@ module Amorail
         request.headers['Content-Type'] = 'application/json'
         request.body = params.to_json
       end
-
       hadle_response(response)
       response
     end
