@@ -4,7 +4,7 @@ require 'rails'
 module Amorail
   class Engine < Rails::Engine
     rake_tasks do
-      load "tasks/class_generator.rake"
+      load "tasks/tasks.rake"
     end
   end
 end
