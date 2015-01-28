@@ -32,15 +32,15 @@ module Amorail
                 company_name: self.company_name,
                 custom_fields: [
                   {
-                    id: #{prop.contacts.position.id},
+                    id: #{prop.contact.position.id},
                     values: [{value: self.job_position}]
                   },
                   {
-                    id: #{prop.contacts.phone.id},
+                    id: #{prop.contact.phone.id},
                     values: [{value: self.phone, enum: 'MOB'}]
                   },
                   {
-                    id: #{prop.contacts.email.id},
+                    id: #{prop.contact.email.id},
                     values: [{value: self.email, enum: 'WORK'}]
                   }
                 ]
@@ -76,19 +76,19 @@ module Amorail
                 company_name: self.company_name,
                 custom_fields: [
                   {
-                    id: #{prop.companies.address.id},
+                    id: #{prop.company.address.id},
                     values: [{value: self.address}]
                   },
                   {
-                    id: #{prop.companies.phone.id},
+                    id: #{prop.company.phone.id},
                     values: [{value: self.phone, enum: 'WORK'}]
                   },
                   {
-                    id: #{prop.companies.email.id},
+                    id: #{prop.company.email.id},
                     values: [{value: self.email, enum: 'WORK'}]
                   },
                   {
-                    id: #{prop.companies.web.id},
+                    id: #{prop.company.web.id},
                     values: [{value: self.website}]
                   }
                 ]
@@ -122,7 +122,7 @@ module Amorail
                 name: self.name,
                 tags: self.tags,
                 price: self.price,
-                status_id: #{prop.leads.first_status.id}
+                status_id: #{prop.lead.first_status.id}
               }
             ]
           }
