@@ -15,6 +15,7 @@ module Amorail
         faraday.response :json, :content_type => /\bjson$/
         faraday.use :instrumentation
       end
+
     end
 
     def connect
@@ -26,22 +27,7 @@ module Amorail
       cookie_handler(response)
       response
     end
-
-    def load_custom_fields
-      response = get('/private/api/v2/json/accounts/current')
-      contacts = {}
-      companies = {}
-      fields = response.body["response"]["account"]["custom_fields"]
-      statuses = response.body["response"]["account"]["leads_statuses"]
-      fields["contacts"].each do |field|
-        contacts[field["code"]] = field["id"] 
-      end
-      fields["companies"].each do |field|
-        companies[field["code"]] = field["id"] 
-      end
-      [contacts, companies, statuses]
-    end
-
+    
     def safe_request(method, url, params={}) 
       self.send(method, url, params)
     rescue AmoUnauthorizedError => e

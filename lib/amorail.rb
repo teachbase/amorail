@@ -3,6 +3,7 @@ require "amorail/config"
 require "amorail/client"
 require "amorail/exceptions"
 require "amorail/entity"
+require "amorail/custom_fields"
 
 # require "amorail/entities/contact"
 Gem.find_files("amorail/entities/*.rb").each { |path| require path }
@@ -11,6 +12,10 @@ module Amorail
   
   def self.config
     @config ||= Config.new
+  end
+
+  def self.properties
+    @properties ||= Property.new(client)
   end
 
   def self.configure

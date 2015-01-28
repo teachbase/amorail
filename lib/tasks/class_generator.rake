@@ -3,12 +3,17 @@ require 'amorail'
 FOLDER_AMORAIL = Gem::Specification.find_by_name('amorail').gem_dir
 
 namespace :class_generator do
+  task :delete_all do
+    dir_path = "#{FOLDER_AMORAIL}/lib/amorail/entities"
+    Dir.foreach(dir_path) {|f| fl=File.join(dir_path, f); File.delete(fl) if f != '.' && f !='..'}
+  end
+end
+
+namespace :class_generator do
   task :create do
-    client = Amorail.client
-    client.authorize
-    
-    contacts, companies, statuses = client.load_custom_fields
-    
+
+    prop = Amorail.properties
+
     contact_class = <<-EOS
 module Amorail
   class AmoContact < Amorail::AmoEntity
@@ -27,15 +32,15 @@ module Amorail
                 company_name: self.company_name,
                 custom_fields: [
                   {
-                    id: #{contacts['POSITION']},
+                    id: #{prop.contacts.fields.position},
                     values: [{value: self.job_position}]
                   },
                   {
-                    id: #{contacts['PHONE']},
+                    id: #{prop.contacts.fields.phone},
                     values: [{value: self.phone, enum: 'MOB'}]
                   },
                   {
-                    id: #{contacts['EMAIL']},
+                    id: #{prop.contacts.fields.email},
                     values: [{value: self.email, enum: 'WORK'}]
                   }
                 ]
@@ -71,19 +76,19 @@ module Amorail
                 company_name: self.company_name,
                 custom_fields: [
                   {
-                    id: #{companies['ADDRESS']},
+                    id: #{prop.companies.fields.address},
                     values: [{value: self.address}]
                   },
                   {
-                    id: #{companies['PHONE']},
+                    id: #{prop.companies.fields.phone},
                     values: [{value: self.phone, enum: 'WORK'}]
                   },
                   {
-                    id: #{companies['EMAIL']},
+                    id: #{prop.companies.fields.email},
                     values: [{value: self.email, enum: 'WORK'}]
                   },
                   {
-                    id: #{companies['WEB']},
+                    id: #{prop.companies.fields.web},
                     values: [{value: self.website}]
                   }
                 ]
@@ -117,7 +122,7 @@ module Amorail
                 name: self.name,
                 tags: self.tags,
                 price: self.price,
-                status_id: #{statuses[0]['id']}
+                status_id: #{prop.leads.fields.first_status}
               }
             ]
           }
