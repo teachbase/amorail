@@ -8,11 +8,11 @@ module Amorail
           tasks: {
             add: [
               {
-                text: self.text,
-                element_id: self.element_id,
-                element_type: self.element_type,
-                task_type: self.task_type,
-                complete_till: self.complete_till
+                text: text,
+                element_id: element_id,
+                element_type: element_type,
+                task_type: task_type,
+                complete_till: complete_till
               }
             ]
           }

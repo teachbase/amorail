@@ -10,21 +10,21 @@ module Amorail
           contacts: {
             add: [
               {
-                name: self.name,
-                linked_leads_id: [self.linked_leads_id],
-                company_name: self.company_name,
+                name: name,
+                linked_leads_id: [linked_leads_id],
+                company_name: company_name,
                 custom_fields: [
                   {
-                    id: self.properties.contact.position.id,
-                    values: [{value: self.job_position}]
+                    id: properties.contact.position.id,
+                    values: [{value: job_position}]
                   },
                   {
-                    id: self.properties.contact.phone.id,
-                    values: [{value: self.phone, enum: 'MOB'}]
+                    id: properties.contact.phone.id,
+                    values: [{value: phone, enum: 'MOB'}]
                   },
                   {
-                    id: self.properties.contact.email.id,
-                    values: [{value: self.email, enum: 'WORK'}]
+                    id: properties.contact.email.id,
+                    values: [{value: email, enum: 'WORK'}]
                   }
                 ]
               }
