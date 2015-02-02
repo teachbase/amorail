@@ -6,7 +6,7 @@ module Amorail
 
     def initialize(attributes={})
       super
-      @url = "/private/api/v2/json/company/set"
+      self.url = "/private/api/v2/json/company/set"
     end
 
     def request_attributes

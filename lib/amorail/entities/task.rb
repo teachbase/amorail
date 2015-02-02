@@ -4,7 +4,7 @@ module Amorail
 
     def initialize(attributes={})
       super
-      @url = "/private/api/v2/json/tasks/set"
+      self.url = "/private/api/v2/json/tasks/set"
     end
 
     def request_attributes
