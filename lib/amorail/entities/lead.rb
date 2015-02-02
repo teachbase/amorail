@@ -9,10 +9,10 @@ module Amorail
           leads: {
             add: [
               {
-                name: self.name,
-                tags: self.tags,
-                price: self.price,
-                status_id: 8195972
+                name: name,
+                tags: tags,
+                price: price,
+                status_id: properties.lead.first_status.id
               }
             ]
           }

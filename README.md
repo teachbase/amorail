@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.org/teachbase/amorail.svg?branch=master)](https://travis-ci.org/teachbase/amorail)
+
 # Amorail
 
-TODO: Write a gem description
+AmoCRM client
 
 ## Installation
 

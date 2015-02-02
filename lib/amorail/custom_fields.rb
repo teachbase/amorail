@@ -27,6 +27,7 @@ module Amorail
     def initialize(client)
       @client = client
       @data = load_fields
+      parse_all_data
     end
 
     def client
@@ -37,25 +38,36 @@ module Amorail
       @data
     end
 
+    def parse_all_data
+      @contact = Contact.parse(data)
+      @company = Company.parse(data)
+      @lead = Lead.parse(data)
+      @task = Task.parse(data)
+    end
+
     def load_fields
       response = client.safe_request(:get, '/private/api/v2/json/accounts/current')
-      response.body["response"]["account"] 
+      if response.body.is_a?(Hash)
+        response.body["response"]["account"]
+      elsif response.body.is_a?(String)
+        JSON.parse(response.body)["response"]["account"]
+      end
     end
 
-    def contacts
-      Contact.parse(data)
+    def contact
+      @contact ||= Contact.parse(data)
     end
 
-    def companies
-      Company.parse(data)
+    def company
+      @company ||= Company.parse(data)
     end
 
-    def leads
-      Lead.parse(data)
+    def lead
+      @lead ||= Lead.parse(data)
     end
 
-    def tasks
-      Task.parse(data)
+    def task
+      @task ||= Task.parse(data)
     end
 
     class Contact

@@ -12,6 +12,7 @@ module Amorail
     def initialize(attributes={})
       super
       @client = Amorail.client
+      @properties = Amorail.properties
     end
 
     def self.attr_accessor(*vars)
@@ -40,6 +41,10 @@ module Amorail
 
     def client
       @client
+    end
+
+    def properties
+      @properties
     end
 
     def save
