@@ -4,6 +4,11 @@ module Amorail
     attr_accessor :url, :name, :linked_leads_id, :email, :phone, :address, 
                   :website, :id, :request_id, :company_name
 
+    def initialize(attributes={})
+      super
+      @url = "/private/api/v2/json/company/set"
+    end
+
     def request_attributes
       {
         request: {

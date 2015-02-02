@@ -2,6 +2,11 @@ module Amorail
   class AmoTask < Amorail::AmoEntity
     attr_accessor :url, :name, :element_id, :element_type, :text, :complete_till, :task_type
 
+    def initialize(attributes={})
+      super
+      @url = "/private/api/v2/json/tasks/set"
+    end
+
     def request_attributes
       {
         request: {
