@@ -15,15 +15,15 @@ module Amorail
                 company_name: self.company_name,
                 custom_fields: [
                   {
-                    id: 1460587,
+                    id: self.properties.contact.position.id,
                     values: [{value: self.job_position}]
                   },
                   {
-                    id: 1460589,
+                    id: self.properties.contact.phone.id,
                     values: [{value: self.phone, enum: 'MOB'}]
                   },
                   {
-                    id: 1460591,
+                    id: self.properties.contact.email.id,
                     values: [{value: self.email, enum: 'WORK'}]
                   }
                 ]

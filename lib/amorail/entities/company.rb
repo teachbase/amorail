@@ -1,6 +1,8 @@
 module Amorail
   class AmoCompany < Amorail::AmoEntity
-    attr_accessor :url, :name, :linked_leads_id, :email, :phone, :address, :website, :id, :request_id, :company_name
+    
+    attr_accessor :url, :name, :linked_leads_id, :email, :phone, :address, 
+                  :website, :id, :request_id, :company_name
 
     def request_attributes
       {
@@ -14,19 +16,19 @@ module Amorail
                 company_name: self.company_name,
                 custom_fields: [
                   {
-                    id: 1460597,
+                    id: self.properties.company.address.id,
                     values: [{value: self.address}]
                   },
                   {
-                    id: 1460589,
+                    id: self.properties.company.phone.id,
                     values: [{value: self.phone, enum: 'WORK'}]
                   },
                   {
-                    id: 1460591,
+                    id: self.properties.company.email.id,
                     values: [{value: self.email, enum: 'WORK'}]
                   },
                   {
-                    id: 1460593,
+                    id: self.properties.company.web.id,
                     values: [{value: self.website}]
                   }
                 ]

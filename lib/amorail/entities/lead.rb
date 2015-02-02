@@ -12,7 +12,7 @@ module Amorail
                 name: self.name,
                 tags: self.tags,
                 price: self.price,
-                status_id: 8195972
+                status_id: self.properties.lead.first_status.id
               }
             ]
           }
