@@ -20,11 +20,11 @@ module Amorail
                   },
                   {
                     id: properties.contact.phone.id,
-                    values: [{value: phone, enum: 'MOB'}]
+                    values: [{value: phone, enum: "MOB"}]
                   },
                   {
                     id: properties.contact.email.id,
-                    values: [{value: email, enum: 'WORK'}]
+                    values: [{value: email, enum: "WORK"}]
                   }
                 ]
               }

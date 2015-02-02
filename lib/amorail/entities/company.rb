@@ -12,7 +12,7 @@ module Amorail
               {
                 name: name,
                 linked_leads_id: [linked_leads_id],
-                type: 'contact',
+                type: "contact",
                 company_name: company_name,
                 custom_fields: [
                   {
@@ -21,11 +21,11 @@ module Amorail
                   },
                   {
                     id: properties.company.phone.id,
-                    values: [{value: phone, enum: 'WORK'}]
+                    values: [{value: phone, enum: "WORK"}]
                   },
                   {
                     id: properties.company.email.id,
-                    values: [{value: email, enum: 'WORK'}]
+                    values: [{value: email, enum: "WORK"}]
                   },
                   {
                     id: properties.company.web.id,
