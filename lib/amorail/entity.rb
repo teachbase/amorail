@@ -86,7 +86,7 @@ module Amorail
         normalize_params(create_params)
       )
       if response.status == 200 or response.status == 204
-        reload_model(JSON.parse(response.body)["response"])
+        reload_model(response.body["response"])
         true
       else
         false

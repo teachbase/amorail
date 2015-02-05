@@ -17,7 +17,7 @@ end
 def account_info_stub(endpoint)
   stub_request(:get, endpoint + '/private/api/v2/json/accounts/current').with(:body => "{}",
                   :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.1'}).to_return(
-            :body => File.read('./spec/fixtures/account_response.json'), status: 200
+            :body => File.read('./spec/fixtures/account_response.json'), headers: {'Content-Type'=>'application/json'}, status: 200
           )
 end
 
@@ -38,7 +38,7 @@ end
 def contact_create_stub(endpoint)
   stub_request(:post, endpoint + '/private/api/v2/json/contacts/set').with(
           :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.1'}).to_return(
-    :body => File.read('./spec/fixtures/contact_create.json'), status: 200
+    :body => File.read('./spec/fixtures/contact_create.json'), headers: {'Content-Type'=>'application/json'}, status: 200
   )
 end
 
@@ -46,6 +46,6 @@ end
 def company_create_stub(endpoint)
   stub_request(:post, endpoint + '/private/api/v2/json/company/set').with(
           :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.1'}).to_return(
-    :body => File.read('./spec/fixtures/contact_create.json'), status: 200
+    :body => File.read('./spec/fixtures/contact_create.json'), headers: {'Content-Type'=>'application/json'}, status: 200
   )
 end

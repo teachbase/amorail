@@ -49,11 +49,7 @@ module Amorail
     
     def load_fields
       response = client.safe_request(:get, '/private/api/v2/json/accounts/current')
-      if response.body.is_a?(Hash)
-        response.body["response"]["account"]
-      elsif response.body.is_a?(String)
-        JSON.parse(response.body)["response"]["account"]
-      end
+      response.body["response"]["account"]
     end
 
     def inspect
