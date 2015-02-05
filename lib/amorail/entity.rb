@@ -85,7 +85,7 @@ module Amorail
         create_url, 
         normalize_params(create_params)
       )
-      if response.status == 200 or response.status == 204
+      if response.status == 200
         reload_model(response.body["response"])
         true
       else
