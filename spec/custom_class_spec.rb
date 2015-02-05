@@ -31,12 +31,12 @@ describe "spec for Amorail Properties" do
   end
 
   it "should parse leads hash" do
-    expect(prop.lead.first_status.id).to eq prop.lead.data["first_status"].data["id"]
-    expect(prop.lead.first_status.id).to eq "8195972"
+    expect(prop.lead.statuses["Первичный контакт"].id).to eq "8195972"
+    expect(prop.lead.statuses["Успешно реализовано"].id).to eq "142"
   end
 
   it "should parse task types" do
-    expect(prop.task.follow_up.id).to eq prop.task.data["follow_up"].data["id"]
     expect(prop.task.follow_up.id).to eq 1
+    expect(prop.task["CALL"].id).to eq 1
   end
 end
