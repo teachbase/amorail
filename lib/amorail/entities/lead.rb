@@ -25,10 +25,5 @@ module Amorail
         }
       }
     end
-
-    def reload_model(response)
-      self.id = response["leads"]["add"][0]["id"]
-      self.request_id = response["leads"]["add"][0]["request_id"]
-    end
   end
 end

@@ -1,6 +1,7 @@
 module Amorail
   class AmoCompany < Amorail::AmoEntity
     set_amo_name "company"
+    set_amo_response_name "contacts"
     
     attr_accessor :name, :linked_leads_id,
                   :email, :phone, :address, :website
@@ -43,11 +44,6 @@ module Amorail
           }
         }
       }
-    end
-
-    def reload_model(response)
-      self.id = response["contacts"]["add"][0]["id"]
-      self.request_id = response["contacts"]["add"][0]["request_id"]
     end
   end
 end

@@ -1,20 +1,26 @@
 # Classes for Amorail Exceptions
 # Every class is name of HTTP response error code(status)
 
-class AmoBadRequestError < StandardError; end
+module Amorail
+  class Error < ::StandardError; end
 
-class AmoMovedPermanentlyError < StandardError; end
+  class APIError < Error; end
+  
+  class AmoBadRequestError < APIError; end
 
-class AmoUnauthorizedError < StandardError; end
+  class AmoMovedPermanentlyError < APIError; end
 
-class AmoForbiddenError < StandardError; end
+  class AmoUnauthorizedError < APIError; end
 
-class AmoNotFoudError < StandardError; end
+  class AmoForbiddenError < APIError; end
 
-class AmoInternalError < StandardError; end
+  class AmoNotFoudError < APIError; end
 
-class AmoBadGatewayError < StandardError; end
+  class AmoInternalError < APIError; end
 
-class AmoServiceUnaviableError < StandardError; end
+  class AmoBadGatewayError < APIError; end
 
-class AmoUnknownError < StandardError; end
+  class AmoServiceUnaviableError < APIError; end
+
+  class AmoUnknownError < APIError; end
+end

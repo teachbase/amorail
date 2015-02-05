@@ -1,0 +1,13 @@
+{
+  "response": {
+    "contacts": {
+      "add": [
+        {
+          "id": 101,
+          "request_id": 0
+        }
+      ]
+    },
+    "server_time": 1423139130
+  }
+}

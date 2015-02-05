@@ -7,10 +7,16 @@ module Amorail
     include ActiveModel::AttributeMethods
     include ActiveModel::Validations
 
+    class InvalidRecord < ::Amorail::Error; end;
+
     class << self
-      attr_reader :amo_name
+      attr_reader :amo_name, :amo_response_name
       def set_amo_name(name)
-        @amo_name = name
+        @amo_name = @amo_response_name = name
+      end
+
+      def set_amo_response_name(name)
+        @amo_response_name = name
       end
     end
 
@@ -57,38 +63,30 @@ module Amorail
 
     def save
       if valid?
-        safe_create
-      else
-        false
-      end
-    end
-
-    def save!
-      if valid?
         create
       else
         false
       end
     end
 
-    def create
-      response = client.post(
-        create_url, 
-        normalize_params(create_params)
-      )
-      true
+    def save!
+      if save
+        true
+      else
+        raise InvalidRecord
+      end
     end
 
     # call safe method <safe_request>. safe_request call authorize
     # if current session undefined or expires.
-    def safe_create
+    def create
       response = client.safe_request(
         :post, 
         create_url, 
         normalize_params(create_params)
       )
       if response.status == 200 or response.status == 204
-        reload_model(response.body["response"])
+        reload_model(JSON.parse(response.body)["response"])
         true
       else
         false
@@ -98,6 +96,8 @@ module Amorail
     # override this method for Amo<Any> class
 
     def reload_model(response)
+      self.id = response[self.class.amo_response_name]["add"][0]["id"]
+      self.request_id = response[self.class.amo_response_name]["add"][0]["request_id"]
     end
 
     # this method removes nil values and empty arrays from params hash (deep)

@@ -30,7 +30,7 @@ module Amorail
     
     def safe_request(method, url, params={}) 
       self.send(method, url, params)
-    rescue AmoUnauthorizedError => e
+    rescue ::Amorail::AmoUnauthorizedError => e
       authorize
       self.send(method, url, params)
     end
@@ -62,23 +62,23 @@ module Amorail
         
       case response.status
       when 301
-        raise AmoMovedPermanentlyError
+        raise ::Amorail::AmoMovedPermanentlyError
       when 400
-        raise AmoBadRequestError
+        raise ::Amorail::AmoBadRequestError
       when 401 
-        raise AmoUnauthorizedError
+        raise ::Amorail::AmoUnauthorizedError
       when 403
-        raise AmoForbiddenError
+        raise ::Amorail::AmoForbiddenError
       when 404
-        raise AmoNotFoudError
+        raise ::Amorail::AmoNotFoudError
       when 500
-        raise AmoInternalError
+        raise ::Amorail::AmoInternalError
       when 502
-        raise AmoBadGatewayError
+        raise ::Amorail::AmoBadGatewayError
       when 503
-        raise AmoServiceUnaviableError
+        raise ::Amorail::AmoServiceUnaviableError
       else
-        raise AmoUnknownError(response.body)
+        raise ::Amorail::AmoUnknownError(response.body)
       end
     end
   end

@@ -31,7 +31,7 @@ module Amorail
           }
         }
       }
-    end 
+    end
 
     [{name: "contact", val: 1},{name: "lead", val: 2}].each do |prop|
       class_eval <<-CODE, __FILE__, __LINE__ + 1
