@@ -2,8 +2,8 @@ module Amorail
   class AmoCompany < Amorail::AmoEntity
     set_amo_name "company"
     
-    attr_accessor :name, :linked_leads_id, 
-                  :email, :phone, :address, :website 
+    attr_accessor :name, :linked_leads_id,
+                  :email, :phone, :address, :website
 
     validates :name, presence: true
 

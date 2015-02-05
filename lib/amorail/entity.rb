@@ -74,14 +74,22 @@ module Amorail
     end
 
     def create
-      response = client.post(url, create_url, normalize_params(create_params))
+      response = client.post(
+        url, 
+        create_url, 
+        normalize_params(create_params)
+      )
       true if response.status == 200 or response.status == 204
     end
 
     # call safe method <safe_request>. safe_request call authorize
     # if current session undefined or expires.
     def safe_create
-      response = client.safe_request(:post, create_url, normalize_params(create_params))
+      response = client.safe_request(
+        :post, 
+        create_url, 
+        normalize_params(create_params)
+      )
       if response.status == 200 or response.status == 204
         reload_model(response.body["response"])
         true
@@ -119,7 +127,6 @@ module Amorail
       compacted
     end
 
-
     def normalize_custom_fields(val)
       val.reject do |field|
         field[:values].all?{ |item| !item[:value] }
@@ -127,22 +134,24 @@ module Amorail
     end
 
     protected
-      def to_timestamp(val)
-        return if val.nil?
+    
+    def to_timestamp(val)
+      return if val.nil?
 
-        case val
-        when String
-          (_date=Date.parse(val)) && _date.to_i
-        when Date
-          val.to_i
-        when Numeric
-          val.to_i
-        end
+      case val
+      when String
+        (_date=Date.parse(val)) && _date.to_i
+      when Date
+        val.to_i
+      when Numeric
+        val.to_i
       end
+    end
 
     private
-      def create_url
-        File.join("#{Amorail.config.api_path}", self.class.amo_name, "set")
-      end
+  
+    def create_url
+      File.join("#{Amorail.config.api_path}", self.class.amo_name, "set")
+    end
   end
 end

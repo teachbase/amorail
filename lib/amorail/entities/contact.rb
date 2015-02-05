@@ -2,7 +2,7 @@ module Amorail
   class AmoContact < Amorail::AmoEntity
     set_amo_name "contacts"
 
-    attr_accessor :name, :company_name, :linked_leads_id, 
+    attr_accessor :name, :company_name, :linked_leads_id,
                   :email, :phone, :job_position
 
     validates :name, presence: true

@@ -1,9 +1,14 @@
 module Amorail
   class AmoTask < Amorail::AmoEntity
     set_amo_name "tasks"
-    attr_accessor :element_id, :element_type, :text, :complete_till, :task_type
+    attr_accessor :element_id, :element_type, :text, 
+                  :complete_till, :task_type
 
-    validates :text, :element_id, :element_type, :complete_till, :task_type, presence: true
+    validates :text, :element_id, 
+              :element_type, :complete_till, 
+              :task_type, 
+              presence: true
+              
     validates :element_type, inclusion: 1..2
 
     def create_params
