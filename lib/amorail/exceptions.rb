@@ -16,3 +16,5 @@ class AmoInternalError < StandardError; end
 class AmoBadGatewayError < StandardError; end
 
 class AmoServiceUnaviableError < StandardError; end
+
+class AmoUnknownError < StandardError; end

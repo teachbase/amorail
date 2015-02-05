@@ -14,10 +14,8 @@ module Amorail
       end
     end
 
-    attr_accessor :date_create, :last_modified, 
+    attr_accessor :id, :date_create, :last_modified, 
                   :request_id, :responsible_user_id
-
-    attr_reader :id
 
     def initialize(attributes={})
       super
@@ -75,11 +73,10 @@ module Amorail
 
     def create
       response = client.post(
-        url, 
         create_url, 
         normalize_params(create_params)
       )
-      true if response.status == 200 or response.status == 204
+      true
     end
 
     # call safe method <safe_request>. safe_request call authorize
@@ -141,8 +138,10 @@ module Amorail
       case val
       when String
         (_date = Date.parse(val)) && _date.to_i
-      when Date
+      when Time
         val.to_i
+      when Date
+        val.to_time.to_i
       when Numeric
         val.to_i
       end

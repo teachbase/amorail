@@ -42,7 +42,6 @@ module Amorail
         request.body = params.to_json
       end
       handle_response(response)
-      response
     end
 
     def post(url, params={})
@@ -52,7 +51,6 @@ module Amorail
         request.body = params.to_json
       end
       handle_response(response)
-      response
     end
 
     def cookie_handler(response)
@@ -60,23 +58,27 @@ module Amorail
     end
 
     def handle_response(response)
+      return response if response.status == 200 or response.status == 204
+        
       case response.status
-        when 301
-          raise AmoMovedPermanentlyError
-        when 400
-          raise AmoBadRequestError
-        when 401 
-          raise AmoUnauthorizedError
-        when 403
-          raise AmoForbiddenError
-        when 404
-          raise AmoNotFoudError
-        when 500
-          raise AmoInternalError
-        when 502
-          raise AmoBadGatewayError
-        when 503
-          raise AmoServiceUnaviableError
+      when 301
+        raise AmoMovedPermanentlyError
+      when 400
+        raise AmoBadRequestError
+      when 401 
+        raise AmoUnauthorizedError
+      when 403
+        raise AmoForbiddenError
+      when 404
+        raise AmoNotFoudError
+      when 500
+        raise AmoInternalError
+      when 502
+        raise AmoBadGatewayError
+      when 503
+        raise AmoServiceUnaviableError
+      else
+        raise AmoUnknownError(response.body)
       end
     end
   end
