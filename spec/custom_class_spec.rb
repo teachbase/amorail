@@ -2,18 +2,7 @@ require "spec_helper"
 require "webmock/rspec"
 
 describe "spec for Amorail Properties" do
-
-  before(:all) do
-    ENV["AMORAIL_CONF"] = "./spec/fixtures/amorail_test.yml"
-  end
-
-  before(:each) do
-    authorize_stub(Amorail.config.api_endpoint, 
-      Amorail.config.usermail, 
-      Amorail.config.api_key)
-    
-    account_info_stub(Amorail.config.api_endpoint)
-  end
+  before(:each) { mock_api }
 
   let(:prop) {Amorail.properties}
 

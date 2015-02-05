@@ -1,24 +1,25 @@
 module Amorail
   class AmoCompany < Amorail::AmoEntity
+    set_amo_name "company"
     
-    attr_accessor :url, :name, :linked_leads_id, :email, :phone, :address, 
-                  :website, :id, :request_id, :company_name
+    attr_accessor :name, :linked_leads_id, 
+                  :email, :phone, :address, :website 
 
-    def initialize(attributes={})
-      super
-      self.url = "/private/api/v2/json/company/set"
-    end
+    validates :name, presence: true
 
-    def request_attributes
+    def create_params
       {
         request: {
           contacts: {
             add: [
               {
                 name: name,
-                linked_leads_id: [linked_leads_id],
                 type: "contact",
-                company_name: company_name,
+                date_create: to_timestamp(date_create),
+                last_modified: to_timestamp(last_modified),
+                request_id: request_id,
+                responsible_user_id: responsible_user_id,
+                linked_leads_id: [linked_leads_id],
                 custom_fields: [
                   {
                     id: properties.company.address.id,
@@ -45,7 +46,7 @@ module Amorail
     end
 
     def reload_model(response)
-      self.id = response["contacts"]["add"][0]["id"]
+      @id = response["contacts"]["add"][0]["id"]
       self.request_id = response["contacts"]["add"][0]["request_id"]
     end
   end

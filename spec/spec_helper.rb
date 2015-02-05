@@ -3,10 +3,14 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'rspec'
 require 'amorail'
+require 'pry-byebug'
 require 'webmock/rspec'
+require 'shoulda/matchers'
 require 'helpers/webmock_helpers'
 
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+ENV["AMORAIL_CONF"] = File.expand_path("../fixtures/amorail_test.yml", __FILE__)
+
+Dir[File.expand_path("../support/**/*.rb",__FILE__)].each {|f| require f}
 
 RSpec.configure do |config|
   config.mock_with :rspec

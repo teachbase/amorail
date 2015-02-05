@@ -41,7 +41,7 @@ module Amorail
         request.headers['Content-Type'] = 'application/json'
         request.body = params.to_json
       end
-      hadle_response(response)
+      handle_response(response)
       response
     end
 
@@ -51,7 +51,7 @@ module Amorail
         request.headers['Content-Type'] = 'application/json'
         request.body = params.to_json
       end
-      hadle_response(response)
+      handle_response(response)
       response
     end
 
@@ -59,7 +59,7 @@ module Amorail
       self.cookies = response.headers['set-cookie'].split('; ')[0]
     end
 
-    def hadle_response(response)
+    def handle_response(response)
       case response.status
         when 301
           raise AmoMovedPermanentlyError

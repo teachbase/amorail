@@ -1,3 +1,12 @@
+def mock_api
+  authorize_stub(Amorail.config.api_endpoint, 
+    Amorail.config.usermail, 
+    Amorail.config.api_key)
+
+  account_info_stub(Amorail.config.api_endpoint)
+end
+
+
 def authorize_stub(endpoint, usermail, api_key)
   stub_request(:post, "#{endpoint}/private/api/auth.php?type=json").
          with(:body => "{\"USER_LOGIN\":\"#{usermail}\",\"USER_HASH\":\"#{api_key}\"}",

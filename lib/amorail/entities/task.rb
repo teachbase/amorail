@@ -1,19 +1,22 @@
 module Amorail
   class AmoTask < Amorail::AmoEntity
-    attr_accessor :url, :name, :element_id, :element_type, :text, :complete_till, :task_type
+    set_amo_name "tasks"
+    attr_accessor :element_id, :element_type, :text, :complete_till, :task_type
 
-    def initialize(attributes={})
-      super
-      self.url = "/private/api/v2/json/tasks/set"
-    end
+    validates :text, :element_id, :element_type, :complete_till, :task_type, presence: true
+    validates :element_type, inclusion: 1..2
 
-    def request_attributes
+    def create_params
       {
         request: {
           tasks: {
             add: [
               {
                 text: text,
+                date_create: to_timestamp(date_create),
+                last_modified: to_timestamp(last_modified),
+                request_id: request_id,
+                responsible_user_id: responsible_user_id,
                 element_id: element_id,
                 element_type: element_type,
                 task_type: task_type,

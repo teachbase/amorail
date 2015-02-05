@@ -1,25 +1,14 @@
 require "spec_helper"
 
 describe Amorail::Client do
+  let(:client) { Amorail.client }
 
-  before(:all) do
-    ENV["AMORAIL_CONF"] = "./spec/fixtures/amorail_test.yml"
-  end
-
-  let(:client) {Amorail.client}
-
-  before(:each) do
-    authorize_stub(Amorail.config.api_endpoint, 
-      Amorail.config.usermail, 
-      Amorail.config.api_key)
-
-    account_info_stub(Amorail.config.api_endpoint)
-  end
+  before(:each) { mock_api }
 
   it "it should create client" do
-    expect(Amorail.config.usermail).to eq "alekseenkoss@gmail.com"
-    expect(Amorail.config.api_key).to eq "7132282ce5742b166417fe32ae178cf6"
-    expect(Amorail.config.api_endpoint).to eq "https://new54c0b12948ffb.amocrm.ru"
+    expect(Amorail.config.usermail).to eq "amorail@test.com"
+    expect(Amorail.config.api_key).to eq "75742b166417fe32ae132282ce178cf6"
+    expect(Amorail.config.api_endpoint).to eq "https://test.amocrm.ru"
   end
 
   it "should #authorize method call" do

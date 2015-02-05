@@ -6,8 +6,8 @@ require 'amorail/version'
 Gem::Specification.new do |spec|
   spec.name          = "amorail"
   spec.version       = Amorail::VERSION
-  spec.authors       = ["alekseenkoss"]
-  spec.email         = ["alekseenkoss@gmail.com"]
+  spec.authors       = ["alekseenkoss", "palkan"]
+  spec.email         = ["alekseenkoss@gmail.com", "dementiev.vm@gmail.com"]
   spec.summary       = %q{Ruby API client for AmoCRM}
   spec.description   = %q{Ruby API client for AmoCRM. You can integrate your system with it.}
   spec.homepage      = ""
@@ -22,10 +22,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
   spec.add_development_dependency "webmock"
+  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'shoulda-matchers'
   spec.add_dependency "anyway_config", "~> 0.3"
   spec.add_dependency "faraday"
   spec.add_dependency "faraday_middleware"
   spec.add_dependency 'activemodel'
   spec.add_dependency 'json'
-  spec.add_dependency 'pry-byebug'
 end
