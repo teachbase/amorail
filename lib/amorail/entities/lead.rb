@@ -27,7 +27,7 @@ module Amorail
     end
 
     def reload_model(response)
-      @id = response["leads"]["add"][0]["id"]
+      self.id = response["leads"]["add"][0]["id"]
       self.request_id = response["leads"]["add"][0]["request_id"]
     end
   end
