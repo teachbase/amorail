@@ -108,16 +108,16 @@ module Amorail
       return data unless data.is_a?(Hash)
 
       compacted = {}
-      data.each do |key,val|
+      data.each do |key, val|
         case val
         when Numeric, String
-          compacted[key]=val
+          compacted[key] = val
         when Array
           val.compact!
           # handle custom keys
-          val=normalize_custom_fields(val) if key == :custom_fields
+          val = normalize_custom_fields(val) if key == :custom_fields
           unless val.empty?
-            compacted[key] = val.map{|el| normalize_params(el) } 
+            compacted[key] = val.map { |el| normalize_params(el) }
           end
         else
           _data = normalize_params(val)
@@ -129,7 +129,7 @@ module Amorail
 
     def normalize_custom_fields(val)
       val.reject do |field|
-        field[:values].all?{ |item| !item[:value] }
+        field[:values].all? { |item| !item[:value] }
       end
     end
 
@@ -140,7 +140,7 @@ module Amorail
 
       case val
       when String
-        (_date=Date.parse(val)) && _date.to_i
+        (_date = Date.parse(val)) && _date.to_i
       when Date
         val.to_i
       when Numeric
