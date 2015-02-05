@@ -4,7 +4,7 @@ require 'rails'
 module Amorail
   class Engine < Rails::Engine
     rake_tasks do
-      load "amorail/tasks/amorail.rake"
+      load File.expand_path("../../tasks/amorail.rake", __FILE__)
     end
   end
 end
