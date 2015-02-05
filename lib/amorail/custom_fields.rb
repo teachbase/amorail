@@ -39,10 +39,10 @@ module Amorail
     end
 
     def parse_all_data
-      @contact = Contact.parse(data)
-      @company = Company.parse(data)
-      @lead = Lead.parse(data)
-      @task = Task.parse(data)
+      contact
+      company
+      lead
+      task
     end
 
     def load_fields
@@ -68,6 +68,10 @@ module Amorail
 
     def task
       @task ||= Task.parse(data)
+    end
+
+    def inspect
+      @data
     end
 
     class Contact
