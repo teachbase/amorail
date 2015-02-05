@@ -18,7 +18,7 @@ module Amorail
                 responsible_user_id: responsible_user_id,
                 tags: tags,
                 price: price,
-                status_id: properties.lead.first_status.id
+                status_id: status_id
               }
             ]
           }
