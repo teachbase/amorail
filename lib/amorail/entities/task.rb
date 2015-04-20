@@ -11,25 +11,18 @@ module Amorail
 
     validates :element_type, inclusion: 1..2
 
-    def create_params
+    def params
       {
-        request: {
-          tasks: {
-            add: [
-              {
-                text: text,
-                date_create: to_timestamp(date_create),
-                last_modified: to_timestamp(last_modified),
-                request_id: request_id,
-                responsible_user_id: responsible_user_id,
-                element_id: element_id,
-                element_type: element_type,
-                task_type: task_type,
-                complete_till: to_timestamp(complete_till)
-              }
-            ]
-          }
-        }
+        id: id,
+        text: text,
+        date_create: to_timestamp(date_create),
+        last_modified: to_timestamp(last_modified) || Time.now.to_i,
+        request_id: request_id,
+        responsible_user_id: responsible_user_id,
+        element_id: element_id,
+        element_type: element_type,
+        task_type: task_type,
+        complete_till: to_timestamp(complete_till)
       }
     end
 
@@ -48,6 +41,5 @@ module Amorail
         end
       CODE
     end
-
   end
 end

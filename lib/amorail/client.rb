@@ -5,7 +5,6 @@ require 'active_support'
 
 module Amorail
   class Client
-
     attr_accessor :cookies
 
     def initialize
@@ -15,7 +14,6 @@ module Amorail
         faraday.response :json, :content_type => /\bjson$/
         faraday.use :instrumentation
       end
-
     end
 
     def connect

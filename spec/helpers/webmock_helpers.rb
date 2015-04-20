@@ -42,6 +42,12 @@ def contact_create_stub(endpoint)
   )
 end
 
+def contact_update_stub(endpoint)
+  stub_request(:post, endpoint + '/private/api/v2/json/contacts/set').with(
+          :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.1'}).to_return(
+    :body => File.read('./spec/fixtures/contact_update.json'), headers: {'Content-Type'=>'application/json'}, status: 200
+  )
+end
 
 def company_create_stub(endpoint)
   stub_request(:post, endpoint + '/private/api/v2/json/company/set').with(

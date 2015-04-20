@@ -2,7 +2,6 @@ require 'anyway'
 
 module Amorail
   class Config < Anyway::Config
-
     attr_config :usermail,
                 :api_key,
                 :api_endpoint,

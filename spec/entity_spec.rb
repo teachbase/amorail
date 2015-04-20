@@ -16,13 +16,20 @@ describe Amorail::AmoEntity do
         phone: "111"
       )
 
-      compact = Amorail::AmoEntity.new.normalize_params(company.create_params)
+      compact = Amorail::AmoEntity.new.normalize_params(company.create_params('add'))
 
       expect(compact[:request][:contacts][:add].length).to eq 1
 
       item = compact[:request][:contacts][:add].first
 
-      expect(item.keys).to include(:name, :date_create, :last_modified, :request_id, :responsible_user_id, :custom_fields)
+      expect(item.keys).to include(
+        "name",
+        "date_create",
+        "last_modified",
+        "request_id",
+        "responsible_user_id",
+        "custom_fields"
+      )
       expect(item.keys).not_to include(:company_name, :linked_leads_id)
 
       expect(item[:date_create]).to eql _now.to_i
