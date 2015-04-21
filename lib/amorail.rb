@@ -1,15 +1,15 @@
-require "amorail/version"
-require "amorail/config"
-require "amorail/client"
-require "amorail/exceptions"
-require "amorail/entity"
-require "amorail/custom_fields"
+require 'amorail/version'
+require 'amorail/config'
+require 'amorail/client'
+require 'amorail/exceptions'
+require 'amorail/entity'
+require 'amorail/custom_fields'
 
-# require "amorail/entities/contact"
-Gem.find_files("amorail/entities/*.rb").each { |path| require path }
+require 'amorail/entities/leadable'
+
+Gem.find_files('amorail/entities/*.rb').each { |path| require path }
 
 module Amorail
-  
   def self.config
     @config ||= Config.new
   end

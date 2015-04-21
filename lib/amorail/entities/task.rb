@@ -1,8 +1,9 @@
 module Amorail
   class AmoTask < Amorail::AmoEntity
-    set_amo_name "tasks"
-    attr_accessor :element_id, :element_type, :text,
-                  :complete_till, :task_type
+    amo_names "tasks"
+
+    amo_field :element_id, :element_type, :text,
+              :task_type, complete_till: :timestamp
 
     validates :text, :element_id,
               :element_type, :complete_till,
@@ -26,7 +27,7 @@ module Amorail
       }
     end
 
-    [{name: "contact", val: 1},{name: "lead", val: 2}].each do |prop|
+    [{ name: "contact", val: 1 }, { name: "lead", val: 2 }].each do |prop|
       class_eval <<-CODE, __FILE__, __LINE__ + 1
         def #{prop[:name]}=(val)
           #{prop[:name]}! if val

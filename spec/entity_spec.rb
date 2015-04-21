@@ -2,41 +2,50 @@ require "spec_helper"
 
 describe Amorail::AmoEntity do
   before { mock_api }
-  describe "#normalize_params and #to_timestamp" do
-    it "should remove nulls and empty arrays" do
-      _now = Time.now
 
-      company = Amorail::AmoCompany.new(
-        name: "test", 
-        request_id: 1, 
-        responsible_user_id: 2, 
-        date_create: _now,
-        last_modified: _now.to_date,
-        address: "tester",
-        phone: "111"
-      )
+  let(:entity) { Amorail::AmoEntity.new }
 
-      compact = Amorail::AmoEntity.new.normalize_params(company.create_params('add'))
+  describe "#params" do
+    let(:now) { Time.now }
 
-      expect(compact[:request][:contacts][:add].length).to eq 1
+    subject { entity.params }
 
-      item = compact[:request][:contacts][:add].first
+    specify { is_expected.to include(:last_modified) }
+    specify { is_expected.not_to include(
+      :id, :request_id, :responsible_user_id, :date_create)
+    }
 
-      expect(item.keys).to include(
-        "name",
-        "date_create",
-        "last_modified",
-        "request_id",
-        "responsible_user_id",
-        "custom_fields"
-      )
-      expect(item.keys).not_to include(:company_name, :linked_leads_id)
+    context "with some values" do
+      let(:entity) do
+        Amorail::AmoEntity.new(
+          responsible_user_id: 2,
+          last_modified: now
+        )
+      end
 
-      expect(item[:date_create]).to eql _now.to_i
-      expect(item[:last_modified]).to eql _now.to_date.to_time.to_i
+      specify { is_expected.to include(responsible_user_id: 2) }
+      specify { is_expected.to include(last_modified: now.to_i) }
+      specify { is_expected.not_to include(
+        :id, :request_id, :date_create)
+      }
+    end
 
-      fields = item[:custom_fields]
-      expect(fields.length).to eq 2
+    context "with all values" do
+      let(:entity) do
+        Amorail::AmoEntity.new(
+          id: 100,
+          request_id: 1,
+          responsible_user_id: 2,
+          date_create: now,
+          last_modified: now
+        )
+      end
+
+      specify { is_expected.to include(id: 100) }
+      specify { is_expected.to include(request_id: 1) }
+      specify { is_expected.to include(responsible_user_id: 2) }
+      specify { is_expected.to include(date_create: now.to_i) }
+      specify { is_expected.to include(last_modified: now.to_i) }
     end
   end
 end

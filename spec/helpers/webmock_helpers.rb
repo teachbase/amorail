@@ -46,8 +46,8 @@ def contact_update_stub(endpoint)
   )
 end
 
-def contact_find_stub(endpoint, id)
-  if id == 101
+def contact_find_stub(endpoint, id, success = true)
+  if success
     stub_request(:get, "#{endpoint}/private/api/v2/json/contacts/list?id=#{id}").to_return(
       :body => File.read('./spec/fixtures/contact_find.json'), headers: {'Content-Type'=>'application/json'}, status: 200
     )

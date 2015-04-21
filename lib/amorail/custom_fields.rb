@@ -33,8 +33,8 @@ module Amorail
       end
     end
     
-    attr_reader :client, :data, :contact,
-                :company, :lead, :task
+    attr_reader :client, :data, :contacts,
+                :company, :leads, :tasks
 
     def initialize(client)
       @client = client
@@ -58,10 +58,10 @@ module Amorail
     private
 
     def parse_all_data
-      @contact = Contact.parse(data)
+      @contacts = Contact.parse(data)
       @company = Company.parse(data)
-      @lead = Lead.parse(data)
-      @task = Task.parse(data)
+      @leads = Lead.parse(data)
+      @tasks = Task.parse(data)
     end
 
     class Contact < PropertyItem

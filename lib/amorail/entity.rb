@@ -11,92 +11,64 @@ module Amorail
     class RecordNotFound < ::Amorail::Error; end
 
     class << self
-      attr_reader :amo_name, :amo_response_name
-      def set_amo_name(name)
+      attr_reader :amo_name, :amo_response_name, :attributes, :properties
+
+      def amo_names(name, response_name = nil)
         @amo_name = @amo_response_name = name
+        @amo_response_name = response_name unless response_name.nil?
       end
 
-      def set_amo_response_name(name)
-        @amo_response_name = name
+      def amo_field(*vars, **hargs)
+        @attributes ||= {}
+        vars.each { |v| @attributes[v] = :default }
+        hargs.each { |k, v| @attributes[k] = v }
+        attr_accessor(*@attributes.keys)
+      end
+
+      def amo_property(name, options = {})
+        @properties ||= {}
+        @properties[name] = options
+        attr_accessor(name)
+      end
+
+      def find(id)
+        new.load_record(id)
+      end
+
+      def find!(id)
+        rec = find(id)
+        fail RecordNotFound unless rec
+        rec
       end
     end
 
-    attr_accessor :id, :date_create, :last_modified, :persisted,
-                  :request_id, :responsible_user_id
+    amo_names 'entity'
+
+    amo_field :id, :request_id, :responsible_user_id,
+              date_create: :timestamp, last_modified: :timestamp
+
+    delegate :client, :properties, to: Amorail
 
     def initialize(attributes = {})
-      super
-      @client = Amorail.client
-      @properties = Amorail.properties
+      super(attributes)
+      self.last_modified = Time.now.to_i if last_modified.nil?
     end
-
-    def self.attr_accessor(*vars)
-      @attributes ||= []
-      @attributes.concat vars
-      super(*vars)
-    end
-
-    def self.find(id)
-      amo = new(id: id)
-      return nil unless amo.find_record(id)
-      amo
-    end
-
-    def self.find!(id)
-      rec = find(id)
-      raise RecordNotFound unless rec
-      rec
-    end
-
-    class << self
-      attr_reader :attributes
-    end
-
-    def attributes
-      attrs = {}
-      attributes_list.each { |a| attrs[a] = send(a) }
-      attrs
-    end
-
-    def attributes_list
-      self.class.attributes
-    end
-
-    attr_reader :client
-
-    attr_reader :properties
 
     def new_record?
       id.blank?
     end
 
     def persisted?
-      persisted.present? && !new_record?
+      !new_record?
     end
 
-    def params
-      {}
-    end
-
-    def create_params(method)
-      {
-        request: {
-          self.class.amo_response_name => {
-            method => [
-              params
-            ]
-          }
-        }
-      }
-    end
-
-    def find_record(id)
+    def load_record(id)
       response = client.safe_request(
         :get,
         remote_url('list'),
-        { id: id }
+        id: id
       )
-      handle_response(response)
+      handle_response(response, 'load')
     end
 
     def save
@@ -126,15 +98,47 @@ module Amorail
       end
     end
 
-    # after update merge updated params
-    def merge_params(attrs)
-      return nil unless attrs.present?
-      attrs.each do |k, v|
-        action = "#{k}="
-        next unless respond_to?(action)
-        send(action, v)
+    def params
+      data = {}
+      self.class.attributes.each do |k, v|
+        data[k] = send("to_#{v}", send(k))
       end
-      self
+
+      data[:custom_fields] = custom_fields
+
+      normalize_params(data)
+    end
+
+    protected
+
+    def custom_fields
+      return unless properties.respond_to?(self.class.amo_name)
+
+      return if self.class.properties.nil?
+
+      props = properties.send(self.class.amo_name)
+
+      custom_fields = []
+
+      self.class.properties.each do |k, v|
+        prop_id = props.send(k).id
+        prop_val = { value: send(k) }.merge(v)
+        custom_fields << { id: prop_id, values: [prop_val] }
+      end
+
+      custom_fields
+    end
+
+    def create_params(method)
+      {
+        request: {
+          self.class.amo_response_name => {
+            method => [
+              params
+            ]
+          }
+        }
+      }
     end
 
     def normalize_custom_fields(val)
@@ -160,73 +164,100 @@ module Amorail
             compacted[key] = val.map { |el| normalize_params(el) }
           end
         else
-          _data = normalize_params(val)
-          compacted[key] = _data unless _data.nil?
+          params = normalize_params(val)
+          compacted[key] = params unless params.nil?
         end
       end
       compacted.with_indifferent_access
     end
-
-    def remote_url(action)
-      File.join("#{Amorail.config.api_path}", self.class.amo_name, action)
-    end
-
-    protected
 
     def to_timestamp(val)
       return if val.nil?
 
       case val
       when String
-        (_date = Date.parse(val)) && _date.to_i
-      when Time
-        val.to_i
+        (date = Time.parse(val)) && date.to_i
       when Date
         val.to_time.to_i
-      when Numeric
+      else
         val.to_i
       end
     end
 
+    def to_default(val)
+      val
+    end
+
+    def reload_model(info)
+      merge_params(info)
+      merge_custom_fields(info['custom_fields'])
+      self
+    end
+
     private
+
+    def merge_params(attrs)
+      attrs.each do |k, v|
+        action = "#{k}="
+        next unless respond_to?(action)
+        send(action, v)
+      end
+      self
+    end
+
+    def merge_custom_fields(fields)
+      return if fields.nil?
+      fields.each do |f|
+        fname = "#{f.fetch('code').downcase}="
+        fval = f.fetch('values').first.fetch('value')
+        send(fname, fval) if respond_to?(fname)
+      end
+    end
+
+    def attributes_list
+      self.class.attributes
+    end
+
+    def remote_url(action)
+      File.join(Amorail.config.api_path, self.class.amo_name, action)
+    end
 
     # call safe method <safe_request>. safe_request call authorize
     # if current session undefined or expires.
     def push(method)
-      return false if method.blank?
       response = commit_request(create_params(method))
-      handle_response(response)
+      handle_response(response, method)
     end
 
     def commit_request(attrs)
-      response = client.safe_request(
+      client.safe_request(
         :post,
         remote_url('set'),
         normalize_params(attrs)
       )
     end
 
-    def handle_response(response)
+    def handle_response(response, method)
       if response.status == 200
-        reload_model(response.body['response'])
-        true
+        extract_method = "extract_data_#{method}"
+        reload_model(
+          send(
+            extract_method,
+            response.body['response'][self.class.amo_response_name]
+          )
+        ) if respond_to?(extract_method, true)
+        self
       else
         false
       end
     end
 
-    # override this method for Amo<Any> class
-    def reload_model(response)
-      if new_record?
-        self.id = response[self.class.amo_response_name]['add'][0]['id']
-        self.request_id = response[self.class.amo_response_name]['add'][0]['request_id']
-      else
-        self.persisted = true
-      end
+    def extract_data_load(response)
+      response.first
     end
 
-    def current_time
-      Time.zone.present? ? Time.zone.now : Time.now
+    def extract_data_add(response)
+      response.fetch('add').first
     end
   end
 end

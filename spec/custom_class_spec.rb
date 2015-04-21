@@ -19,24 +19,24 @@ describe "spec for Amorail Properties" do
   end
 
   it "should parse contacts hash" do
-    expect(prop.contact.email.present?).to be_truthy
-    expect(prop.contact.im.is_a?(Amorail::Property::PropertyItem)).to be_truthy
-    expect(prop.contact.im.id.present?).to be_truthy
-    expect(prop.contact.data["im"].data["id"]).to eq prop.contact.im.id
+    expect(prop.contacts.email.present?).to be_truthy
+    expect(prop.contacts.im.is_a?(Amorail::Property::PropertyItem)).to be_truthy
+    expect(prop.contacts.im.id.present?).to be_truthy
+    expect(prop.contacts.data["im"].data["id"]).to eq prop.contacts.im.id
 
-    expect(prop.contact.im.id).to eq "1460595"
-    expect(prop.contact.position.id).to eq "1460587"
-    expect(prop.contact.phone.id).to eq "1460589"
-    expect(prop.contact.email.id).to eq "1460591"
+    expect(prop.contacts.im.id).to eq "1460595"
+    expect(prop.contacts.position.id).to eq "1460587"
+    expect(prop.contacts.phone.id).to eq "1460589"
+    expect(prop.contacts.email.id).to eq "1460591"
   end
 
   it "should parse leads hash" do
-    expect(prop.lead.statuses["Первичный контакт"].id).to eq "8195972"
-    expect(prop.lead.statuses["Успешно реализовано"].id).to eq "142"
+    expect(prop.leads.statuses["Первичный контакт"].id).to eq "8195972"
+    expect(prop.leads.statuses["Успешно реализовано"].id).to eq "142"
   end
 
   it "should parse task types" do
-    expect(prop.task.follow_up.id).to eq 1
-    expect(prop.task["CALL"].id).to eq 1
+    expect(prop.tasks.follow_up.id).to eq 1
+    expect(prop.tasks["CALL"].id).to eq 1
   end
 end
