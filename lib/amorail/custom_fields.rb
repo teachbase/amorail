@@ -11,7 +11,6 @@ module Amorail
   end
 
   class Property
-
     class PropertyItem
       include MethodMissing
 
@@ -34,7 +33,7 @@ module Amorail
       end
     end
     
-    attr_reader :client, :data, :contact, 
+    attr_reader :client, :data, :contact,
                 :company, :lead, :task
 
     def initialize(client)

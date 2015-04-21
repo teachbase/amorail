@@ -34,10 +34,8 @@ module Amorail
     end
 
     def get(url, params={})
-      response = connect.get(url) do |request|
+      response = connect.get(url, params) do |request|
         request.headers['Cookie'] = self.cookies if self.cookies.present?
-        request.headers['Content-Type'] = 'application/json'
-        request.body = params.to_json
       end
       handle_response(response)
     end

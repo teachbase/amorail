@@ -8,6 +8,7 @@ module Amorail
 
     class InvalidRecord < ::Amorail::Error; end
     class NotPersisted < ::Amorail::Error; end
+    class RecordNotFound < ::Amorail::Error; end
 
     class << self
       attr_reader :amo_name, :amo_response_name
@@ -36,7 +37,15 @@ module Amorail
     end
 
     def self.find(id)
-      new(id: id)
+      amo = new(id: id)
+      return nil unless amo.find_record(id)
+      amo
+    end
+
+    def self.find!(id)
+      rec = find(id)
+      raise RecordNotFound unless rec
+      rec
     end
 
     class << self
@@ -79,6 +88,15 @@ module Amorail
           }
         }
       }
+    end
+
+    def find_record(id)
+      response = client.safe_request(
+        :get,
+        remote_url('list'),
+        { id: id }
+      )
+      handle_response(response)
     end
 
     def save
@@ -149,6 +167,10 @@ module Amorail
       compacted.with_indifferent_access
     end
 
+    def remote_url(action)
+      File.join("#{Amorail.config.api_path}", self.class.amo_name, action)
+    end
+
     protected
 
     def to_timestamp(val)
@@ -179,7 +201,7 @@ module Amorail
     def commit_request(attrs)
       response = client.safe_request(
         :post,
-        create_url,
+        remote_url('set'),
         normalize_params(attrs)
       )
     end
@@ -205,10 +227,6 @@ module Amorail
 
     def current_time
       Time.zone.present? ? Time.zone.now : Time.now
-    end
-
-    def create_url
-      File.join("#{Amorail.config.api_path}", self.class.amo_name, 'set')
     end
   end
 end

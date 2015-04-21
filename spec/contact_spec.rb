@@ -22,6 +22,7 @@ describe Amorail::AmoContact do
     let(:contact) { Amorail::AmoContact.new(name: "test2") }
 
     before { contact_update_stub(Amorail.config.api_endpoint) }
+    before { contact_find_stub(Amorail.config.api_endpoint, 101) }
 
     it "return true after update" do
       contact_create_stub(Amorail.config.api_endpoint)
@@ -32,7 +33,24 @@ describe Amorail::AmoContact do
       expect(contact.name).to eq "foo"
     end
 
-    it "#update" do
+    it "#find" do
+      obj = Amorail::AmoContact.find(101)
+      expect(obj.id).to eq 101
+    end
+
+    it "#find error" do
+      contact_find_stub(Amorail.config.api_endpoint, 102)
+      obj = Amorail::AmoContact.find(102)
+      expect(obj).to be_nil
+    end
+
+    it "#find! error" do
+      contact_find_stub(Amorail.config.api_endpoint, 102)
+      expect { Amorail::AmoContact.find!(102) }
+        .to raise_error(Amorail::AmoEntity::RecordNotFound)
+    end
+
+    it "#find and #update" do
       obj = Amorail::AmoContact.find(101)
       res = obj.update(name: 'Ivan')
       expect(res).to be_truthy
