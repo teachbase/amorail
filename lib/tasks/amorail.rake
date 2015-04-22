@@ -1,8 +1,8 @@
 require 'amorail'
 
 namespace :amorail do
-  desc "Check Amorails configuration. Authorize and get custom fields information"
+  desc "Check Amorail configuration."
   task :check do
-    p Amorail.properties
+    p Amorail.properties.inspect
   end
 end

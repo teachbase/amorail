@@ -1,11 +1,10 @@
-# Classes for Amorail Exceptions
+# Amorail Exceptions.
 # Every class is name of HTTP response error code(status)
-
 module Amorail
   class Error < ::StandardError; end
 
   class APIError < Error; end
-  
+
   class AmoBadRequestError < APIError; end
 
   class AmoMovedPermanentlyError < APIError; end

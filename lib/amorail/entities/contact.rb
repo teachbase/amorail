@@ -1,44 +1,17 @@
-module Amorail
-  class AmoContact < Amorail::AmoEntity
-    set_amo_name "contacts"
+require 'amorail/entities/leadable'
 
-    attr_accessor :name, :company_name, :linked_leads_id,
-                  :email, :phone, :job_position
+module Amorail
+  # AmoCRM contact entity
+  class AmoContact < Amorail::AmoEntity
+    include Leadable
+    amo_names 'contacts'
+
+    amo_field :name, :company_name
+
+    amo_property :email, enum: 'WORK'
+    amo_property :phone, enum: 'MOB'
+    amo_property :position
 
     validates :name, presence: true
-
-    def create_params
-      {
-        request: {
-          contacts: {
-            add: [
-              {
-                name: name,
-                date_create: to_timestamp(date_create),
-                last_modified: to_timestamp(last_modified),
-                request_id: request_id,
-                responsible_user_id: responsible_user_id,
-                company_name: company_name,
-                linked_leads_id: [linked_leads_id],
-                custom_fields: [
-                  {
-                    id: properties.contact.position.id,
-                    values: [{value: job_position}]
-                  },
-                  {
-                    id: properties.contact.phone.id,
-                    values: [{value: phone, enum: "MOB"}]
-                  },
-                  {
-                    id: properties.contact.email.id,
-                    values: [{value: email, enum: "WORK"}]
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      }
-    end
   end
 end
