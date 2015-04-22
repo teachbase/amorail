@@ -14,6 +14,18 @@ module Amorail
     class PropertyItem
       include MethodMissing
 
+      class << self
+        attr_accessor :source_name
+
+        def parse(data)
+          hash = {}
+          data['custom_fields'][source_name].each do |contact|
+            hash[contact['code'].downcase] = PropertyItem.new(contact)
+          end
+          new hash
+        end
+      end
+
       attr_reader :data
 
       def initialize(data)
@@ -68,23 +80,11 @@ module Amorail
     end
 
     class Contact < PropertyItem
-      def self.parse(data)
-        hash = {}
-        data['custom_fields']['contacts'].each do |contact|
-          hash[contact['code'].downcase] = PropertyItem.new(contact)
-        end
-        new hash
-      end
+      self.source_name = 'contacts'
     end
 
     class Company < PropertyItem
-      def self.parse(data)
-        hash = {}
-        data['custom_fields']['companies'].each do |company|
-          hash[company['code'].downcase] = PropertyItem.new(company)
-        end
-        new hash
-      end
+      self.source_name = 'companies'
     end
 
     class Lead < StatusItem
