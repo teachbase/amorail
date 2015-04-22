@@ -13,11 +13,11 @@ describe Amorail::AmoTask do
   end
 
   describe "contact and lead" do
-    let(:task) { Amorail::AmoTask.new }
+    let(:task) { described_class.new }
     it "set element_type on initialize" do
-      expect(Amorail::AmoTask.new(lead: true).element_type).to eq 2
-      expect(Amorail::AmoTask.new(contact: true).contact?).to be_truthy
-      expect(Amorail::AmoTask.new(lead: false).element_type).to be_nil
+      expect(described_class.new(lead: true).element_type).to eq 2
+      expect(described_class.new(contact: true).contact?).to be_truthy
+      expect(described_class.new(lead: false).element_type).to be_nil
     end
 
     it "set element_type with bang method" do
@@ -30,7 +30,7 @@ describe Amorail::AmoTask do
 
   describe "#params" do
     let(:task) do
-      Amorail::AmoTask.new(
+      described_class.new(
         element_id: 1,
         element_type: 1,
         text: 'Win the war',
@@ -46,7 +46,9 @@ describe Amorail::AmoTask do
     specify { is_expected.to include(text: 'Win the war') }
     specify { is_expected.to include(task_type: 'test') }
     specify {
-      is_expected.to include(complete_till: Time.local(2015, 5, 9, 12, 0, 0).to_i)
+      is_expected.to include(
+        complete_till: Time.local(2015, 5, 9, 12, 0, 0).to_i
+      )
     }
   end
 end

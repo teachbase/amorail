@@ -1,4 +1,5 @@
 module Amorail
+  # AmoCRM lead entity
   class AmoLead < Amorail::AmoEntity
     amo_names "leads"
 

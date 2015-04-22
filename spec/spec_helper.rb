@@ -10,8 +10,9 @@ require 'helpers/webmock_helpers'
 
 ENV["AMORAIL_CONF"] = File.expand_path("../fixtures/amorail_test.yml", __FILE__)
 
-Dir[File.expand_path("../support/**/*.rb",__FILE__)].each {|f| require f}
+Dir[File.expand_path("../support/**/*.rb", __FILE__)].each { |f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec
+  include AmoWebMock
 end

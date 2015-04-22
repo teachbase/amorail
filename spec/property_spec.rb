@@ -1,14 +1,14 @@
 require "spec_helper"
 require "webmock/rspec"
 
-describe "spec for Amorail Properties" do
+describe Amorail::Property do
   before(:each) { mock_api }
 
-  let(:prop) {Amorail.properties}
+  let(:prop) { Amorail.properties }
 
   it "should parse companies hash" do
     expect(prop.company.phone.present?).to be_truthy
-    expect(prop.company.phone.is_a?(Amorail::Property::PropertyItem)).to be_truthy
+    expect(prop.company.phone.is_a?(described_class::PropertyItem)).to be_truthy
     expect(prop.company.phone.id.present?).to be_truthy
     expect(prop.company.data["phone"].data["id"]).to eq prop.company.phone.id
 
@@ -20,7 +20,7 @@ describe "spec for Amorail Properties" do
 
   it "should parse contacts hash" do
     expect(prop.contacts.email.present?).to be_truthy
-    expect(prop.contacts.im.is_a?(Amorail::Property::PropertyItem)).to be_truthy
+    expect(prop.contacts.im.is_a?(described_class::PropertyItem)).to be_truthy
     expect(prop.contacts.im.id.present?).to be_truthy
     expect(prop.contacts.data["im"].data["id"]).to eq prop.contacts.im.id
 

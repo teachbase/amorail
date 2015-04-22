@@ -1,8 +1,8 @@
 module Amorail
-
+  # Return hash key as method call
   module MethodMissing
     def method_missing(method_sym, *arguments, &block)
-      if data.has_key?(method_sym.to_s)
+      if data.key?(method_sym.to_s)
         data.fetch(method_sym.to_s)
       else
         super
@@ -10,7 +10,7 @@ module Amorail
     end
   end
 
-  class Property
+  class Property # :nodoc: all
     class PropertyItem
       include MethodMissing
 
@@ -32,7 +32,7 @@ module Amorail
         @statuses = data
       end
     end
-    
+
     attr_reader :client, :data, :contacts,
                 :company, :leads, :tasks
 
@@ -45,9 +45,12 @@ module Amorail
       @data = load_fields
       parse_all_data
     end
-    
+
     def load_fields
-      response = client.safe_request(:get, '/private/api/v2/json/accounts/current')
+      response = client.safe_request(
+        :get,
+        '/private/api/v2/json/accounts/current'
+      )
       response.body["response"]["account"]
     end
 

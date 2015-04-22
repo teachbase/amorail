@@ -3,12 +3,14 @@ require 'amorail/config'
 require 'amorail/client'
 require 'amorail/exceptions'
 require 'amorail/entity'
-require 'amorail/custom_fields'
+require 'amorail/property'
 
 require 'amorail/entities/leadable'
 
 Gem.find_files('amorail/entities/*.rb').each { |path| require path }
 
+# AmoCRM API integration.
+# https://www.amocrm.com/
 module Amorail
   def self.config
     @config ||= Config.new

@@ -3,15 +3,15 @@ require "spec_helper"
 describe Amorail::AmoContact do
   before { mock_api }
 
-  let(:contact) { Amorail::AmoContact.new(name: "test") }
+  let(:contact) { described_class.new(name: "test") }
 
   describe "validations" do
-    it { should validate_presence_of(:name)}
+    it { should validate_presence_of(:name) }
   end
 
   describe "#params" do
     let(:contact) do
-      Amorail::AmoContact.new(
+      described_class.new(
         name: 'Tester',
         company_name: 'Test inc',
         phone: '12345678',
@@ -51,7 +51,7 @@ describe Amorail::AmoContact do
     before { contact_find_stub(Amorail.config.api_endpoint, 102, false) }
 
     it "loads entity" do
-      obj = Amorail::AmoContact.find(101)
+      obj = described_class.find(101)
       expect(obj.id).to eq 101
       expect(obj.company_name).to eq "Foo Inc."
       expect(obj.email).to eq "foo@tb.com"
@@ -59,12 +59,12 @@ describe Amorail::AmoContact do
     end
 
     it "returns nil" do
-      obj = Amorail::AmoContact.find(102)
+      obj = described_class.find(102)
       expect(obj).to be_falsey
     end
 
     it "raise error" do
-      expect { Amorail::AmoContact.find!(102) }
+      expect { described_class.find!(102) }
         .to raise_error(Amorail::AmoEntity::RecordNotFound)
     end
   end
@@ -91,12 +91,12 @@ describe Amorail::AmoContact do
     end
 
     it "raise error if id is blank?" do
-      obj = Amorail::AmoContact.new
+      obj = described_class.new
       expect { obj.update!(name: 'Igor') }.to raise_error
     end
 
     it "raise error" do
-      obj = Amorail::AmoContact.new
+      obj = described_class.new
       expect { obj.update!(id: 101, name: "Igor") }
         .to(raise_error)
     end

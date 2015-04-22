@@ -3,7 +3,7 @@ require "spec_helper"
 describe Amorail::AmoEntity do
   before { mock_api }
 
-  let(:entity) { Amorail::AmoEntity.new }
+  let(:entity) { described_class.new }
 
   describe "#params" do
     let(:now) { Time.now }
@@ -11,13 +11,14 @@ describe Amorail::AmoEntity do
     subject { entity.params }
 
     specify { is_expected.to include(:last_modified) }
-    specify { is_expected.not_to include(
-      :id, :request_id, :responsible_user_id, :date_create)
+    specify {
+      is_expected.not_to include(
+        :id, :request_id, :responsible_user_id, :date_create)
     }
 
     context "with some values" do
       let(:entity) do
-        Amorail::AmoEntity.new(
+        described_class.new(
           responsible_user_id: 2,
           last_modified: now
         )
@@ -25,14 +26,15 @@ describe Amorail::AmoEntity do
 
       specify { is_expected.to include(responsible_user_id: 2) }
       specify { is_expected.to include(last_modified: now.to_i) }
-      specify { is_expected.not_to include(
-        :id, :request_id, :date_create)
+      specify {
+        is_expected.not_to include(
+          :id, :request_id, :date_create)
       }
     end
 
     context "with all values" do
       let(:entity) do
-        Amorail::AmoEntity.new(
+        described_class.new(
           id: 100,
           request_id: 1,
           responsible_user_id: 2,

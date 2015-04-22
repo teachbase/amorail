@@ -4,13 +4,13 @@ describe Amorail::AmoLead do
   before { mock_api }
 
   describe "validations" do
-    it { should validate_presence_of(:name)}
-    it { should validate_presence_of(:status_id)}
+    it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:status_id) }
   end
 
   describe "#params" do
     let(:lead) do
-      Amorail::AmoLead.new(
+      described_class.new(
         name: 'Test',
         price: 100,
         status_id: 2,

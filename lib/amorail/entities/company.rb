@@ -1,4 +1,5 @@
 module Amorail
+  # AmoCRM company entity
   class AmoCompany < Amorail::AmoEntity
     include Leadable
     amo_names 'company', 'contacts'

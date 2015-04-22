@@ -2,14 +2,14 @@ require "spec_helper"
 
 describe Amorail::AmoCompany do
   before { mock_api }
-  
+
   describe "validations" do
     it { should validate_presence_of(:name) }
   end
 
   describe "#params" do
     let(:company) do
-      Amorail::AmoCompany.new(
+      described_class.new(
         name: 'Test inc',
         phone: '12345678',
         email: 'test@mala.ru',
@@ -51,7 +51,7 @@ describe Amorail::AmoCompany do
   end
 
   describe "#save" do
-    let(:company) { Amorail::AmoCompany.new(name: "test") }
+    let(:company) { described_class.new(name: "test") }
 
     before { company_create_stub(Amorail.config.api_endpoint) }
 
