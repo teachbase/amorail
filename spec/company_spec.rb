@@ -42,14 +42,16 @@ describe Amorail::AmoCompany do
       prop = subject[:custom_fields].detect { |p| p[:id] == "1460591" }
       expect(prop).not_to be_nil
       expect(prop[:values].first[:value]).to eq 'test@mala.ru'
-      expect(prop[:values].first[:enum]).to eq 'WORK'
+      expect(prop[:values].first[:enum])
+        .to eq described_class.properties[:email][:enum]
     end
 
     it "contains phone property" do
       prop = subject[:custom_fields].detect { |p| p[:id] == "1460589" }
       expect(prop).not_to be_nil
       expect(prop[:values].first[:value]).to eq '12345678'
-      expect(prop[:values].first[:enum]).to eq 'WORK'
+      expect(prop[:values].first[:enum])
+        .to eq described_class.properties[:phone][:enum]
     end
 
     it "contains address property" do
