@@ -12,6 +12,22 @@ describe Amorail::AmoTask do
     it { should validate_presence_of(:complete_till) }
   end
 
+  describe ".attributes" do
+    subject { described_class.attributes }
+
+    it_behaves_like 'entity_class'
+
+    specify do
+      is_expected.to include(
+        :element_type,
+        :element_id,
+        :text,
+        :task_type,
+        :complete_till
+      )
+    end
+  end
+
   describe "contact and lead" do
     let(:task) { described_class.new }
     it "set element_type on initialize" do
@@ -41,6 +57,7 @@ describe Amorail::AmoTask do
 
     subject { task.params }
 
+    specify { is_expected.to include(:last_modified) }
     specify { is_expected.to include(element_id: 1) }
     specify { is_expected.to include(element_type: 1) }
     specify { is_expected.to include(text: 'Win the war') }

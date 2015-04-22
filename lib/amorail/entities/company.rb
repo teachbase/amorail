@@ -1,3 +1,5 @@
+require 'amorail/entities/leadable'
+
 module Amorail
   # AmoCRM company entity
   class AmoCompany < Amorail::AmoEntity

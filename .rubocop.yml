@@ -6,7 +6,7 @@ AllCops:
     - 'spec/**/*.rb'
   Exclude:
     - 'bin/**/*'
-  RunRailsCops: false
+  RunRailsCops: true
   DisplayCopNames: true
   StyleGuideCopsOnly: false
 
@@ -24,3 +24,9 @@ Style/BlockDelimiters:
 Metrics/MethodLength:
   Exclude:
     - 'spec/**/*.rb'
+
+Rails/Date:
+  Enabled: false
+
+Rails/TimeZone:
+  Enabled: false

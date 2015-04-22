@@ -10,24 +10,31 @@ module Amorail
     class RecordNotFound < ::Amorail::Error; end
 
     class << self
-      attr_reader :amo_name, :amo_response_name, :attributes, :properties
+      attr_reader :amo_name, :amo_response_name
 
       def amo_names(name, response_name = nil)
-        @attributes ||= {}
-        @properties ||= {}
         @amo_name = @amo_response_name = name
         @amo_response_name = response_name unless response_name.nil?
       end
 
       def amo_field(*vars, **hargs)
-        vars.each { |v| @attributes[v] = :default }
-        hargs.each { |k, v| @attributes[k] = v }
-        attr_accessor(*@attributes.keys)
+        vars.each { |v| attributes[v] = :default }
+        hargs.each { |k, v| attributes[k] = v }
+        attr_accessor(*(vars + hargs.keys))
       end
 
       def amo_property(name, options = {})
-        @properties[name] = options
+        properties[name] = options
         attr_accessor(name)
+      end
+
+      def attributes
+        @attributes ||=
+          superclass.respond_to?(:attributes) ? superclass.attributes.dup : {}
+      end
+
+      def properties
+        @properties ||= {}
       end
     end
 

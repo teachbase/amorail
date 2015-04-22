@@ -7,6 +7,20 @@ describe Amorail::AmoCompany do
     it { should validate_presence_of(:name) }
   end
 
+  describe ".attributes" do
+    subject { described_class.attributes }
+
+    it_behaves_like 'entity_class'
+
+    specify { is_expected.to include(:name) }
+  end
+
+  describe ".properties" do
+    subject { described_class.properties }
+
+    specify { is_expected.to include(:email, :phone, :web, :address) }
+  end
+
   describe "#params" do
     let(:company) do
       described_class.new(
@@ -20,6 +34,7 @@ describe Amorail::AmoCompany do
 
     subject { company.params }
 
+    specify { is_expected.to include(:last_modified) }
     specify { is_expected.to include(name: 'Test inc') }
     specify { is_expected.to include(type: 'contact') }
 

@@ -9,6 +9,20 @@ describe Amorail::AmoContact do
     it { should validate_presence_of(:name) }
   end
 
+  describe ".attributes" do
+    subject { described_class.attributes }
+
+    it_behaves_like 'entity_class'
+
+    specify { is_expected.to include(:name, :company_name) }
+  end
+
+  describe ".properties" do
+    subject { described_class.properties }
+
+    specify { is_expected.to include(:email, :phone, :position) }
+  end
+
   describe "#params" do
     let(:contact) do
       described_class.new(
@@ -22,6 +36,7 @@ describe Amorail::AmoContact do
 
     subject { contact.params }
 
+    specify { is_expected.to include(:last_modified) }
     specify { is_expected.to include(name: 'Tester') }
     specify { is_expected.to include(company_name: 'Test inc') }
 
@@ -56,6 +71,7 @@ describe Amorail::AmoContact do
       expect(obj.company_name).to eq "Foo Inc."
       expect(obj.email).to eq "foo@tb.com"
       expect(obj.phone).to eq "1111 111 111"
+      expect(obj.params[:id]).to eq 101
     end
 
     it "returns nil" do

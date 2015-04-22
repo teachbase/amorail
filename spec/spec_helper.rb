@@ -8,6 +8,7 @@ require 'webmock/rspec'
 require 'shoulda/matchers'
 require 'helpers/webmock_helpers'
 
+ENV.clear
 ENV["AMORAIL_CONF"] = File.expand_path("../fixtures/amorail_test.yml", __FILE__)
 
 Dir[File.expand_path("../support/**/*.rb", __FILE__)].each { |f| require f }

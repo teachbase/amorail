@@ -5,6 +5,8 @@ describe Amorail::AmoEntity do
 
   let(:entity) { described_class.new }
 
+  it_behaves_like 'entity_class'
+
   describe "#params" do
     let(:now) { Time.now }
 
