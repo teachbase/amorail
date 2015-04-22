@@ -7,7 +7,6 @@
 /pkg/
 /spec/reports/
 /tmp/
-/lib/amorail/entities/
 *.bundle
 *.so
 *.o
