@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Amorail::AmoCompany do
+describe Amorail::Company do
   before { mock_api }
 
   describe "validations" do
@@ -65,6 +65,8 @@ describe Amorail::AmoCompany do
       expect(prop).not_to be_nil
       expect(prop[:values].first[:value]).to eq 'hoohle.com'
     end
+
+    it_behaves_like 'leadable'
   end
 
   describe "#save" do

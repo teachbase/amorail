@@ -1,5 +1,5 @@
 module Amorail # :nodoc: all
-  class AmoEntity
+  class Entity
     class InvalidRecord < ::Amorail::Error; end
     class NotPersisted < ::Amorail::Error; end
 
@@ -36,6 +36,11 @@ module Amorail # :nodoc: all
       else
         fail NotPersisted
       end
+    end
+
+    def reload
+      fail NotPersisted if id.nil?
+      load_record(id)
     end
 
     private

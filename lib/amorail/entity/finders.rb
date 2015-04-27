@@ -1,5 +1,5 @@
 module Amorail # :nodoc: all
-  class AmoEntity
+  class Entity
     class << self
       def find(id)
         new.load_record(id)

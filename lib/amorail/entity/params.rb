@@ -1,5 +1,5 @@
 module Amorail # :nodoc: all
-  class AmoEntity
+  class Entity
     def params
       data = {}
       self.class.attributes.each do |k, v|

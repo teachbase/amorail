@@ -1,6 +1,6 @@
 module Amorail
   # AmoCRM task entity
-  class AmoTask < Amorail::AmoEntity
+  class Task < Amorail::Entity
     amo_names "tasks"
 
     amo_field :element_id, :element_type, :text,

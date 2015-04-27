@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Amorail::AmoContact do
+describe Amorail::Contact do
   before { mock_api }
 
   let(:contact) { described_class.new(name: "test") }
@@ -28,6 +28,7 @@ describe Amorail::AmoContact do
       described_class.new(
         name: 'Tester',
         company_name: 'Test inc',
+        linked_company_id: 123,
         phone: '12345678',
         email: 'test@mala.ru',
         position: 'CEO'
@@ -39,6 +40,7 @@ describe Amorail::AmoContact do
     specify { is_expected.to include(:last_modified) }
     specify { is_expected.to include(name: 'Tester') }
     specify { is_expected.to include(company_name: 'Test inc') }
+    specify { is_expected.to include(linked_company_id: 123) }
 
     it "contains email property" do
       prop = subject[:custom_fields].detect { |p| p[:id] == "1460591" }
@@ -61,6 +63,8 @@ describe Amorail::AmoContact do
       expect(prop).not_to be_nil
       expect(prop[:values].first[:value]).to eq 'CEO'
     end
+
+    it_behaves_like 'leadable'
   end
 
   describe ".find" do
@@ -83,7 +87,7 @@ describe Amorail::AmoContact do
 
     it "raise error" do
       expect { described_class.find!(102) }
-        .to raise_error(Amorail::AmoEntity::RecordNotFound)
+        .to raise_error(Amorail::Entity::RecordNotFound)
     end
   end
 

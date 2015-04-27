@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Amorail::AmoTask do
+describe Amorail::Task do
   before { mock_api }
 
   describe "validations" do

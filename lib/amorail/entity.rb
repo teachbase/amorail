@@ -2,7 +2,7 @@ require 'active_model'
 
 module Amorail
   # Core class for all Amo entities (company, contact, etc)
-  class AmoEntity
+  class Entity
     include ActiveModel::Model
     include ActiveModel::AttributeMethods
     include ActiveModel::Validations

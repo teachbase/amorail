@@ -1,6 +1,6 @@
 module Amorail
   # AmoCRM lead entity
-  class AmoLead < Amorail::AmoEntity
+  class Lead < Amorail::Entity
     amo_names "leads"
 
     amo_field :name, :price, :status_id, :tags

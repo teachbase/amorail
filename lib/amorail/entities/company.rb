@@ -2,7 +2,7 @@ require 'amorail/entities/leadable'
 
 module Amorail
   # AmoCRM company entity
-  class AmoCompany < Amorail::AmoEntity
+  class Company < Amorail::Entity
     include Leadable
     amo_names 'company', 'contacts'
 
