@@ -22,22 +22,39 @@ Or install it yourself as:
 
 ## Usage
 
-With Amorails you can manipulate with next objects: 
-Companies, Contacts, Leads and Tasks 
-
-We tried to create simple AR-like interface for the gem.
+With Amorail you can manipulate the following AmoCRM entities: Companies, Contacts, Leads and Tasks.
+We're triying to build simple AR-like interface.
 
 ### Auth configuration
 
-Configuration settings is stored into config/secrets.yml like this:
+Amorail uses [anyway_config](https://github.com/palkan/anyway_config) for configuration, so you
+can provide configuration parameters through env vars, seperate config file (`config/amorail.yml`) or `secrets.yml`.
+
+Required params: **usermail**, **api_key** and **api_endpoint**.
+
+Example:
 
 ```
+# config/secrets.yml
 development:
   ...
-  amoparams:
+  amorail:
     usermail: 'amorail@test.com'
     api_key: '75742b166417fe32ae132282ce178cf6'
     api_endpoint: 'https://test.amocrm.ru'
+```
+
+### Running from console
+
+You can try amorail in action from console ([PRY](https://github.com/pry/pry) is required to be installed):
+
+```shell
+# amorail gem directory
+AMORAIL_USERMAIL=my_mail@test.com AMORAIL_API_KEY=my_key AMORAIL_API_ENDPOINT=my@amo.com bundle exec rake console
+pry> Amorail.properties
+# ... prints properties (custom_fields) data
+pry> Amorail::Contact.find_by_query("test_contact")
+# ... returns array of contacts which satisfy the query  
 ```
 
 ### Create new objects
@@ -99,10 +116,16 @@ task.element_id = lead.id
 task.save!
 ```
 
-You can find any objects like this:
+You can find any object by id:
 
 ```ruby
   Amorail::Company.find(company_id)
+```
+
+Or using query:
+
+```ruby
+  Amorail::Company.find_by_query("vip")
 ```
 
 Also you can update objects, e.g:
@@ -136,15 +159,6 @@ Note: response example in official documentation:
 rake amorail:check
 ```
 Rake task will returns information about properties.
-After that you can setup special custom_field ids into secrets.yml, e.g.
-
-```
-amoparams:
-    ...
-    task_code: 11111
-    lead_status: 22222
-```
-
 
 ## Contributing
 
