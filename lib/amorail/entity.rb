@@ -36,6 +36,10 @@ module Amorail
       def properties
         @properties ||= {}
       end
+
+      def remote_url(action)
+        File.join(Amorail.config.api_path, amo_name, action)
+      end
     end
 
     amo_names 'entity'
@@ -44,7 +48,7 @@ module Amorail
               date_create: :timestamp, last_modified: :timestamp
 
     delegate :client, :properties, to: Amorail
-    delegate :amo_name, to: :class
+    delegate :amo_name, :remote_url, to: :class
 
     def initialize(attributes = {})
       super(attributes)
@@ -79,10 +83,6 @@ module Amorail
         fval = f.fetch('values').first.fetch('value')
         send(fname, fval) if respond_to?(fname)
       end
-    end
-
-    def remote_url(action)
-      File.join(Amorail.config.api_path, self.class.amo_name, action)
     end
 
     # call safe method <safe_request>. safe_request call authorize

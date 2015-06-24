@@ -19,8 +19,10 @@ module Amorail
 
         def parse(data)
           hash = {}
-          data['custom_fields'][source_name].each do |contact|
-            hash[contact['code'].downcase] = PropertyItem.new(contact)
+          data['custom_fields'].fetch(source_name, []).each do |contact|
+            identifier = contact['code'].presence || contact['name'].presence
+            next if identifier.nil?
+            hash[identifier.downcase] = PropertyItem.new(contact)
           end
           new hash
         end
@@ -87,23 +89,33 @@ module Amorail
       self.source_name = 'companies'
     end
 
-    class Lead < StatusItem
-      def self.parse(data)
-        hash = {}
-        data['leads_statuses'].each do |prop|
-          hash[prop['name']] = PropertyItem.new(prop)
+    class Lead < PropertyItem
+      self.source_name = 'leads'
+
+      attr_accessor :statuses
+
+      class << self
+        def parse(data)
+          obj = super
+          hash = {}
+          data.fetch('leads_statuses', []).each do |prop|
+            hash[prop['name']] = PropertyItem.new(prop)
+          end
+          obj.statuses = hash
+          obj
         end
-        new hash
       end
     end
 
     class Task < PropertyItem
       def self.parse(data)
         hash = {}
-        data['task_types'].each do |tt|
+        data.fetch('task_types', []).each do |tt|
           prop_item = PropertyItem.new(tt)
-          hash[tt['code'].downcase] = prop_item
-          hash[tt['code']] = prop_item
+          identifier = tt['code'].presence || tt['name'].presence
+          next if identifier.nil?
+          hash[identifier.downcase] = prop_item
+          hash[identifier] = prop_item
         end
         new hash
       end

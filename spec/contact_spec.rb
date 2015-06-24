@@ -91,6 +91,28 @@ describe Amorail::Contact do
     end
   end
 
+  describe ".find_by_query" do
+    before { contacts_find_query_stub(Amorail.config.api_endpoint, 'foo') }
+    before { contacts_find_query_stub(Amorail.config.api_endpoint, 'faa', nil) }
+
+    it "loads entities" do
+      res = described_class.find_by_query('foo')
+      expect(res.size).to eq 2
+      expect(res.first.id).to eq 101
+      expect(res.last.id).to eq 102
+      expect(res.first.company_name).to eq "Foo Inc."
+      expect(res.last.email).to eq "foo2@tb.com"
+      expect(res.first.phone).to eq "1111 111 111"
+      expect(res.first.params[:id]).to eq 101
+    end
+
+    it "returns empty array" do
+      res = described_class.find_by_query('faa')
+      expect(res).to be_a(Array)
+      expect(res).to be_empty
+    end
+  end
+
   describe "#save" do
     before { contact_create_stub(Amorail.config.api_endpoint) }
 

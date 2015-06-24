@@ -28,9 +28,12 @@ describe Amorail::Property do
     expect(prop.contacts.position.id).to eq "1460587"
     expect(prop.contacts.phone.id).to eq "1460589"
     expect(prop.contacts.email.id).to eq "1460591"
+    expect(prop.contacts.teachbase_id.id).to eq "116302"
   end
 
   it "should parse leads hash" do
+    expect(prop.leads.textfield.id).to eq "484604"
+    expect(prop.leads.flag.id).to eq "484606"
     expect(prop.leads.statuses["Первичный контакт"].id).to eq "8195972"
     expect(prop.leads.statuses["Успешно реализовано"].id).to eq "142"
   end
