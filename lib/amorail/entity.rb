@@ -75,7 +75,7 @@ module Amorail
     def merge_custom_fields(fields)
       return if fields.nil?
       fields.each do |f|
-        fname = "#{f.fetch('code').downcase}=" || "#{f.fetch('name').downcase}="
+        fname = "#{f.fetch('code', f.fetch('name')).downcase}="
         fval = f.fetch('values').first.fetch('value')
         send(fname, fval) if respond_to?(fname)
       end
