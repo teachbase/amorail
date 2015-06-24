@@ -22,7 +22,129 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+With Amorails you can manipulate with next objects: 
+Companies, Contacts, Leads and Tasks 
+
+We tried to create simple AR-like interface for the gem.
+
+### Auth configuration
+
+Configuration settings is stored into config/secrets.yml like this:
+
+```
+development:
+  ...
+  amoparams:
+    usermail: 'amorail@test.com'
+    api_key: '75742b166417fe32ae132282ce178cf6'
+    api_endpoint: 'https://test.amocrm.ru'
+```
+
+### Create new objects
+
+Create Leads
+
+```ruby
+lead = Amorail::Lead.new(
+  name:  "Example Lead",
+  tags: "IT, Sales",
+  price: 100,
+  status_id: Amorail.properties.leads.statuses[
+    Rails.application.secrets.amoparams['lead_status']
+  ].id
+)
+
+lead.save!
+```
+
+Create Company
+
+```ruby
+company = Amorail::Company.new(
+  name: "My company",
+  phone: "222-111",
+  email: "human@example.com"
+)
+company.linked_leads_id << lead.id
+company.save!
+```
+
+Create Contact
+
+```ruby
+contact = Amorail::Contact.new(
+  name: "Ivan Ivanov",
+  linked_company_id: company.id,
+  phone: "111-222",
+  email: "ivan@example.com"
+)
+
+contact.linked_leads_id << lead.id
+contact.save!
+```
+
+Create Task
+
+```ruby
+task = Amorail::Task.new(
+  text: "Example task",
+  lead: true,
+  complete_till: Time.zone.today.end_of_day,
+  task_type: Amorail.properties.tasks[Rails.application.secrets.amoparams['task_code']].id
+)
+
+# set up lead id
+task.element_id = lead.id
+# and save it
+task.save!
+```
+
+You can find any objects like this:
+
+```ruby
+  Amorail::Company.find(company_id)
+```
+
+Also you can update objects, e.g:
+
+```ruby
+company = Amorail::Company.find(company_id)
+contact = Amorail::Contact.find(contact_id)
+
+# like this
+contact.linked_company_id = company.id
+contact.save!
+
+# or
+
+contact.update(linked_company_id: company.id)
+```
+
+
+### Properties Configuration
+
+AmoCRM is using "custom_fields" architecture,
+to get all information for your account, you can
+find properties and set up configuration manually in config/secrets.yml.
+
+Note: response example in official documentation: 
+      https://developers.amocrm.ru/rest_api/accounts_current.php
+
+1) Get list of properties for your account
+
+```
+rake amorail:check
+```
+Rake task will returns information about properties.
+After that you can setup special custom_field ids into secrets.yml, e.g.
+
+```
+amoparams:
+    ...
+    task_code: 11111
+    lead_status: 22222
+```
+
 
 ## Contributing
 
