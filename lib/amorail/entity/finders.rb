@@ -1,14 +1,31 @@
 module Amorail # :nodoc: all
   class Entity
     class << self
+      # Find AMO entity by id
       def find(id)
         new.load_record(id)
       end
 
+      # Find AMO entity by id
+      # and raise RecordNotFoun if nothing was found
       def find!(id)
         rec = find(id)
         fail RecordNotFound unless rec
         rec
+      end
+
+      # Find AMO entities by query
+      # Returns array of matching entities.
+      def find_by_query(q)
+        response = Amorail.client.safe_request(
+          :get,
+          remote_url('list'),
+          query: q
+        )
+        return [] unless response.status == 200
+
+        (response.body['response'][amo_response_name] || [])
+          .map { |info| new.reload_model(info) }
       end
     end
 

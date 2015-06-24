@@ -6,3 +6,6 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
+task :console do
+  sh 'pry -r ./lib/amorail.rb'
+end

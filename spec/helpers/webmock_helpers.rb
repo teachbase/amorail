@@ -1,3 +1,4 @@
+# rubocop: disable Metrics/ModuleLength
 module AmoWebMock
   def mock_api
     authorize_stub(
@@ -82,6 +83,24 @@ module AmoWebMock
         :get,
         "#{endpoint}/private/api/v2/json/contacts/list?id=#{id}")
         .to_return(body: nil, status: 204)
+    end
+  end
+
+  def contacts_find_query_stub(endpoint, query, success = true)
+    if success
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/contacts/list?query=#{query}")
+        .to_return(
+          body: File.read('./spec/fixtures/contact_find_query.json'),
+          headers: { 'Content-Type' => 'application/json' },
+          status: 200
+        )
+    else
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/contacts/list?query=#{query}")
+        .to_return(status: 204)
     end
   end
 
