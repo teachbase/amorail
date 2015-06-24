@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Amorail::Entity do
+describe MyEntity do
   before { mock_api }
 
   let(:entity) { described_class.new }

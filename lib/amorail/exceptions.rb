@@ -13,7 +13,7 @@ module Amorail
 
   class AmoForbiddenError < APIError; end
 
-  class AmoNotFoudError < APIError; end
+  class AmoNotFoundError < APIError; end
 
   class AmoInternalError < APIError; end
 

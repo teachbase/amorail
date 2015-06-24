@@ -71,7 +71,7 @@ module Amorail
       when 403
         fail ::Amorail::AmoForbiddenError
       when 404
-        fail ::Amorail::AmoNotFoudError
+        fail ::Amorail::AmoNotFoundError
       when 500
         fail ::Amorail::AmoInternalError
       when 502

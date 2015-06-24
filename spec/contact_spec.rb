@@ -136,13 +136,14 @@ describe Amorail::Contact do
 
     it "raise error if id is blank?" do
       obj = described_class.new
-      expect { obj.update!(name: 'Igor') }.to raise_error
+      expect { obj.update!(name: 'Igor') }
+        .to raise_error(Amorail::Entity::NotPersisted)
     end
 
     it "raise error" do
       obj = described_class.new
       expect { obj.update!(id: 101, name: "Igor") }
-        .to(raise_error)
+        .to(raise_error(Amorail::Entity::NotPersisted))
     end
   end
 end

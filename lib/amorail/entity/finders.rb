@@ -7,7 +7,7 @@ module Amorail # :nodoc: all
       end
 
       # Find AMO entity by id
-      # and raise RecordNotFoun if nothing was found
+      # and raise RecordNotFound if nothing was found
       def find!(id)
         rec = find(id)
         fail RecordNotFound unless rec

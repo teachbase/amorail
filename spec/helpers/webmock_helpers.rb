@@ -86,6 +86,24 @@ module AmoWebMock
     end
   end
 
+  def my_contact_find_stub(endpoint, id, success = true)
+    if success
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/contacts/list?id=#{id}")
+        .to_return(
+          body: File.read('./spec/fixtures/my_contact_find.json'),
+          headers: { 'Content-Type' => 'application/json' },
+          status: 200
+        )
+    else
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/contacts/list?id=#{id}")
+        .to_return(body: nil, status: 204)
+    end
+  end
+
   def contacts_find_query_stub(endpoint, query, success = true)
     if success
       stub_request(

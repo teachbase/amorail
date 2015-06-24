@@ -12,6 +12,11 @@ module Amorail
     class << self
       attr_reader :amo_name, :amo_response_name
 
+      # copy Amo names
+      def inherited(subclass)
+        subclass.amo_names amo_name, amo_response_name
+      end
+
       def amo_names(name, response_name = nil)
         @amo_name = @amo_response_name = name
         @amo_response_name = response_name unless response_name.nil?
@@ -34,15 +39,14 @@ module Amorail
       end
 
       def properties
-        @properties ||= {}
+        @properties ||=
+          superclass.respond_to?(:properties) ? superclass.properties.dup : {}
       end
 
       def remote_url(action)
         File.join(Amorail.config.api_path, amo_name, action)
       end
     end
-
-    amo_names 'entity'
 
     amo_field :id, :request_id, :responsible_user_id,
               date_create: :timestamp, last_modified: :timestamp
@@ -79,7 +83,9 @@ module Amorail
     def merge_custom_fields(fields)
       return if fields.nil?
       fields.each do |f|
-        fname = "#{f.fetch('code').downcase}="
+        fname = f['code'] || f['name']
+        next if fname.nil?
+        fname = "#{fname.downcase}="
         fval = f.fetch('values').first.fetch('value')
         send(fname, fval) if respond_to?(fname)
       end

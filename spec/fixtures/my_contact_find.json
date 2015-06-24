@@ -1,0 +1,48 @@
+{
+  "response": {
+    "contacts": [
+      {
+        "id": 11,
+        "name": "Foo bar",
+        "account_id": "8195968",
+        "last_modified": 1423139130,
+        "company_name": "Foo Inc.",
+        "custom_fields": 
+        [
+          {
+            "id": "1460591",
+            "name": "Email",
+            "code": "EMAIL",
+            "values": [
+              {
+                "value": "foo@tb.com",
+                "enum": "3392098"
+              }
+            ]
+          },
+          {
+            "id": "1460589",
+            "name": "Телефон",
+            "code": "PHONE",
+            "values": [
+              {
+                "value": "1111 111 111",
+                "enum": "3392086"
+              }
+            ]
+          },
+          {
+            "id": "116302",
+            "name": "teachbase_id",
+            "values": [
+              {
+                "value": 1123,
+                "enum": "3392090"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
