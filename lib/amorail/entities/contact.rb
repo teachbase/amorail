@@ -12,6 +12,7 @@ module Amorail
     amo_property :phone, enum: 'MOB'
     amo_property :position
     amo_property :lp_db_id
+    amo_property :user_hash
 
     validates :name, presence: true
 
