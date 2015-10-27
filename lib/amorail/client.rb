@@ -22,6 +22,7 @@ module Amorail
     end
 
     def authorize
+      self.cookies = nil
       response = post(
         Amorail.config.auth_url,
         'USER_LOGIN' => Amorail.config.usermail,
