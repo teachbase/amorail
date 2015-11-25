@@ -1,0 +1,69 @@
+{
+"response":  {
+  "leads":  [
+  {
+    "id":  "1",
+    "name":  "Research new technologies",
+    "last_modified":  1374656336,
+    "status_id":  "7046196",
+    "price":  "500000",
+    "responsible_user_id":  "103586",
+    "tags":[
+      {
+       "id":  "960472",
+       "name":  "USA"},
+      {
+       "id":  "960854",
+       "name":  "Lead"
+      }
+    ],
+    "date_create": 1386014400,
+    "account_id":  "7046192",
+    "created_user_id": "4502311",
+    "custom_fields":  [
+      {
+      "id":  "484604",
+      "name":  "field",
+      "values":  [
+        {
+          "value":  "text"
+        }
+      ]
+    }
+    ]
+  },
+  {
+    "id":  "2",
+    "name":  "Sell it!",
+    "last_modified":  1374656336,
+    "status_id":  "7046196",
+    "price":  "100000",
+    "responsible_user_id":  "103586",
+    "tags":[
+      {
+       "id":  "960472",
+       "name":  "USA"},
+      {
+       "id":  "960854",
+       "name":  "Lead"
+      }
+    ],
+    "date_create": 1386014400,
+    "account_id":  "7046192",
+    "created_user_id": "4502311",
+    "custom_fields":  [
+      {
+      "id":  "484604",
+      "name":  "field",
+      "values":  [
+        {
+          "value":  "text"
+        }
+      ]
+    }
+    ]
+  }
+  ],
+  "server_time":  1374839787
+  }
+}

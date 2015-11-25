@@ -122,6 +122,24 @@ module AmoWebMock
     end
   end
 
+  def contacts_find_all_stub(endpoint, ids, success = true)
+    if success
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/contacts/list?#{ids.to_query('id')}")
+        .to_return(
+          body: File.read('./spec/fixtures/contact_find_query.json'),
+          headers: { 'Content-Type' => 'application/json' },
+          status: 200
+        )
+    else
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/contacts/list?#{ids.to_query('id')}")
+        .to_return(status: 204)
+    end
+  end
+
   def company_create_stub(endpoint)
     stub_request(:post, endpoint + '/private/api/v2/json/company/set')
       .to_return(
@@ -129,5 +147,23 @@ module AmoWebMock
         headers: { 'Content-Type' => 'application/json' },
         status: 200
       )
+  end
+
+  def leads_stub(endpoint, ids, success = true)
+    if success
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/leads/list?#{ids.to_query('id')}")
+        .to_return(
+          body: File.read('./spec/fixtures/leads.json'),
+          headers: { 'Content-Type' => 'application/json' },
+          status: 200
+        )
+    else
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/leads/list?#{ids.to_query('id')}")
+        .to_return(status: 204)
+    end
   end
 end

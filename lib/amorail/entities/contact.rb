@@ -14,6 +14,12 @@ module Amorail
 
     validates :name, presence: true
 
+    # Clear company cache
+    def reload
+      @company = nil
+      super
+    end
+
     def company
       return if linked_company_id.nil?
       @company ||= Amorail::Company.find(linked_company_id)
