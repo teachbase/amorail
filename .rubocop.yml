@@ -30,3 +30,14 @@ Rails/Date:
 
 Rails/TimeZone:
   Enabled: false
+
+Metrics/MethodLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Metrics/LineLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Style/WordArray:
+  Enabled: false

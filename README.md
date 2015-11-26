@@ -143,6 +143,57 @@ contact.save!
 contact.update(linked_company_id: company.id)
 ```
 
+### Querying
+
+Load by id
+
+```ruby
+Amorail::Contact.find(223) #=> #<Amorail::Contact ...>
+```
+
+Load many entites by array of ids
+
+```ruby
+Amorail::Contact.find_all(123, 124) #=> [#<Amorail::Contact ...>, ...]
+```
+
+Load by query
+
+```ruby
+Amorail::Contact.find_by_query("my_company") #=> [#<Amorail::Contact ...>, ...]
+```
+
+
+Load contacts associated with lead
+
+```ruby
+lead = Amorail::Lead.find(1)
+lead.contacts #=> [#<Amorail::Contact ...>, ...]
+```
+
+Load company associated with contact
+
+```ruby
+contact = Amorail::Contact.find(1)
+contact.company #=> #<Amorail::Company ...>
+```
+
+Load leads associated with contact
+
+```ruby
+contact = Amorail::Contact.find(1)
+contact.leads #=> [#<Amorail::Lead ...>, ...]
+```
+
+Load contacts-leads pairs
+
+```ruby
+# Load all contact-leads pairs for contacts
+Amorail::ContactLink.find_by_contacts(1, 2)
+
+# Load all contact-leads pairs for leads
+Amorail::ContactLink.find_by_leads(1, 2)
+```
 
 ### Properties Configuration
 

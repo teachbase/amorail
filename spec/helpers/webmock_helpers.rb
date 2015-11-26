@@ -166,4 +166,27 @@ module AmoWebMock
         .to_return(status: 204)
     end
   end
+
+  def contacts_links_stub(endpoint, ids)
+    stub_request(:get, endpoint + "/private/api/v2/json/contacts/links?#{ids.to_query('contacts_link')}")
+      .to_return(
+        body: File.read('./spec/fixtures/contacts_links.json'),
+        headers: { 'Content-Type' => 'application/json' },
+        status: 200
+      )
+  end
+
+  def leads_links_stub(endpoint, ids, success = true)
+    if success
+      stub_request(:get, endpoint + "/private/api/v2/json/contacts/links?#{ids.to_query('deals_link')}")
+        .to_return(
+          body: File.read('./spec/fixtures/leads_links.json'),
+          headers: { 'Content-Type' => 'application/json' },
+          status: 200
+        )
+    else
+      stub_request(:get, endpoint + "/private/api/v2/json/contacts/links?#{ids.to_query('deals_link')}")
+        .to_return(status: 204)
+    end
+  end
 end
