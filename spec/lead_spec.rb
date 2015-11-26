@@ -41,4 +41,33 @@ describe Amorail::Lead do
     specify { is_expected.to include(status_id: 2) }
     specify { is_expected.to include(tags: 'test lead') }
   end
+
+  describe "#contacts" do
+    let(:lead) { described_class.new(id: 2) }
+
+    it "fails if not persisted" do
+      expect { described_class.new.contacts }
+        .to raise_error(Amorail::Entity::NotPersisted)
+    end
+
+    context "has contacts" do
+      before { leads_links_stub(Amorail.config.api_endpoint, [2]) }
+      before { contacts_find_all_stub(Amorail.config.api_endpoint, [101, 102]) }
+
+      it "loads contacts for lead" do
+        res = lead.contacts
+        expect(res.size).to eq 2
+        expect(res.first.id).to eq 101
+        expect(res.last.id).to eq 102
+      end
+    end
+
+    context "no contacts" do
+      before { leads_links_stub(Amorail.config.api_endpoint, [2], false) }
+
+      it "returns empty" do
+        expect(lead.contacts).to be_empty
+      end
+    end
+  end
 end

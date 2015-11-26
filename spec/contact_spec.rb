@@ -78,6 +78,7 @@ describe Amorail::Contact do
       expect(obj.email).to eq "foo@tb.com"
       expect(obj.phone).to eq "1111 111 111"
       expect(obj.params[:id]).to eq 101
+      expect(obj.linked_leads_id).to contain_exactly("1872746", "1885024")
     end
 
     it "returns nil" do
@@ -108,6 +109,28 @@ describe Amorail::Contact do
 
     it "returns empty array" do
       res = described_class.find_by_query('faa')
+      expect(res).to be_a(Array)
+      expect(res).to be_empty
+    end
+  end
+
+  describe ".find_all" do
+    before { contacts_find_all_stub(Amorail.config.api_endpoint, [101, 102]) }
+    before { contacts_find_all_stub(Amorail.config.api_endpoint, [105, 104], false) }
+
+    it "loads entities" do
+      res = described_class.find_all(101, 102)
+      expect(res.size).to eq 2
+      expect(res.first.id).to eq 101
+      expect(res.last.id).to eq 102
+      expect(res.first.company_name).to eq "Foo Inc."
+      expect(res.last.email).to eq "foo2@tb.com"
+      expect(res.first.phone).to eq "1111 111 111"
+      expect(res.first.params[:id]).to eq 101
+    end
+
+    it "returns empty array" do
+      res = described_class.find_all([105, 104])
       expect(res).to be_a(Array)
       expect(res).to be_empty
     end
