@@ -44,7 +44,7 @@ development:
     api_endpoint: 'https://test.amocrm.ru'
 ```
 
-For custom client params you should create a client before using Amorail functionality. It sets your params instead of params in anyway_config:  
+For custom client params you should create a client manually before using Amorail functionality. It sets your params instead of params in anyway_config:  
 ```
 # custom client
 Amorail.client(usermail: 'user_email', api_key: "api_token", api_endpoint: "api_endpoint")
@@ -53,8 +53,6 @@ Amorail.client(usermail: 'user_email', api_key: "api_token", api_endpoint: "api_
 Amorail.reset
 
 ```
-
-
 
 ### Running from console
 
