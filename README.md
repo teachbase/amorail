@@ -51,7 +51,6 @@ Amorail.client(usermail: 'user_email', api_key: "api_token", api_endpoint: "api_
 
 # reset custom client
 Amorail.reset
-
 ```
 
 ### Running from console
