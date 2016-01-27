@@ -44,6 +44,18 @@ development:
     api_endpoint: 'https://test.amocrm.ru'
 ```
 
+For custom client params you should create a client before using Amorail functionality. It sets your params instead of params in anyway_config:  
+```
+# custom client
+Amorail.client(usermail: 'user_email', api_key: "api_token", api_endpoint: "api_endpoint")
+
+# reset custom client
+Amorail.reset
+
+```
+
+
+
 ### Running from console
 
 You can try amorail in action from console ([PRY](https://github.com/pry/pry) is required to be installed):
