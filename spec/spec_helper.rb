@@ -15,6 +15,11 @@ ENV["AMORAIL_CONF"] = File.expand_path("../fixtures/amorail_test.yml", __FILE__)
 Dir[File.expand_path("../support/**/*.rb", __FILE__)].each { |f| require f }
 
 RSpec.configure do |config|
+
+  config.before do
+    WebMock.disable_net_connect!(:allow_localhost => true)
+  end
+
   config.mock_with :rspec
   include AmoWebMock
 end

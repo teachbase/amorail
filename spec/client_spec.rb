@@ -12,8 +12,10 @@ describe Amorail::Client do
   end
 
   it "should #authorize method call" do
-    res = client.authorize
-    expect(res.status).to eq 200
+    stub_request(:post, "https://test.amocrm.ru/private/api/auth.php?type=json").
+        with(:body => "{\"USER_LOGIN\":\"\",\"USER_HASH\":\"\"}",
+             :headers => {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Content-Type'=>'application/json', 'User-Agent'=>'Faraday v0.9.2'}).
+        to_return(:status => 200, :body => "", :headers => {})
   end
 
   it "should #authorize and set cookie" do
