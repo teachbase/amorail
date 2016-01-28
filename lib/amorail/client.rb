@@ -36,7 +36,7 @@ module Amorail
                                  Amorail.client.api_key.present?
                                 [Amorail.client.usermail, Amorail.client.api_key]
                               else
-                                [args[:usermail].to_s, args[:api_key].to_s]
+                                [Amorail.config.usermail, Amorail.config.api_key]
                               end
 
       response = post(
