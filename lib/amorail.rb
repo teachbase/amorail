@@ -29,6 +29,7 @@ module Amorail
   def self.reset
     @config = nil
     @client = nil
+    @properties = nil
   end
 
   require 'amorail/engine' if defined?(Rails)
