@@ -22,13 +22,14 @@ module Amorail
     yield(config) if block_given?
   end
 
-  def self.client
-    @client ||= Client.new
+  def self.client(options = {})
+    @client ||= Client.new(options)
   end
 
   def self.reset
     @config = nil
     @client = nil
+    @properties = nil
   end
 
   require 'amorail/engine' if defined?(Rails)

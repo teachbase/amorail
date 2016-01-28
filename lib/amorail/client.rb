@@ -6,10 +6,18 @@ require 'active_support'
 module Amorail
   # Amorail http client
   class Client
-    attr_accessor :cookies
+    attr_accessor :cookies, :usermail, :api_key
 
-    def initialize
-      @host = Amorail.config.api_endpoint
+    def initialize(options = {})
+
+      @host = if options[:api_endpoint]
+                options[:api_endpoint].to_s
+              else
+                Amorail.config.api_endpoint
+              end
+      @usermail = options[:usermail] if options[:usermail].present?
+      @api_key = options[:api_key] if options[:api_key].present?
+
       @connect = Faraday.new(url: @host) do |faraday|
         faraday.adapter Faraday.default_adapter
         faraday.response :json, content_type: /\bjson$/
@@ -21,12 +29,20 @@ module Amorail
       @connect || self.class.new
     end
 
-    def authorize
+    def authorize(args = {})
       self.cookies = nil
+
+      user_login, user_hash = if Amorail.client.usermail.present? &&
+                                 Amorail.client.api_key.present?
+                                [Amorail.client.usermail, Amorail.client.api_key]
+                              else
+                                [Amorail.config.usermail, Amorail.config.api_key]
+                              end
+
       response = post(
         Amorail.config.auth_url,
-        'USER_LOGIN' => Amorail.config.usermail,
-        'USER_HASH' => Amorail.config.api_key
+        'USER_LOGIN' => user_login,
+        'USER_HASH' => user_hash
       )
       cookie_handler(response)
       response
