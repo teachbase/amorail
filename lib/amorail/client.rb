@@ -32,16 +32,17 @@ module Amorail
     def authorize(args = {})
       self.cookies = nil
 
-      user_login, user_hash = if Amorail.client.usermail.present? && Amorail.client.api_key.present?
+      user_login, user_hash = if Amorail.client.usermail.present? &&
+                                 Amorail.client.api_key.present?
                                 [Amorail.client.usermail, Amorail.client.api_key]
                               else
                                 [args[:usermail].to_s, args[:api_key].to_s]
                               end
 
       response = post(
-          Amorail.config.auth_url,
-          'USER_LOGIN' => user_login,
-          'USER_HASH' => user_hash
+        Amorail.config.auth_url,
+        'USER_LOGIN' => user_login,
+        'USER_HASH' => user_hash
       )
       cookie_handler(response)
       response
