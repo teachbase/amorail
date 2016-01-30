@@ -15,7 +15,7 @@ module Amorail
   end
 
   def self.properties
-    @properties ||= Property.new(client)
+    client.properties
   end
 
   def self.configure
@@ -23,12 +23,25 @@ module Amorail
   end
 
   def self.client
-    @client ||= Client.new
+    ClientRegistry.client || (@client ||= Client.new)
   end
 
   def self.reset
     @config = nil
     @client = nil
+  end
+
+  def self.with_client(client)
+    client = Client.new(client) unless client.is_a?(Client)
+    ClientRegistry.client = client
+    yield
+    ClientRegistry.client = nil
+  end
+
+  class ClientRegistry # :nodoc:
+    extend ActiveSupport::PerThreadRegistry
+
+    attr_accessor :client
   end
 
   require 'amorail/engine' if defined?(Rails)

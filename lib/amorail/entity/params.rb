@@ -46,7 +46,6 @@ module Amorail # :nodoc: all
     end
 
     # this method removes nil values and empty arrays from params hash (deep)
-    # rubocop:disable Metrics/AbcSize
     # rubocop:disable Metrics/CyclomaticComplexity
     # rubocop:disable Metrics/MethodLength
     def normalize_params(data)
@@ -71,7 +70,6 @@ module Amorail # :nodoc: all
       end
       compacted.with_indifferent_access
     end
-    # rubocop:enable Metrics/AbcSize
     # rubocop:enable Metrics/CyclomaticComplexity
     # rubocop:enable Metrics/MethodLength
 

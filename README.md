@@ -211,10 +211,29 @@ rake amorail:check
 ```
 Rake task will returns information about properties.
 
+### Multiple configurations
+
+It is possible to use Amorail with multiple AmoCRM accounts. To do so use `Amorail.with_client` method,
+which receive client params or client instance and a block to execute within custom context:
+
+```ruby
+Amorail.with_client(usermail: "custom@mail.com", api_endpoint: "https://my.acmocrm.ru", api_key: "my_secret_key") do
+  # Client specific code here
+end
+
+# or using client instance
+my_client = Amorail::Client.new(usermail: "custom@mail.com", api_endpoint: "https://my.acmocrm.ru", api_key: "my_secret_key")
+
+Amorail.with_client(client) do
+  ...
+end
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/amorail/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+4. Follow style guides (use Rubocop)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create a new Pull Request

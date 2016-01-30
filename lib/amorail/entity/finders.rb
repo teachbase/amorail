@@ -17,7 +17,7 @@ module Amorail # :nodoc: all
       def find_all(*ids)
         ids = ids.first if ids.size == 1 && ids.first.is_a?(Array)
 
-        response = Amorail.client.safe_request(
+        response = client.safe_request(
           :get,
           remote_url('list'),
           id: ids
@@ -28,7 +28,7 @@ module Amorail # :nodoc: all
       # Find AMO entities by query
       # Returns array of matching entities.
       def find_by_query(q)
-        response = Amorail.client.safe_request(
+        response = client.safe_request(
           :get,
           remote_url('list'),
           query: q

@@ -9,6 +9,16 @@ module AmoWebMock
     account_info_stub(Amorail.config.api_endpoint)
   end
 
+  def mock_custom_api(endpoint, usermail, api_key, properties = 'account2_response.json')
+    authorize_stub(
+      endpoint,
+      usermail,
+      api_key
+    )
+
+    account_info_stub(endpoint, properties)
+  end
+
   def authorize_stub(endpoint, usermail, api_key)
     cookie = 'PHPSESSID=58vorte6dd4t7h6mtuig9l0p50; path=/; domain=amocrm.ru'
     stub_request(:post, "#{endpoint}/private/api/auth.php?type=json")
@@ -23,10 +33,10 @@ module AmoWebMock
         })
   end
 
-  def account_info_stub(endpoint)
+  def account_info_stub(endpoint, properties = 'account_response.json')
     stub_request(:get, endpoint + '/private/api/v2/json/accounts/current')
       .to_return(
-        body: File.read('./spec/fixtures/account_response.json'),
+        body: File.read("./spec/fixtures/#{properties}"),
         headers: { 'Content-Type' => 'application/json' },
         status: 200
       )
