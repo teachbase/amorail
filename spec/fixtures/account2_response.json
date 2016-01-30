@@ -1,0 +1,195 @@
+{
+  "response": {
+    "account": {
+      "id": "101",
+      "name": "База клиентов",
+      "subdomain": "custom_test",
+      "currency": "RUB",
+      "paid_from": false,
+      "paid_till": false,
+      "timezone": "Europe/Moscow",
+      "language": "ru",
+      "date_pattern": "d.m.Y H:i",
+      "limits": {
+        "users_count": false,
+        "contacts_count": false,
+        "active_deals_count": false
+      },
+      "users": [
+        {
+          "id": "337914",
+          "name": "sergey",
+          "last_name": null,
+          "login": "alekseenkoss@gmail.com",
+          "group_id": 0,
+          "rights_lead_add": "A",
+          "rights_lead_view": "A",
+          "rights_lead_edit": "A",
+          "rights_lead_delete": "A",
+          "rights_lead_export": "A",
+          "rights_contact_add": "A",
+          "rights_contact_view": "A",
+          "rights_contact_edit": "A",
+          "rights_contact_delete": "A",
+          "rights_contact_export": "A",
+          "rights_company_add": "A",
+          "rights_company_view": "A",
+          "rights_company_edit": "A",
+          "rights_company_delete": "A",
+          "rights_company_export": "A",
+          "is_admin": "Y"
+        }
+      ],
+      "groups": [],
+      "leads_statuses": [
+        {
+          "name": "Demo",
+          "id": "101",
+          "color": "#99CCFF",
+          "editable": "Y",
+          "sort": "10"
+        },
+        {
+          "name": "Closed",
+          "id": "102",
+          "color": "#FFFF99",
+          "editable": "Y",
+          "sort": "20"
+        }
+      ],
+      "custom_fields": {
+        "contacts": [
+          {
+            "id": "201",
+            "name": "Должность",
+            "code": "POSITION",
+            "multiple": "N",
+            "type_id": "1",
+            "disabled": "0"
+          },
+          {
+            "id": "202",
+            "name": "Телефон",
+            "code": "PHONE",
+            "multiple": "Y",
+            "type_id": "8",
+            "disabled": "0",
+            "enums": {
+              "3392086": "WORK",
+              "3392088": "WORKDD",
+              "3392090": "MOB",
+              "3392092": "FAX",
+              "3392094": "HOME",
+              "3392096": "OTHER"
+            }
+          },
+          {
+            "id": "203",
+            "name": "Email",
+            "code": "EMAIL",
+            "multiple": "Y",
+            "type_id": "8",
+            "disabled": "0",
+            "enums": {
+              "3392098": "WORK",
+              "3392100": "PRIV",
+              "3392102": "OTHER"
+            }
+          },
+          {
+            "id": "204",
+            "name": "Мгн. сообщения",
+            "code": "IM",
+            "multiple": "Y",
+            "type_id": "8",
+            "disabled": "0",
+            "enums": {
+              "3392104": "SKYPE",
+              "3392106": "ICQ",
+              "3392108": "JABBER",
+              "3392110": "GTALK",
+              "3392112": "MSN",
+              "3392114": "OTHER"
+            }
+          }
+        ],
+        "leads": [],
+        "companies": [
+          {
+            "id": "301",
+            "name": "Телефон",
+            "code": "PHONE",
+            "multiple": "Y",
+            "type_id": "8",
+            "disabled": "0",
+            "enums": {
+              "3392086": "WORK",
+              "3392088": "WORKDD",
+              "3392090": "MOB",
+              "3392092": "FAX",
+              "3392094": "HOME",
+              "3392096": "OTHER"
+            }
+          },
+          {
+            "id": "302",
+            "name": "Email",
+            "code": "EMAIL",
+            "multiple": "Y",
+            "type_id": "8",
+            "disabled": "0",
+            "enums": {
+              "3392098": "WORK",
+              "3392100": "PRIV",
+              "3392102": "OTHER"
+            }
+          },
+          {
+            "id": "303",
+            "name": "Web",
+            "code": "WEB",
+            "multiple": "N",
+            "type_id": "7",
+            "disabled": "0"
+          },
+          {
+            "id": "304",
+            "name": "Адрес",
+            "code": "ADDRESS",
+            "multiple": "N",
+            "type_id": "9",
+            "disabled": "0"
+          }
+        ]
+      },
+      "note_types": [
+        {
+          "id": 1000,
+          "name": "",
+          "code": "DEMO_REQUESTED",
+          "editable": "N"
+        },
+        {
+          "id": 1001,
+          "name": "",
+          "code": "BILL_CREATED",
+          "editable": "N"
+        }
+      ],
+      "task_types": [
+        {
+          "id": 1,
+          "name": "Звонок",
+          "code": "CALL"
+        },
+        {
+          "id": 2,
+          "name": "Встреча",
+          "code": "MEETING"
+        }
+      ],
+      "timezoneoffset": "+03:00"
+    },
+    "server_time": 1422442143
+  }
+}

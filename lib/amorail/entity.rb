@@ -12,6 +12,8 @@ module Amorail
     class << self
       attr_reader :amo_name, :amo_response_name
 
+      delegate :client, to: Amorail
+
       # copy Amo names
       def inherited(subclass)
         subclass.amo_names amo_name, amo_response_name
@@ -51,8 +53,8 @@ module Amorail
     amo_field :id, :request_id, :responsible_user_id,
               date_create: :timestamp, last_modified: :timestamp
 
-    delegate :client, :properties, to: Amorail
-    delegate :amo_name, :remote_url, to: :class
+    delegate :amo_name, :remote_url, :client, to: :class
+    delegate :properties, to: Amorail
 
     def initialize(attributes = {})
       super(attributes)
