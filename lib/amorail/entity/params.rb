@@ -17,11 +17,10 @@ module Amorail # :nodoc: all
       props = properties.send(self.class.amo_name)
 
       custom_fields = []
-
-      self.class.properties.each do |k, v|
+      self.class.properties.each do |k, value|
         prop_id = props.send(k).id
-        prop_val = { value: send(k) }.merge(v)
-        custom_fields << { id: prop_id, values: [prop_val] }
+        prop_val = props.send(k)['type_id'] == "5" ? [send(k)] : { value: send(k) }.merge(value)
+        custom_fields << { id: prop_id, values: [prop_val].flatten }
       end
 
       custom_fields
@@ -41,7 +40,10 @@ module Amorail # :nodoc: all
 
     def normalize_custom_fields(val)
       val.reject do |field|
-        field[:values].all? { |item| !item[:value] }
+	next if field[:values].instance_of? Array
+        field[:values].all? { |item| 
+	   !item[:value]
+	}
       end
     end
 
