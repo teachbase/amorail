@@ -1,4 +1,7 @@
 module Amorail # :nodoc: all
+
+  MULTISELECT_FIELD_TYPE = '5'
+
   class Entity
     def params
       data = {}
@@ -19,7 +22,7 @@ module Amorail # :nodoc: all
       custom_fields = []
       self.class.properties.each do |k, value|
         prop_id = props.send(k).id
-        prop_val = props.send(k)['type_id'] == "5" ? [send(k)] : { value: send(k) }.merge(value)
+        prop_val = props.send(k)['type_id'] == MULTISELECT_FIELD_TYPE ? [send(k)] : { value: send(k) }.merge(value)
         custom_fields << { id: prop_id, values: [prop_val].flatten }
       end
 
