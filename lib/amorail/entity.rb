@@ -32,7 +32,7 @@ module Amorail
 
       def amo_property(name, options = {})
         properties[name] = options
-        attr_accessor(name)
+        attr_accessor(options.fetch(:method_name, name))
       end
 
       def attributes
@@ -87,6 +87,7 @@ module Amorail
       fields.each do |f|
         fname = f['code'] || f['name']
         next if fname.nil?
+        fname = self.class.properties.fetch(fname.downcase, {})[:method_name] || fname
         fname = "#{fname.downcase}="
         fval = f.fetch('values').first.fetch('value')
         send(fname, fval) if respond_to?(fname)
