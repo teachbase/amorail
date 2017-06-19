@@ -1,3 +1,5 @@
+require "active_support/core_ext/hash/indifferent_access"
+
 module Amorail # :nodoc: all
   class Entity
     def params
