@@ -1,8 +1,6 @@
-require 'amorail'
-
 namespace :amorail do
-  desc "Check Amorail configuration."
+  desc 'Check Amorail configuration'
   task :check do
-    p Amorail.properties.inspect
+    puts Amorail.properties.inspect
   end
 end
