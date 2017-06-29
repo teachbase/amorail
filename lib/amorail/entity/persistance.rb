@@ -17,11 +17,7 @@ module Amorail # :nodoc: all
     end
 
     def save!
-      if save
-        true
-      else
-        fail InvalidRecord
-      end
+      save || fail(InvalidRecord)
     end
 
     def update(attrs = {})
@@ -31,11 +27,7 @@ module Amorail # :nodoc: all
     end
 
     def update!(attrs = {})
-      if update(attrs)
-        true
-      else
-        fail NotPersisted
-      end
+      update(attrs) || fail(NotPersisted)
     end
 
     def reload
