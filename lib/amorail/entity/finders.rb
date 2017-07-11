@@ -52,7 +52,7 @@ module Amorail # :nodoc: all
         remote_url('list'),
         id: id
       )
-      handle_response(response, 'load')
+      handle_response(response, 'load') || nil
     end
 
     private

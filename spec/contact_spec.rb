@@ -83,7 +83,7 @@ describe Amorail::Contact do
 
     it "returns nil" do
       obj = described_class.find(102)
-      expect(obj).to be_falsey
+      expect(obj).to be_nil
     end
 
     it "raise error" do
