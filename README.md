@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/teachbase/amorail.svg?branch=master)](https://travis-ci.org/teachbase/amorail)
+[![Gem Version](https://badge.fury.io/rb/amorail.svg)](https://rubygems.org/gems/amorail) [![Build Status](https://travis-ci.org/teachbase/amorail.svg?branch=master)](https://travis-ci.org/teachbase/amorail)
 
 # Amorail
 
