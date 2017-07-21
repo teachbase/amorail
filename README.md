@@ -128,6 +128,12 @@ Or using query:
   Amorail::Company.find_by_query("vip")
 ```
 
+Or using arbitrary params:
+
+```ruby
+  Amorail::Company.where(query: "test", limit_rows: 10)
+```
+
 Also you can update objects, e.g:
 
 ```ruby

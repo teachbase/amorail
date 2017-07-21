@@ -136,6 +136,21 @@ describe Amorail::Contact do
     end
   end
 
+  describe ".where" do
+    before { contacts_where_stub(Amorail.config.api_endpoint, query: 'xxx', limit_rows: 10, limit_offset: 100) }
+
+    it "loads entities" do
+      res = described_class.where(query: 'xxx', limit_rows: 10, limit_offset: 100)
+      expect(res.size).to eq 2
+      expect(res.first.id).to eq 101
+      expect(res.last.id).to eq 102
+      expect(res.first.company_name).to eq "Foo Inc."
+      expect(res.last.email).to eq "foo2@tb.com"
+      expect(res.first.phone).to eq "1111 111 111"
+      expect(res.first.params[:id]).to eq 101
+    end
+  end
+
   describe "#save" do
     before { contact_create_stub(Amorail.config.api_endpoint) }
 

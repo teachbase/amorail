@@ -150,6 +150,26 @@ module AmoWebMock
     end
   end
 
+  def contacts_where_stub(endpoint, success = true, **params)
+    if success
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/contacts/list"
+      ).with(
+        query: params
+      ).to_return(
+        body: File.read('./spec/fixtures/contact_find_query.json'),
+        headers: { 'Content-Type' => 'application/json' },
+        status: 200
+      )
+    else
+      stub_request(
+        :get,
+        "#{endpoint}/private/api/v2/json/contacts/list?query=#{query}")
+        .to_return(status: 204)
+    end
+  end
+
   def company_create_stub(endpoint)
     stub_request(:post, endpoint + '/private/api/v2/json/company/set')
       .to_return(
