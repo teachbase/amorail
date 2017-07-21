@@ -1,11 +1,14 @@
 module Amorail
+  # Provides common functionallity for entities
+  # that can be attached to another objects.
   module Elementable
     extend ActiveSupport::Concern
 
     ELEMENT_TYPES = {
       contact: 1,
       lead:    2,
-      company: 3
+      company: 3,
+      task:    4
     }.freeze
 
     included do
@@ -13,8 +16,6 @@ module Amorail
 
       validates :element_id, :element_type,
                 presence: true
-
-      validates :element_type, inclusion: 1..3
     end
 
     ELEMENT_TYPES.each do |type, value|

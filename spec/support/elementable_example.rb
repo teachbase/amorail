@@ -2,7 +2,6 @@ shared_examples 'elementable' do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:element_id) }
     it { is_expected.to validate_presence_of(:element_type) }
-    it { is_expected.to validate_inclusion_of(:element_type).in_range(1..3) }
   end
 
   describe '.attributes' do

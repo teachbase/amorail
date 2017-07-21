@@ -6,8 +6,9 @@ describe Amorail::Note do
   it_behaves_like 'elementable'
 
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:note_type) }
     it { is_expected.to validate_presence_of(:text) }
+    it { is_expected.to validate_presence_of(:note_type) }
+    it { is_expected.to validate_inclusion_of(:element_type).in_range(1..4) }
   end
 
   describe '.attributes' do
@@ -17,8 +18,8 @@ describe Amorail::Note do
 
     specify do
       is_expected.to include(
-        :note_type,
-        :text
+        :text,
+        :note_type
       )
     end
   end
