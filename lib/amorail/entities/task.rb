@@ -11,5 +11,8 @@ module Amorail
 
     validates :task_type, :text, :complete_till,
               presence: true
+
+    validates :element_type, inclusion:
+              ELEMENT_TYPES.reject { |type, _| type == :task }.values
   end
 end

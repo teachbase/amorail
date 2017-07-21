@@ -11,5 +11,7 @@ module Amorail
 
     validates :note_type, :text,
               presence: true
+
+    validates :element_type, inclusion: ELEMENT_TYPES.values
   end
 end
