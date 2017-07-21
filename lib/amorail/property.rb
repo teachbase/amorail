@@ -8,6 +8,10 @@ module Amorail
         super
       end
     end
+
+    def respond_to_missing?(method_sym, *args)
+      args.size.zero? && data.key?(method_sym.to_s)
+    end
   end
 
   class Property # :nodoc: all

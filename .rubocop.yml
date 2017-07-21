@@ -6,7 +6,9 @@ AllCops:
     - 'spec/**/*.rb'
   Exclude:
     - 'bin/**/*'
-  RunRailsCops: true
+    - Rakefile
+    - Gemfile
+    - '*.gemspec'
   DisplayCopNames: true
   StyleGuideCopsOnly: false
 
@@ -39,5 +41,18 @@ Metrics/LineLength:
   Exclude:
     - 'spec/**/*.rb'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
 Style/WordArray:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/SignalException:
+  Enabled: false
+
+Layout/MultilineMethodCallBraceLayout:
   Enabled: false

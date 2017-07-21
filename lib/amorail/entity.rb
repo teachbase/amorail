@@ -111,11 +111,13 @@ module Amorail
     def handle_response(response, method)
       return false unless response.status == 200
       extract_method = "extract_data_#{method}"
+      return self unless respond_to?(extract_method, true)
+
       reload_model(
         send(extract_method,
              response.body['response'][self.class.amo_response_name]
             )
-      ) if respond_to?(extract_method, true)
+      )
       self
     end
   end

@@ -22,8 +22,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.4"
   spec.add_development_dependency "webmock"
-  spec.add_development_dependency 'pry'
-  spec.add_development_dependency 'shoulda-matchers', "~> 2.0"
+  spec.add_development_dependency "pry"
+  spec.add_development_dependency "shoulda-matchers", "~> 2.0"
+  spec.add_development_dependency "rubocop", "~> 0.49"
   spec.add_dependency "anyway_config", "~> 0", ">= 0.3"
   spec.add_dependency "faraday"
   spec.add_dependency "faraday_middleware"
