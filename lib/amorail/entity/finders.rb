@@ -14,26 +14,26 @@ module Amorail # :nodoc: all
         rec
       end
 
-      def find_all(*ids)
-        ids = ids.first if ids.size == 1 && ids.first.is_a?(Array)
-
+      # General method to load many records by proving some filters
+      def where(options)
         response = client.safe_request(
           :get,
           remote_url('list'),
-          id: ids
+          options
         )
         load_many(response)
+      end
+
+      def find_all(*ids)
+        ids = ids.first if ids.size == 1 && ids.first.is_a?(Array)
+
+        where(id: ids)
       end
 
       # Find AMO entities by query
       # Returns array of matching entities.
       def find_by_query(q)
-        response = client.safe_request(
-          :get,
-          remote_url('list'),
-          query: q
-        )
-        load_many(response)
+        where(query: q)
       end
 
       private
