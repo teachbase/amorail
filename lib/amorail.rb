@@ -35,6 +35,7 @@ module Amorail
     client = Client.new(client) unless client.is_a?(Client)
     ClientRegistry.client = client
     yield
+  ensure
     ClientRegistry.client = nil
   end
 
