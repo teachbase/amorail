@@ -15,9 +15,9 @@ module Amorail
       @api_key = api_key
       @usermail = usermail
       @connect = Faraday.new(url: api_endpoint) do |faraday|
-        faraday.adapter Faraday.default_adapter
         faraday.response :json, content_type: /\bjson$/
         faraday.use :instrumentation
+        faraday.adapter Faraday.default_adapter
       end
     end
 
