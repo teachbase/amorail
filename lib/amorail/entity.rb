@@ -62,7 +62,7 @@ module Amorail
     end
 
     require 'amorail/entity/params'
-    require 'amorail/entity/persistance'
+    require 'amorail/entity/persistence'
     require 'amorail/entity/finders'
 
     def reload_model(info)
