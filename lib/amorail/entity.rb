@@ -108,17 +108,18 @@ module Amorail
       )
     end
 
+    # We can have response with 200 or 204 here.
+    # 204 response has no body, so we don't want to parse it.
     def handle_response(response, method)
-      return false unless response.status == 200
-      extract_method = "extract_data_#{method}"
-      return self unless respond_to?(extract_method, true)
+      return false if response.status == 204
 
-      reload_model(
-        send(extract_method,
-             response.body['response'][self.class.amo_response_name]
-            )
+      data = send(
+        "extract_data_#{method}",
+        response.body['response'][self.class.amo_response_name]
       )
-      self
+      reload_model(data)
+    rescue InvalidRecord
+      return false
     end
   end
 end

@@ -6,6 +6,8 @@ require 'active_support'
 module Amorail
   # Amorail http client
   class Client
+    SUCCESS_STATUS_CODES = [200, 204].freeze
+
     attr_reader :usermail, :api_key, :api_endpoint
 
     def initialize(api_endpoint: Amorail.config.api_endpoint,
@@ -41,10 +43,10 @@ module Amorail
     end
 
     def safe_request(method, url, params = {})
-      send(method, url, params)
+      public_send(method, url, params)
     rescue ::Amorail::AmoUnauthorizedError
       authorize
-      send(method, url, params)
+      public_send(method, url, params)
     end
 
     def get(url, params = {})
@@ -72,7 +74,7 @@ module Amorail
     end
 
     def handle_response(response) # rubocop:disable all
-      return response if response.status == 200 || response.status == 204
+      return response if SUCCESS_STATUS_CODES.include?(response.status)
 
       case response.status
       when 301

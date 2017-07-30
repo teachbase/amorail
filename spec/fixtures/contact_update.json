@@ -1,5 +1,13 @@
 {
   "response": {
-    "contacts": null
+    "contacts": {
+      "update": [
+        {
+          "id": 12509853,
+          "last_modified": 1501256276
+        }
+      ]
+    },
+    "server_time": 1501452197
   }
 }

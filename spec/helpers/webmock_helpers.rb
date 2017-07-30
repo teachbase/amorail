@@ -197,6 +197,33 @@ module AmoWebMock
     end
   end
 
+  def lead_create_stub(endpoint)
+    stub_request(:post, endpoint + '/private/api/v2/json/leads/set')
+      .to_return(
+        body: File.read('./spec/fixtures/lead_create.json'),
+        headers: { 'Content-Type' => 'application/json' },
+        status: 200
+      )
+  end
+
+  def lead_update_stub(endpoint, success = true)
+    fixture_file =
+      if success
+        './spec/fixtures/lead_update.json'
+      else
+        './spec/fixtures/lead_update_errors.json'
+      end
+
+    stub_request(:post, endpoint + '/private/api/v2/json/leads/set')
+      .to_return(
+        body: File.read(fixture_file),
+        headers: {
+          'Content-Type' => 'application/json'
+        },
+        status: 200
+      )
+  end
+
   def contacts_links_stub(endpoint, ids)
     stub_request(:get, endpoint + "/private/api/v2/json/contacts/links?#{ids.to_query('contacts_link')}")
       .to_return(
