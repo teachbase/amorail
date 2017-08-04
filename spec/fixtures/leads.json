@@ -6,6 +6,7 @@
     "name":  "Research new technologies",
     "last_modified":  1374656336,
     "status_id":  "7046196",
+    "pipeline_id": 683506,
     "price":  "500000",
     "responsible_user_id":  "103586",
     "tags":[
@@ -37,6 +38,7 @@
     "name":  "Sell it!",
     "last_modified":  1374656336,
     "status_id":  "7046196",
+    "pipeline_id": 683506,
     "price":  "100000",
     "responsible_user_id":  "103586",
     "tags":[
