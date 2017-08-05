@@ -18,6 +18,7 @@ describe Amorail::Lead do
         :name,
         :price,
         :status_id,
+        :pipeline_id,
         :tags
       )
     end
@@ -29,6 +30,7 @@ describe Amorail::Lead do
         name: 'Test',
         price: 100,
         status_id: 2,
+        pipeline_id: 17,
         tags: 'test lead'
       )
     end
@@ -39,6 +41,7 @@ describe Amorail::Lead do
     specify { is_expected.to include(name: 'Test') }
     specify { is_expected.to include(price: 100) }
     specify { is_expected.to include(status_id: 2) }
+    specify { is_expected.to include(pipeline_id: 17) }
     specify { is_expected.to include(tags: 'test lead') }
   end
 
