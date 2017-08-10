@@ -40,5 +40,24 @@ module Amorail # :nodoc: all
     def extract_data_add(response)
       response.fetch('add').first
     end
+
+    # Update response can have status 200 and contain errors.
+    # In case of errors "update" key in a response is a Hash with "errors" key.
+    # If there are no errors "update" key is an Array with entities attributes.
+    def extract_data_update(response)
+      case data = response.fetch('update')
+      when Array
+        data.first
+      when Hash
+        merge_errors(data)
+        raise(InvalidRecord)
+      end
+    end
+
+    def merge_errors(data)
+      data.fetch("errors").each do |_, message|
+        errors.add(:base, message)
+      end
+    end
   end
 end

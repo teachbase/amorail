@@ -38,11 +38,13 @@ module Amorail # :nodoc: all
 
       private
 
+      # We can have response with 200 or 204 here.
+      # 204 response has no body, so we don't want to parse it.
       def load_many(response)
-        return [] unless response.status == 200
+        return [] if response.status == 204
 
-        (response.body['response'][amo_response_name] || [])
-          .map { |info| new.reload_model(info) }
+        response.body['response'].fetch(amo_response_name, [])
+                .map { |info| new.reload_model(info) }
       end
     end
 

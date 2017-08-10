@@ -73,4 +73,29 @@ describe Amorail::Lead do
       end
     end
   end
+
+  describe "#update" do
+    subject { lead.update }
+
+    let(:lead) { described_class.new(name: 'RSpec lead', status_id: 142) }
+
+    before do
+      lead_create_stub(Amorail.config.api_endpoint)
+      lead.save!
+    end
+
+    context 'with errors in response' do
+      before do
+        lead_update_stub(Amorail.config.api_endpoint, false)
+        lead.name = 'Updated name'
+      end
+
+      it { is_expected.to be_falsey }
+
+      specify do
+        subject
+        expect(lead.errors[:base]).to include('Last modified date is older than in database')
+      end
+    end
+  end
 end
