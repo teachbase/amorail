@@ -141,9 +141,9 @@
             }
           },
           {
-            "id":  "116302",
-            "name":  "teachbase_id",
-            "multiple":  "N",
+            "id": "116302",
+            "name": "teachbase_id",
+            "multiple": "N",
             "type_id": "8"
           }
         ],
@@ -162,7 +162,7 @@
             "multiple": "N",
             "type_id": "3"
           }
-          ],
+        ],
         "companies": [
           {
             "id": "1460589",

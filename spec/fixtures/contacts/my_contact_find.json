@@ -7,8 +7,7 @@
         "account_id": "8195968",
         "last_modified": 1423139130,
         "company_name": "Foo Inc.",
-        "custom_fields": 
-        [
+        "custom_fields": [
           {
             "id": "1460591",
             "name": "Email",

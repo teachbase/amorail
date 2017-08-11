@@ -7,12 +7,11 @@
         "account_id": "8195968",
         "last_modified": 1423139130,
         "company_name": "Foo Inc.",
-        "linked_leads_id":  [
-           "1872746",
-           "1885024"
+        "linked_leads_id": [
+          "1872746",
+          "1885024"
         ],
-        "custom_fields": 
-        [
+        "custom_fields": [
           {
             "id": "1460591",
             "name": "Email",
