@@ -9,7 +9,7 @@ module AmoWebMock
     account_info_stub(Amorail.config.api_endpoint)
   end
 
-  def mock_custom_api(endpoint, usermail, api_key, properties = 'account2_response.json')
+  def mock_custom_api(endpoint, usermail, api_key, properties = 'response_2.json')
     authorize_stub(
       endpoint,
       usermail,
@@ -33,10 +33,10 @@ module AmoWebMock
         })
   end
 
-  def account_info_stub(endpoint, properties = 'account_response.json')
+  def account_info_stub(endpoint, properties = 'response_1.json')
     stub_request(:get, endpoint + '/private/api/v2/json/accounts/current')
       .to_return(
-        body: File.read("./spec/fixtures/#{properties}"),
+        body: File.read("./spec/fixtures/accounts/#{properties}"),
         headers: { 'Content-Type' => 'application/json' },
         status: 200
       )
@@ -61,7 +61,7 @@ module AmoWebMock
   def contact_create_stub(endpoint)
     stub_request(:post, endpoint + '/private/api/v2/json/contacts/set')
       .to_return(
-        body: File.read('./spec/fixtures/contact_create.json'),
+        body: File.read('./spec/fixtures/contacts/create.json'),
         headers: { 'Content-Type' => 'application/json' },
         status: 200
       )
@@ -70,7 +70,7 @@ module AmoWebMock
   def contact_update_stub(endpoint)
     stub_request(:post, endpoint + '/private/api/v2/json/contacts/set')
       .to_return(
-        body: File.read('./spec/fixtures/contact_update.json'),
+        body: File.read('./spec/fixtures/contacts/update.json'),
         headers: {
           'Content-Type' => 'application/json'
         },
@@ -84,7 +84,7 @@ module AmoWebMock
         :get,
         "#{endpoint}/private/api/v2/json/contacts/list?id=#{id}")
         .to_return(
-          body: File.read('./spec/fixtures/contact_find.json'),
+          body: File.read('./spec/fixtures/contacts/find_one.json'),
           headers: { 'Content-Type' => 'application/json' },
           status: 200
         )
@@ -102,7 +102,7 @@ module AmoWebMock
         :get,
         "#{endpoint}/private/api/v2/json/contacts/list?id=#{id}")
         .to_return(
-          body: File.read('./spec/fixtures/my_contact_find.json'),
+          body: File.read('./spec/fixtures/contacts/my_contact_find.json'),
           headers: { 'Content-Type' => 'application/json' },
           status: 200
         )
@@ -120,7 +120,7 @@ module AmoWebMock
         :get,
         "#{endpoint}/private/api/v2/json/contacts/list?query=#{query}")
         .to_return(
-          body: File.read('./spec/fixtures/contact_find_query.json'),
+          body: File.read('./spec/fixtures/contacts/find_many.json'),
           headers: { 'Content-Type' => 'application/json' },
           status: 200
         )
@@ -138,7 +138,7 @@ module AmoWebMock
         :get,
         "#{endpoint}/private/api/v2/json/contacts/list?#{ids.to_query('id')}")
         .to_return(
-          body: File.read('./spec/fixtures/contact_find_query.json'),
+          body: File.read('./spec/fixtures/contacts/find_many.json'),
           headers: { 'Content-Type' => 'application/json' },
           status: 200
         )
@@ -158,7 +158,7 @@ module AmoWebMock
       ).with(
         query: params
       ).to_return(
-        body: File.read('./spec/fixtures/contact_find_query.json'),
+        body: File.read('./spec/fixtures/contacts/find_many.json'),
         headers: { 'Content-Type' => 'application/json' },
         status: 200
       )
@@ -173,7 +173,7 @@ module AmoWebMock
   def company_create_stub(endpoint)
     stub_request(:post, endpoint + '/private/api/v2/json/company/set')
       .to_return(
-        body: File.read('./spec/fixtures/contact_create.json'),
+        body: File.read('./spec/fixtures/contacts/create.json'),
         headers: { 'Content-Type' => 'application/json' },
         status: 200
       )
@@ -185,7 +185,7 @@ module AmoWebMock
         :get,
         "#{endpoint}/private/api/v2/json/leads/list?#{ids.to_query('id')}")
         .to_return(
-          body: File.read('./spec/fixtures/leads.json'),
+          body: File.read('./spec/fixtures/leads/find_many.json'),
           headers: { 'Content-Type' => 'application/json' },
           status: 200
         )
@@ -200,7 +200,7 @@ module AmoWebMock
   def lead_create_stub(endpoint)
     stub_request(:post, endpoint + '/private/api/v2/json/leads/set')
       .to_return(
-        body: File.read('./spec/fixtures/lead_create.json'),
+        body: File.read('./spec/fixtures/leads/create.json'),
         headers: { 'Content-Type' => 'application/json' },
         status: 200
       )
@@ -209,9 +209,9 @@ module AmoWebMock
   def lead_update_stub(endpoint, success = true)
     fixture_file =
       if success
-        './spec/fixtures/lead_update.json'
+        './spec/fixtures/leads/update.json'
       else
-        './spec/fixtures/lead_update_errors.json'
+        './spec/fixtures/leads/update_errors.json'
       end
 
     stub_request(:post, endpoint + '/private/api/v2/json/leads/set')
@@ -227,7 +227,7 @@ module AmoWebMock
   def contacts_links_stub(endpoint, ids)
     stub_request(:get, endpoint + "/private/api/v2/json/contacts/links?#{ids.to_query('contacts_link')}")
       .to_return(
-        body: File.read('./spec/fixtures/contacts_links.json'),
+        body: File.read('./spec/fixtures/contacts/links.json'),
         headers: { 'Content-Type' => 'application/json' },
         status: 200
       )
@@ -237,7 +237,7 @@ module AmoWebMock
     if success
       stub_request(:get, endpoint + "/private/api/v2/json/contacts/links?#{ids.to_query('deals_link')}")
         .to_return(
-          body: File.read('./spec/fixtures/leads_links.json'),
+          body: File.read('./spec/fixtures/leads/links.json'),
           headers: { 'Content-Type' => 'application/json' },
           status: 200
         )
