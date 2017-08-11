@@ -2,17 +2,12 @@
   "response": {
     "contacts": [
       {
-        "id": 101,
+        "id": 11,
         "name": "Foo bar",
         "account_id": "8195968",
         "last_modified": 1423139130,
         "company_name": "Foo Inc.",
-        "linked_leads_id":  [
-           "1872746",
-           "1885024"
-        ],
-        "custom_fields": 
-        [
+        "custom_fields": [
           {
             "id": "1460591",
             "name": "Email",
@@ -32,6 +27,16 @@
               {
                 "value": "1111 111 111",
                 "enum": "3392086"
+              }
+            ]
+          },
+          {
+            "id": "116302",
+            "name": "teachbase_id",
+            "values": [
+              {
+                "value": 1123,
+                "enum": "3392090"
               }
             ]
           }

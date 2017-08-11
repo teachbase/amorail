@@ -2,13 +2,12 @@
   "response": {
     "contacts": [
       {
-        "id": 11,
+        "id": 101,
         "name": "Foo bar",
         "account_id": "8195968",
         "last_modified": 1423139130,
         "company_name": "Foo Inc.",
-        "custom_fields": 
-        [
+        "custom_fields": [
           {
             "id": "1460591",
             "name": "Email",
@@ -30,14 +29,24 @@
                 "enum": "3392086"
               }
             ]
-          },
+          }
+        ]
+      },
+      {
+        "id": 102,
+        "name": "Foo bar 2",
+        "account_id": "8195968",
+        "last_modified": 1423139150,
+        "company_name": "Foo Inc.",
+        "custom_fields": [
           {
-            "id": "116302",
-            "name": "teachbase_id",
+            "id": "1460591",
+            "name": "Email",
+            "code": "EMAIL",
             "values": [
               {
-                "value": 1123,
-                "enum": "3392090"
+                "value": "foo2@tb.com",
+                "enum": "3392098"
               }
             ]
           }

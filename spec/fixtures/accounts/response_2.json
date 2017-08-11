@@ -1,9 +1,9 @@
 {
   "response": {
     "account": {
-      "id": "8195968",
+      "id": "101",
       "name": "База клиентов",
-      "subdomain": "test",
+      "subdomain": "custom_test",
       "currency": "RUB",
       "paid_from": false,
       "paid_till": false,
@@ -43,52 +43,24 @@
       "groups": [],
       "leads_statuses": [
         {
-          "name": "Первичный контакт",
-          "id": "8195972",
+          "name": "Demo",
+          "id": "101",
           "color": "#99CCFF",
           "editable": "Y",
           "sort": "10"
         },
         {
-          "name": "Переговоры",
-          "id": "8195974",
+          "name": "Closed",
+          "id": "102",
           "color": "#FFFF99",
           "editable": "Y",
           "sort": "20"
-        },
-        {
-          "name": "Принимают решение",
-          "id": "8195976",
-          "color": "#FFCC66",
-          "editable": "Y",
-          "sort": "30"
-        },
-        {
-          "name": "Согласование договора",
-          "id": "8195978",
-          "color": "#FFCCCC",
-          "editable": "Y",
-          "sort": "40"
-        },
-        {
-          "name": "Успешно реализовано",
-          "id": "142",
-          "color": "#CCFF66",
-          "editable": "N",
-          "sort": "600"
-        },
-        {
-          "name": "Закрыто и не реализовано",
-          "id": "143",
-          "color": "#D5D8DB",
-          "editable": "N",
-          "sort": "700"
         }
       ],
       "custom_fields": {
         "contacts": [
           {
-            "id": "1460587",
+            "id": "201",
             "name": "Должность",
             "code": "POSITION",
             "multiple": "N",
@@ -96,7 +68,7 @@
             "disabled": "0"
           },
           {
-            "id": "1460589",
+            "id": "202",
             "name": "Телефон",
             "code": "PHONE",
             "multiple": "Y",
@@ -112,7 +84,7 @@
             }
           },
           {
-            "id": "1460591",
+            "id": "203",
             "name": "Email",
             "code": "EMAIL",
             "multiple": "Y",
@@ -125,7 +97,7 @@
             }
           },
           {
-            "id": "1460595",
+            "id": "204",
             "name": "Мгн. сообщения",
             "code": "IM",
             "multiple": "Y",
@@ -139,33 +111,12 @@
               "3392112": "MSN",
               "3392114": "OTHER"
             }
-          },
-          {
-            "id":  "116302",
-            "name":  "teachbase_id",
-            "multiple":  "N",
-            "type_id": "8"
           }
         ],
-        "leads": [
-          {
-            "id": "484604",
-            "name": "textfield",
-            "code": null,
-            "multiple": "N",
-            "type_id": "1"
-          },
-          {
-            "id": "484606",
-            "name": "Flag",
-            "code": null,
-            "multiple": "N",
-            "type_id": "3"
-          }
-          ],
+        "leads": [],
         "companies": [
           {
-            "id": "1460589",
+            "id": "301",
             "name": "Телефон",
             "code": "PHONE",
             "multiple": "Y",
@@ -181,7 +132,7 @@
             }
           },
           {
-            "id": "1460591",
+            "id": "302",
             "name": "Email",
             "code": "EMAIL",
             "multiple": "Y",
@@ -194,7 +145,7 @@
             }
           },
           {
-            "id": "1460593",
+            "id": "303",
             "name": "Web",
             "code": "WEB",
             "multiple": "N",
@@ -202,7 +153,7 @@
             "disabled": "0"
           },
           {
-            "id": "1460597",
+            "id": "304",
             "name": "Адрес",
             "code": "ADDRESS",
             "multiple": "N",
@@ -213,114 +164,19 @@
       },
       "note_types": [
         {
-          "id": 1,
+          "id": 1000,
           "name": "",
-          "code": "DEAL_CREATED",
+          "code": "DEMO_REQUESTED",
           "editable": "N"
         },
         {
-          "id": 2,
+          "id": 1001,
           "name": "",
-          "code": "CONTACT_CREATED",
-          "editable": "N"
-        },
-        {
-          "id": 3,
-          "name": "",
-          "code": "DEAL_STATUS_CHANGED",
-          "editable": "N"
-        },
-        {
-          "id": 4,
-          "name": "",
-          "code": "COMMON",
-          "editable": "Y"
-        },
-        {
-          "id": 5,
-          "name": "",
-          "code": "ATTACHEMENT",
-          "editable": "N"
-        },
-        {
-          "id": 6,
-          "name": "",
-          "code": "CALL",
-          "editable": "N"
-        },
-        {
-          "id": 7,
-          "name": "",
-          "code": "MAIL_MESSAGE",
-          "editable": "N"
-        },
-        {
-          "id": 8,
-          "name": "",
-          "code": "MAIL_MESSAGE_ATTACHMENT",
-          "editable": "N"
-        },
-        {
-          "id": 9,
-          "name": "",
-          "code": "EXTERNAL_ATTACH",
-          "editable": "N"
-        },
-        {
-          "id": 10,
-          "name": "",
-          "code": "CALL_IN",
-          "editable": "N"
-        },
-        {
-          "id": 11,
-          "name": "",
-          "code": "CALL_OUT",
-          "editable": "N"
-        },
-        {
-          "id": 12,
-          "name": "",
-          "code": "COMPANY_CREATED",
-          "editable": "N"
-        },
-        {
-          "id": 13,
-          "name": "",
-          "code": "TASK_RESULT",
-          "editable": "N"
-        },
-        {
-          "id": 99,
-          "name": "",
-          "code": "MAX_SYSTEM",
-          "editable": "N"
-        },
-        {
-          "id": 101,
-          "name": "Ссылка",
-          "code": "DROPBOX",
-          "editable": "N"
-        },
-        {
-          "id": 102,
-          "name": "Входящее",
-          "code": "SMS_IN",
-          "editable": "N"
-        },
-        {
-          "id": 103,
-          "name": "Исходящее",
-          "code": "SMS_OUT",
+          "code": "BILL_CREATED",
           "editable": "N"
         }
       ],
       "task_types": [
-        {
-          "id": 1,
-          "name": "Q_TASKS_CLASS_FOLLOW_UP",
-          "code": "FOLLOW_UP"
-        },
         {
           "id": 1,
           "name": "Звонок",
@@ -330,11 +186,6 @@
           "id": 2,
           "name": "Встреча",
           "code": "MEETING"
-        },
-        {
-          "id": 3,
-          "name": "Письмо",
-          "code": "LETTER"
         }
       ],
       "timezoneoffset": "+03:00"
