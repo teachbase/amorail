@@ -6,6 +6,9 @@ module Amorail
 
     def self.list
       response = client.safe_request(:get, remote_url('list'))
+
+      return [] if response.body.blank?
+
       response.body['response'].fetch(amo_response_name, []).map { |attributes| new.reload_model(attributes) }
     end
 

@@ -247,12 +247,13 @@ module AmoWebMock
     end
   end
 
-  def webhooks_list_stub(endpoint)
+  def webhooks_list_stub(endpoint, empty: false)
+    body = empty ? '' : File.read('./spec/fixtures/webhooks/list.json')
     stub_request(:get, "#{endpoint}/private/api/v2/json/webhooks/list")
       .to_return(
-        body: File.read('./spec/fixtures/webhooks/list.json'),
+        body: body,
         headers: { 'Content-Type' => 'application/json' },
-        status: 200
+          status: 200
       )
   end
 

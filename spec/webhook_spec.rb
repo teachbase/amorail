@@ -4,22 +4,30 @@ describe Amorail::Webhook do
   before { mock_api }
 
   describe '.list' do
-    before { webhooks_list_stub(Amorail.config.api_endpoint) }
+    context 'there are some webhooks' do
+      before { webhooks_list_stub(Amorail.config.api_endpoint) }
 
-    it 'loads webhooks' do
-      res = described_class.list
+      it 'loads webhooks' do
+        res = described_class.list
+        expect(res.size).to eq 2
+        expect(res.first.id).to eq '1'
+        expect(res.first.url).to eq 'http://example.org'
+        expect(res.first.events).to eq ['add_contact']
+        expect(res.first.disabled).to eq false
+        expect(res.last.id).to eq '2'
+        expect(res.last.url).to eq 'http://example.com'
+        expect(res.last.events).to eq ['add_contact', 'add_company']
+        expect(res.last.disabled).to eq true
+      end
+    end
 
-      expect(res.size).to eq 2
+    context 'there are not any webhooks' do
+      before { webhooks_list_stub(Amorail.config.api_endpoint, empty: true) }
 
-      expect(res.first.id).to eq '1'
-      expect(res.first.url).to eq 'http://example.org'
-      expect(res.first.events).to eq ['add_contact']
-      expect(res.first.disabled).to eq false
-
-      expect(res.last.id).to eq '2'
-      expect(res.last.url).to eq 'http://example.com'
-      expect(res.last.events).to eq ['add_contact', 'add_company']
-      expect(res.last.disabled).to eq true
+      it 'returns an empty array' do
+        res = described_class.list
+        expect(res).to eq []
+      end
     end
   end
 
