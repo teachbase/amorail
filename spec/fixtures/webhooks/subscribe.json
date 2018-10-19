@@ -1,0 +1,17 @@
+{
+  "response": {
+    "webhooks": {
+      "subscribe": [
+        {
+          "url": "http://example.org",
+          "result": true
+        },
+        {
+          "url": "http://example.com",
+          "result": true
+        }
+      ]
+    },
+    "server_time": 1539941636
+  }
+}
