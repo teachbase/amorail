@@ -77,6 +77,7 @@ module Amorail
       attrs.each do |k, v|
         action = "#{k}="
         next unless respond_to?(action)
+
         send(action, v)
       end
       self
@@ -84,9 +85,11 @@ module Amorail
 
     def merge_custom_fields(fields)
       return if fields.nil?
+
       fields.each do |f|
         fname = f['code'] || f['name']
         next if fname.nil?
+
         fname = "#{fname.downcase}="
         fval = f.fetch('values').first.fetch('value')
         send(fname, fval) if respond_to?(fname)
@@ -119,7 +122,7 @@ module Amorail
       )
       reload_model(data)
     rescue InvalidRecord
-      return false
+      false
     end
   end
 end

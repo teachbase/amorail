@@ -22,6 +22,7 @@ module Amorail
     # Return all linked leads
     def leads
       return [] if linked_leads_id.empty?
+
       @leads ||= Amorail::Lead.find_all(linked_leads_id)
     end
   end

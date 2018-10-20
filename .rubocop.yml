@@ -56,3 +56,6 @@ Style/SignalException:
 
 Layout/MultilineMethodCallBraceLayout:
   Enabled: false
+
+Lint/MissingCopEnableDirective:
+  Enabled: false

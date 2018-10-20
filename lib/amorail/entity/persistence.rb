@@ -13,6 +13,7 @@ module Amorail # :nodoc: all
 
     def save
       return false unless valid?
+
       new_record? ? push('add') : push('update')
     end
 
@@ -22,6 +23,7 @@ module Amorail # :nodoc: all
 
     def update(attrs = {})
       return false if new_record?
+
       merge_params(attrs)
       push('update')
     end
@@ -32,6 +34,7 @@ module Amorail # :nodoc: all
 
     def reload
       fail NotPersisted if id.nil?
+
       load_record(id)
     end
 

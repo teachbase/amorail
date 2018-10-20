@@ -11,6 +11,7 @@ module Amorail # :nodoc: all
       def find!(id)
         rec = find(id)
         fail RecordNotFound unless rec
+
         rec
       end
 
@@ -32,8 +33,8 @@ module Amorail # :nodoc: all
 
       # Find AMO entities by query
       # Returns array of matching entities.
-      def find_by_query(q)
-        where(query: q)
+      def find_by_query(query)
+        where(query: query)
       end
 
       private
