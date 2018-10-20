@@ -1,4 +1,5 @@
 module Amorail
+  # AmoCRM webhook entity
   class Webhook < Entity
     amo_names 'webhooks'
 
@@ -9,11 +10,15 @@ module Amorail
 
       return [] if response.body.blank?
 
-      response.body['response'].fetch(amo_response_name, []).map { |attributes| new.reload_model(attributes) }
+      response.body['response'].fetch(amo_response_name, []).map do |attributes|
+        new.reload_model(attributes)
+      end
     end
 
     def self.subscribe(webhooks)
-      perform_webhooks_request('subscribe', webhooks) { |data| data.map { |attrs| new.reload_model(attrs) } }
+      perform_webhooks_request('subscribe', webhooks) do |data|
+        data.map { |attrs| new.reload_model(attrs) }
+      end
     end
 
     def self.unsubscribe(webhooks)
@@ -21,8 +26,15 @@ module Amorail
     end
 
     def self.perform_webhooks_request(action, webhooks, &block)
-      response = client.safe_request(:post, remote_url(action), request: { webhooks: { action => webhooks } })
-      block.call(response.body['response'].dig(amo_response_name, 'subscribe')) if block
+      response = client.safe_request(
+        :post,
+        remote_url(action),
+        request: { webhooks: { action => webhooks } }
+      )
+
+      return response unless block
+
+      block.call(response.body['response'].dig(amo_response_name, 'subscribe'))
     end
 
     private_class_method :perform_webhooks_request

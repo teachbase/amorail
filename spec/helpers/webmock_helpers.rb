@@ -253,7 +253,7 @@ module AmoWebMock
       .to_return(
         body: body,
         headers: { 'Content-Type' => 'application/json' },
-          status: 200
+        status: 200
       )
   end
 
