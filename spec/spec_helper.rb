@@ -10,9 +10,9 @@ require 'helpers/webmock_helpers'
 
 # Cleanup Amorail env
 ENV.delete_if { |k, _| k =~ /amorail/i }
-ENV["AMORAIL_CONF"] = File.expand_path("../fixtures/amorail_test.yml", __FILE__)
+ENV["AMORAIL_CONF"] = File.expand_path("fixtures/amorail_test.yml", __dir__)
 
-Dir[File.expand_path("../support/**/*.rb", __FILE__)].each { |f| require f }
+Dir[File.expand_path("support/**/*.rb", __dir__)].each { |f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec

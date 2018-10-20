@@ -26,6 +26,7 @@ module Amorail
           data['custom_fields'].fetch(source_name, []).each do |contact|
             identifier = contact['code'].presence || contact['name'].presence
             next if identifier.nil?
+
             hash[identifier.downcase] = PropertyItem.new(contact)
           end
           new hash
@@ -118,6 +119,7 @@ module Amorail
           prop_item = PropertyItem.new(tt)
           identifier = tt['code'].presence || tt['name'].presence
           next if identifier.nil?
+
           hash[identifier.downcase] = prop_item
           hash[identifier] = prop_item
         end

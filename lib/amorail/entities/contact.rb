@@ -22,6 +22,7 @@ module Amorail
 
     def company
       return if linked_company_id.nil?
+
       @company ||= Amorail::Company.find(linked_company_id)
     end
   end

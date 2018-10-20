@@ -15,6 +15,7 @@ module Amorail
     # Return list of associated contacts
     def contacts
       fail NotPersisted if id.nil?
+
       @contacts ||=
         begin
           links = Amorail::ContactLink.find_by_leads(id)
