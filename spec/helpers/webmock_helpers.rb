@@ -246,4 +246,34 @@ module AmoWebMock
         .to_return(status: 204)
     end
   end
+
+  def webhooks_list_stub(endpoint, empty: false)
+    body = empty ? '' : File.read('./spec/fixtures/webhooks/list.json')
+    stub_request(:get, "#{endpoint}/private/api/v2/json/webhooks/list")
+      .to_return(
+        body: body,
+        headers: { 'Content-Type' => 'application/json' },
+        status: 200
+      )
+  end
+
+  def webhooks_subscribe_stub(endpoint, webhooks)
+    stub_request(:post, "#{endpoint}/private/api/v2/json/webhooks/subscribe")
+      .with(body: { request: { webhooks: { subscribe: webhooks } } }.to_json)
+      .to_return(
+        body: File.read('./spec/fixtures/webhooks/subscribe.json'),
+        headers: { 'Content-Type' => 'application/json' },
+        status: 200
+      )
+  end
+
+  def webhooks_unsubscribe_stub(endpoint, webhooks)
+    stub_request(:post, "#{endpoint}/private/api/v2/json/webhooks/unsubscribe")
+      .with(body: { request: { webhooks: { unsubscribe: webhooks } } }.to_json)
+      .to_return(
+        body: File.read('./spec/fixtures/webhooks/unsubscribe.json'),
+        headers: { 'Content-Type' => 'application/json' },
+        status: 200
+      )
+  end
 end
