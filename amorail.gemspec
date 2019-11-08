@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "shoulda-matchers", "~> 2.0"
   spec.add_development_dependency "rubocop", "~> 0.49"
-  spec.add_dependency "anyway_config", "~> 1.0"
+  spec.add_dependency "anyway_config", ">= 1.0"
   spec.add_dependency "faraday"
   spec.add_dependency "faraday_middleware"
   spec.add_dependency 'activemodel'
