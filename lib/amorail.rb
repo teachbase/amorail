@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'amorail/version'
 require 'amorail/config'
 require 'amorail/client'

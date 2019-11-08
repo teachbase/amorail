@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'elementable' do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:element_id) }

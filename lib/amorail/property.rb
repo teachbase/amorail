@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Amorail
   # Return hash key as method call
   module MethodMissing

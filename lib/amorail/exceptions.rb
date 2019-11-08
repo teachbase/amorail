@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Amorail Exceptions.
 # Every class is name of HTTP response error code(status)
 module Amorail

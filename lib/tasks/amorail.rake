@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :amorail do
   desc 'Check Amorail configuration'
   task :check do

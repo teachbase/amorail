@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Amorail
   # AmoCRM webhook entity
   class Webhook < Entity

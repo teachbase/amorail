@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Amorail
   # Lead associations
   module Leadable
