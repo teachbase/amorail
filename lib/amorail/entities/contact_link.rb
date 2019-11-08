@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Amorail
   # AmoCRM contact-link join model
   class ContactLink < Amorail::Entity

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Amorail # :nodoc: all
   class Entity
     class << self

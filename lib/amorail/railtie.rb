@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Amorail
   # Add amorail rake tasks
   class Railtie < Rails::Railtie

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Amorail
   # Provides common functionallity for entities
   # that can be attached to another objects.
@@ -6,9 +8,9 @@ module Amorail
 
     ELEMENT_TYPES = {
       contact: 1,
-      lead:    2,
+      lead: 2,
       company: 3,
-      task:    4
+      task: 4
     }.freeze
 
     included do
