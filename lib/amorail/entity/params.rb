@@ -22,7 +22,7 @@ module Amorail # :nodoc: all
 
       custom_fields = []
       self.class.properties.each do |k, v|
-        prop_id = props.send(k.downcase).id
+        prop_id = props.send(k).id
         prop_val = { value: send(v.fetch(:method_name, k)) }.merge(v)
         custom_fields << { id: prop_id, values: [prop_val] }
       end
