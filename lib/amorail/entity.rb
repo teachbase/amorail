@@ -100,7 +100,7 @@ module Amorail
 
     def custom_field_name(field)
       fname = field['code'] || field['name']
-      return nil if fname.nil?
+      return if fname.nil?
 
       fname = self.class.properties
                   .fetch(fname.downcase, {})[:method_name] || fname
