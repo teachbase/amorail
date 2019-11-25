@@ -4,15 +4,15 @@ module Amorail
   # Return hash key as method call
   module MethodMissing
     def method_missing(method_sym, *arguments, &block)
-      if data.key?(method_sym.to_s)
-        data.fetch(method_sym.to_s)
+      if data.key?(method_sym.to_s.downcase)
+        data.fetch(method_sym.to_s.downcase)
       else
         super
       end
     end
 
     def respond_to_missing?(method_sym, *args)
-      args.size.zero? && data.key?(method_sym.to_s)
+      args.size.zero? && data.key?(method_sym.to_s.downcase)
     end
   end
 

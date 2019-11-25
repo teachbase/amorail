@@ -34,7 +34,7 @@ module Amorail
 
       def amo_property(name, options = {})
         properties[name] = options
-        attr_accessor(name)
+        attr_accessor(options.fetch(:method_name, name))
       end
 
       def attributes
@@ -89,13 +89,22 @@ module Amorail
       return if fields.nil?
 
       fields.each do |f|
-        fname = f['code'] || f['name']
+        fname = custom_field_name(f)
         next if fname.nil?
 
         fname = "#{fname.downcase}="
         fval = f.fetch('values').first.fetch('value')
         send(fname, fval) if respond_to?(fname)
       end
+    end
+
+    def custom_field_name(field)
+      fname = field['code'] || field['name']
+      return if fname.nil?
+
+      fname = self.class.properties
+                  .fetch(fname.downcase, {})[:method_name] || fname
+      fname
     end
 
     # call safe method <safe_request>. safe_request call authorize
