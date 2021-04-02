@@ -1,3 +1,5 @@
-usermail: 'amorail@test.com'
-api_key: '75742b166417fe32ae132282ce178cf6'
+client_id: 'some_id'
+client_secret: 'some_secret'
+code: 'some_code'
+redirect_uri: 'https://example.ru/redirect/uri'
 api_endpoint: 'https://test.amocrm.ru'

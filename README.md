@@ -25,12 +25,36 @@ Or install it yourself as:
 With Amorail you can manipulate the following AmoCRM entities: Companies, Contacts, Leads and Tasks.
 We're triying to build simple AR-like interface.
 
+### Store configuration
+
+In order to configure a token store you should set up a store adapter in a following way: `Amorail.token_store = :redis, { redis_url: 'redis://127.0.0.1:6379/0' }` (options can be omitted). Currently supported stores are `:redis` and `:memory`. Memory adapter is used **by default**.
+
+Here is a default configuration for Redis:
+
+```ruby
+Amorail.token_store = :redis, {
+  redis_host: "127.0.0.1",
+  redis_port: "6379",
+  redis_db_name: "0"
+}
+```
+
+You can also provide a Redis URL instead:
+
+```ruby
+Amorail.token_store = :redis, { redis_url: "redis://localhost:6397" }
+```
+
+**NOTE**: if `REDIS_URL` environment variable is set it is used automatically.
+
 ### Auth configuration
 
 Amorail uses [anyway_config](https://github.com/palkan/anyway_config) for configuration, so you
 can provide configuration parameters through env vars, seperate config file (`config/amorail.yml`) or `secrets.yml`.
 
-Required params: **usermail**, **api_key** and **api_endpoint**.
+Required params: **client_id**, **client_secret** **code**, **redirect_uri** and **api_endpoint**.
+
+An authorization **code** is required for the initial obtaining of a pair of access and refresh tokens. You can see it in the interface or through a Redirect URI if the authorization was run from the modal window for permissions. The lifespan of the code is 20 minutes. [More details](https://www.amocrm.com/developers/content/oauth/oauth/)
 
 Example:
 
@@ -39,9 +63,14 @@ Example:
 development:
   ...
   amorail:
-    usermail: 'amorail@test.com'
-    api_key: '75742b166417fe32ae132282ce178cf6'
-    api_endpoint: 'https://test.amocrm.ru'
+    client_id: c0df457d-eacc-47cc-behb-3d8f962g4lbf
+    client_secret: a36b564b64398d3e53004c12e4997eb340e32b18ee185389ddb409292ebc5ebae297a3eab96be4a9d38ecbf274d90bbb54a7e8f282f40d1b29e5c9b2e2e357a6
+    code: a911ff963f58ea6c846901056114d37a14d2efa4d05ffb6ef0a8d60d32e5d6dae785bd317cbc9b0bd04261cb0cf9905af0cc32b5567c1eb84433328d08888f5c613608b822c1928272769ffd284b
+    redirect_uri: https://example.ru
+    api_endpoint: https://test.amocrm.ru
+    redis_host: 127.0.0.1
+    redis_port: 6379
+    redis_db_name: 0
 ```
 
 ### Running from console
@@ -50,7 +79,7 @@ You can try amorail in action from console ([PRY](https://github.com/pry/pry) is
 
 ```shell
 # amorail gem directory
-AMORAIL_USERMAIL=my_mail@test.com AMORAIL_API_KEY=my_key AMORAIL_API_ENDPOINT=my@amo.com bundle exec rake console
+AMORAIL_CLIENT_ID=integration_id AMORAIL_CLIENT_SECRET=secret_key AMORAIL_CODE=my_code AMORAIL_REDIRECT_URI=https://example.com AMORAIL_API_ENDPOINT=https://test.amocrm.ru bundle exec rake console
 pry> Amorail.properties
 # ... prints properties (custom_fields) data
 pry> Amorail::Contact.find_by_query("test_contact")
@@ -223,12 +252,12 @@ It is possible to use Amorail with multiple AmoCRM accounts. To do so use `Amora
 which receive client params or client instance and a block to execute within custom context:
 
 ```ruby
-Amorail.with_client(usermail: "custom@mail.com", api_endpoint: "https://my.acmocrm.ru", api_key: "my_secret_key") do
+Amorail.with_client(client_id: "my_id", client_secret: "my_secret", code: "my_code", api_endpoint: "https://my.acmocrm.ru", redirect_uri: "https://example.com") do
   # Client specific code here
 end
 
 # or using client instance
-my_client = Amorail::Client.new(usermail: "custom@mail.com", api_endpoint: "https://my.acmocrm.ru", api_key: "my_secret_key")
+my_client = Amorail::Client.new(client_id: "my_id", client_secret: "my_secret", code: "my_code", api_endpoint: "https://my.acmocrm.ru", redirect_uri: "https://example.com")
 
 Amorail.with_client(client) do
   ...

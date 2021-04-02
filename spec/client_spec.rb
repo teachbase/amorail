@@ -9,8 +9,10 @@ describe Amorail::Client do
 
   context "default client" do
     it "should create client", :aggregate_failures do
-      expect(subject.usermail).to eq "amorail@test.com"
-      expect(subject.api_key).to eq "75742b166417fe32ae132282ce178cf6"
+      expect(subject.client_id).to eq "some_id"
+      expect(subject.client_secret).to eq "some_secret"
+      expect(subject.code).to eq "some_code"
+      expect(subject.redirect_uri).to eq "https://example.ru/redirect/uri"
       expect(subject.api_endpoint).to eq "https://test.amocrm.ru"
     end
 
@@ -26,40 +28,48 @@ describe Amorail::Client do
   end
 
   describe "#with_client" do
-    before { mock_custom_api("https://custom.amo.com", "custom@amo.com", "123") }
+    before { mock_custom_api("https://custom.amo.com", "custom_client_id", "custom_client_secret", "custom_code", "https://custom-site.ru/redirecto/uri") }
 
     let(:new_client) do
       described_class.new(
         api_endpoint: "https://custom.amo.com",
-        usermail: "custom@amo.com",
-        api_key: "123"
+        client_secret: "custom_client_secret",
+        client_id: "custom_client_id",
+        code: "custom_code",
+        redirect_uri: "https://custom-site.ru/redirecto/uri"
       )
     end
 
     it "use custom client as instance", :aggregate_failures do
-      expect(Amorail.client.usermail).to eq "amorail@test.com"
+      expect(Amorail.client.client_id).to eq "some_id"
       Amorail.with_client(new_client) do
-        expect(Amorail.client.usermail).to eq "custom@amo.com"
+        expect(Amorail.client.client_secret).to eq "custom_client_secret"
+        expect(Amorail.client.client_id).to eq "custom_client_id"
         expect(Amorail.client.api_endpoint).to eq "https://custom.amo.com"
-        expect(Amorail.client.api_key).to eq "123"
+        expect(Amorail.client.code).to eq "custom_code"
+        expect(Amorail.client.redirect_uri).to eq "https://custom-site.ru/redirecto/uri"
       end
 
-      expect(Amorail.client.usermail).to eq "amorail@test.com"
+      expect(Amorail.client.client_id).to eq "some_id"
     end
 
     it "use custom client as options", :aggregate_failures do
-      expect(Amorail.client.usermail).to eq "amorail@test.com"
+      expect(Amorail.client.client_id).to eq "some_id"
       Amorail.with_client(
         api_endpoint: "https://custom.amo.com",
-        usermail: "custom@amo.com",
-        api_key: "123"
+        client_secret: "custom_client_secret",
+        client_id: "custom_client_id",
+        code: "custom_code",
+        redirect_uri: "https://custom-site.ru/redirecto/uri"
       ) do
-        expect(Amorail.client.usermail).to eq "custom@amo.com"
+        expect(Amorail.client.client_secret).to eq "custom_client_secret"
+        expect(Amorail.client.client_id).to eq "custom_client_id"
         expect(Amorail.client.api_endpoint).to eq "https://custom.amo.com"
-        expect(Amorail.client.api_key).to eq "123"
+        expect(Amorail.client.code).to eq "custom_code"
+        expect(Amorail.client.redirect_uri).to eq "https://custom-site.ru/redirecto/uri"
       end
 
-      expect(Amorail.client.usermail).to eq "amorail@test.com"
+      expect(Amorail.client.client_id).to eq "some_id"
     end
 
     it "loads custom properties", :aggregate_failures do
@@ -83,10 +93,10 @@ describe Amorail::Client do
       # only after the second thread enters block
       threads << Thread.new do
         q1.pop
-        Amorail.with_client(usermail: 'test1@amo.com') do
+        Amorail.with_client(client_id: 'some_id_1') do
           q2 << 1
           q1.pop
-          results << Amorail.client.usermail
+          results << Amorail.client.client_id
           q2 << 1
         end
         q3 << 1
@@ -96,10 +106,10 @@ describe Amorail::Client do
       # after the first block
       threads << Thread.new do
         q2.pop
-        Amorail.with_client(usermail: 'test2@amo.com') do
+        Amorail.with_client(client_id: 'some_id_2') do
           q1 << 1
           q2.pop
-          results << Amorail.client.usermail
+          results << Amorail.client.client_id
         end
         q3 << 1
       end
@@ -107,19 +117,19 @@ describe Amorail::Client do
       # This thread enters block third and commits
       # after all other threads left blocks
       threads << Thread.new do
-        Amorail.with_client(usermail: 'test3@amo.com') do
+        Amorail.with_client(client_id: 'some_id_3') do
           q3.pop
           q3.pop
-          results << Amorail.client.usermail
+          results << Amorail.client.client_id
         end
       end
 
       q1 << 1
       threads.each(&:join)
 
-      expect(results[0]).to eq 'test1@amo.com'
-      expect(results[1]).to eq 'test2@amo.com'
-      expect(results[2]).to eq 'test3@amo.com'
+      expect(results[0]).to eq 'some_id_1'
+      expect(results[1]).to eq 'some_id_2'
+      expect(results[2]).to eq 'some_id_3'
     end
   end
 end

@@ -6,39 +6,58 @@ require 'amorail/client'
 require 'amorail/exceptions'
 require 'amorail/entity'
 require 'amorail/property'
+require 'amorail/access_token'
+require 'amorail/store_adapters'
 
 Gem.find_files('amorail/entities/*.rb').each { |path| require path }
 
 # AmoCRM API integration.
 # https://www.amocrm.com/
 module Amorail
-  def self.config
+  extend self
+
+  def config
     @config ||= Config.new
   end
 
-  def self.properties
+  def properties
     client.properties
   end
 
-  def self.configure
+  def configure
     yield(config) if block_given?
   end
 
-  def self.client
+  def client
     ClientRegistry.client || (@client ||= Client.new)
   end
 
-  def self.reset
+  def reset
     @config = nil
     @client = nil
   end
 
-  def self.with_client(client)
+  def with_client(client)
     client = Client.new(client) unless client.is_a?(Client)
     ClientRegistry.client = client
     yield
   ensure
     ClientRegistry.client = nil
+  end
+
+  def token_store=(args)
+    adapter, options = Array(args)
+    @token_store = StoreAdapters.build_by_name(adapter, options)
+  rescue NameError => e
+    raise e.class, "Token store adapter for :#{adapter} haven't been found", e.backtrace
+  end
+
+  def token_store
+    unless instance_variable_defined?(:@token_store)
+      self.token_store = :memory
+    end
+
+    @token_store
   end
 
   class ClientRegistry # :nodoc:
