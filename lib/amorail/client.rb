@@ -132,27 +132,27 @@ module Amorail
     end
 
     def create_access_token(response)
-      @_access = AccessToken.create(
+      _access = AccessToken.create(
         client_secret,
         response.body['access_token'],
         response.body['refresh_token'],
         expiration(response.body['expires_in']),
         store
       )
-      @access_token = @_access.token
-      @refresh_token = @_access.refresh_token
+      @access_token = _access.token
+      @refresh_token = _access.refresh_token
     end
 
     def update_access_token(response)
-      @_access = AccessToken.refresh(
+      _access = AccessToken.refresh(
         client_secret,
         response.body['access_token'],
         response.body['refresh_token'],
         expiration(response.body['expires_in']),
         store
       )
-      @access_token = @_access.token
-      @refresh_token = @_access.refresh_token
+      @access_token = _access.token
+      @refresh_token = _access.refresh_token
     end
 
     def expiration(expires_in)
