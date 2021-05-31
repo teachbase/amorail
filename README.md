@@ -47,6 +47,18 @@ Amorail.token_store = :redis, { redis_url: "redis://localhost:6397" }
 
 **NOTE**: if `REDIS_URL` environment variable is set it is used automatically.
 
+### Add custom store
+
+To add custom store you need declare a class that implements the interface `AbstractStoreAdapter`.
+For example `class FileStoreAdapter < Amorail::StoreAdapters::AbstractStoreAdapter`
+
+The class must contain constructor `initialize(**options)` and **4 required methods**:
+
+1. `fetch_access` — method that should return Hash with token data (**required keys:** `token`, `refresh_token` and `expiration`) or empty Hash (`{}`) if no value was received
+2. `persist_access` — method that stores data in storage
+3. `update_access` — method that updates existed token data in storage
+4. `access_expired?` — method that returns `true` if token was expired otherwise `false`
+
 ### Auth configuration
 
 Amorail uses [anyway_config](https://github.com/palkan/anyway_config) for configuration, so you
