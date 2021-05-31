@@ -4,16 +4,20 @@ require 'anyway'
 
 module Amorail
   # Amorail config contains:
-  # - usermail ("user@gmail.com")
-  # - api_key ("13601bbac84727df")
   # - api_endpoint ("http://you_company.amocrm.com")
   # - api_path (default: "/private/api/v2/json/")
-  # - auth_url (default: "/private/api/auth.php?type=json")
+  # - auth_url (default: "/oauth2/access_token")
   class Config < Anyway::Config
-    attr_config :usermail,
-                :api_key,
-                :api_endpoint,
-                api_path: "/private/api/v2/json/",
-                auth_url: "/private/api/auth.php?type=json"
+    attr_config :api_endpoint,
+                :client_id,
+                :client_secret,
+                :code,
+                :redirect_uri,
+                :redis_url,
+                api_path: '/private/api/v2/json/',
+                auth_url: '/oauth2/access_token',
+                redis_host: '127.0.0.1',
+                redis_port: '6379',
+                redis_db_name: '0'
   end
 end

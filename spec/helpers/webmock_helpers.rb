@@ -5,34 +5,69 @@ module AmoWebMock
   def mock_api
     authorize_stub(
       Amorail.config.api_endpoint,
-      Amorail.config.usermail,
-      Amorail.config.api_key)
+      Amorail.config.client_id,
+      Amorail.config.client_secret,
+      'authorization_code',
+      Amorail.config.code,
+      Amorail.config.redirect_uri
+    )
+
+    resresh_token_stub(
+      Amorail.config.api_endpoint,
+      Amorail.config.client_id,
+      Amorail.config.client_secret,
+      'refresh_token',
+      'refresh_token',
+      Amorail.config.redirect_uri
+    )
 
     account_info_stub(Amorail.config.api_endpoint)
   end
 
-  def mock_custom_api(endpoint, usermail, api_key, properties = 'response_2.json')
+  def mock_custom_api(endpoint, client_id, client_secret, code, redirect_uri, properties = 'response_2.json')
     authorize_stub(
       endpoint,
-      usermail,
-      api_key
+      client_id,
+      client_secret,
+      'authorization_code',
+      code,
+      redirect_uri
+    )
+
+    resresh_token_stub(
+      endpoint,
+      client_id,
+      client_secret,
+      'refresh_token',
+      'refresh_token',
+      redirect_uri
     )
 
     account_info_stub(endpoint, properties)
   end
 
-  def authorize_stub(endpoint, usermail, api_key)
-    cookie = 'PHPSESSID=58vorte6dd4t7h6mtuig9l0p50; path=/; domain=amocrm.ru'
-    stub_request(:post, "#{endpoint}/private/api/auth.php?type=json")
+  def authorize_stub(endpoint, client_id, client_secret, grant_type, code, redirect_uri)
+    stub_request(:post, "#{endpoint}/oauth2/access_token")
       .with(
-        body: "{\"USER_LOGIN\":\"#{usermail}\",\"USER_HASH\":\"#{api_key}\"}"
+        body: "{\"client_id\":\"#{client_id}\",\"client_secret\":\"#{client_secret}\",\"grant_type\":\"#{grant_type}\",\"code\":\"#{code}\",\"redirect_uri\":\"#{redirect_uri}\"}"
       )
       .to_return(
         status: 200,
-        body: "",
-        headers: {
-          'Set-Cookie' => cookie
-        })
+        body: File.read('./spec/fixtures/authorize.json'),
+        headers: {}
+      )
+  end
+
+  def resresh_token_stub(endpoint, client_id, client_secret, grant_type, refresh_token, redirect_uri)
+    stub_request(:post, "#{endpoint}/oauth2/access_token")
+        .with(
+            body: "{\"client_id\":\"#{client_id}\",\"client_secret\":\"#{client_secret}\",\"grant_type\":\"#{grant_type}\",\"refresh_token\":\"#{refresh_token}\",\"redirect_uri\":\"#{redirect_uri}\"}"
+        )
+        .to_return(
+            status: 200,
+            body: File.read('./spec/fixtures/authorize.json'),
+            headers: {}
+        )
   end
 
   def account_info_stub(endpoint, properties = 'response_1.json')
