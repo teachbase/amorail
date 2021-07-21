@@ -33,7 +33,7 @@ module Amorail
       end
 
       def amo_property(name, options = {})
-        properties[name] = options
+        properties[name.downcase] = options
         attr_accessor(options.fetch(:method_name, name))
       end
 
