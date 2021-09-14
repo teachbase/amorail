@@ -93,7 +93,8 @@ module Amorail
         next if fname.nil?
 
         fname = "#{fname.downcase}="
-        fval = f.fetch('values').first.fetch('value')
+        fval = f.fetch('values').pluck('value')
+        fval = fval.size == 1 ? fval.first : fval
         send(fname, fval) if respond_to?(fname)
       end
     end

@@ -26,6 +26,27 @@ describe Amorail::Contact do
   end
 
   describe "#params" do
+    context "when multiple phones are specified" do
+      let(:contact) do
+        described_class.new(
+          name: 'Tester',
+          company_name: 'Test inc',
+          linked_company_id: 123,
+          phone: ['12345678', '789456734'],
+          email: 'test@mala.ru',
+          position: 'CEO'
+        )
+      end
+
+      it "contains phone property" do
+        prop = subject[:custom_fields].detect { |p| p[:id] == "1460589" }
+        expect(prop).not_to be_nil
+        expect(prop[:values].pluck(:value)).to eq ["12345678", "789456734"]
+        expect(prop[:values].first[:enum])
+          .to eq described_class.properties[:phone][:enum]
+      end
+    end
+
     let(:contact) do
       described_class.new(
         name: 'Tester',
@@ -165,13 +186,28 @@ describe Amorail::Contact do
   describe "#update" do
     before { contact_create_stub(Amorail.config.api_endpoint) }
 
+    context "when multiple phones are specified" do
+      it "update params" do
+        contact.save!
+        contact.name = "foo"
+        contact.phone = ["123456789", "987654321"]
+
+        contact_update_stub(Amorail.config.api_endpoint)
+        expect(contact.save!).to be_truthy
+        expect(contact.name).to eq "foo"
+        expect(contact.phone).to eq ["123456789", "987654321"]
+      end
+    end
+
     it "update params" do
       contact.save!
       contact.name = "foo"
+      contact.phone = "123456789"
 
       contact_update_stub(Amorail.config.api_endpoint)
       expect(contact.save!).to be_truthy
       expect(contact.name).to eq "foo"
+      expect(contact.phone).to eq "123456789"
     end
 
     it "raise error if id is blank?" do
