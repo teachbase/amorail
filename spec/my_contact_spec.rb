@@ -14,7 +14,7 @@ describe MyContact do
   end
 
   describe "#params" do
-    let(:company) do
+    let(:contact) do
       described_class.new(
         name: 'Test inc',
         phone: '12345678',
@@ -23,7 +23,7 @@ describe MyContact do
       )
     end
 
-    subject { company.params }
+    subject { contact.params }
 
     specify { is_expected.to include(:last_modified) }
     specify { is_expected.to include(name: 'Test inc') }
@@ -43,6 +43,7 @@ describe MyContact do
       expect(obj.id).to eq 11
       expect(obj.company_name).to eq "Foo Inc."
       expect(obj.email).to eq "foo@tb.com"
+      expect(obj.phone).to eq ["1111 111 111", "2222 222 222"]
       expect(obj.teachbase_id).to eq 1123
       expect(obj.params[:id]).to eq 11
     end

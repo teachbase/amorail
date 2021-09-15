@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'active_model'
+require 'active_support/core_ext/array'
 
 module Amorail
   # Core class for all Amo entities (company, contact, etc)
@@ -34,7 +35,12 @@ module Amorail
 
       def amo_property(name, options = {})
         properties[name] = options
-        attr_accessor(options.fetch(:method_name, name))
+        var_name = options.fetch(:method_name, name)
+        define_method "#{var_name}=" do |value|
+          var_value = options[:multiple] ? Array.wrap(value) : Array.wrap(value).first
+          instance_variable_set("@#{var_name}", var_value)
+        end
+        attr_reader(var_name)
       end
 
       def attributes
@@ -94,7 +100,6 @@ module Amorail
 
         fname = "#{fname.downcase}="
         fval = f.fetch('values').pluck('value')
-        fval = fval.size == 1 ? fval.first : fval
         send(fname, fval) if respond_to?(fname)
       end
     end
