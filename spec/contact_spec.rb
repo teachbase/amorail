@@ -168,10 +168,12 @@ describe Amorail::Contact do
     it "update params" do
       contact.save!
       contact.name = "foo"
+      contact.phone = "123456789"
 
       contact_update_stub(Amorail.config.api_endpoint)
       expect(contact.save!).to be_truthy
       expect(contact.name).to eq "foo"
+      expect(contact.phone).to eq "123456789"
     end
 
     it "raise error if id is blank?" do

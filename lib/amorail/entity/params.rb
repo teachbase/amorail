@@ -23,8 +23,17 @@ module Amorail # :nodoc: all
       custom_fields = []
       self.class.properties.each do |k, v|
         prop_id = props.send(k).id
-        prop_val = { value: send(v.fetch(:method_name, k)) }.merge(v)
-        custom_fields << { id: prop_id, values: [prop_val] }
+        prop_values = send(v.fetch(:method_name, k))
+
+        if prop_values.is_a?(Array)
+          prop_val = prop_values.map do |value|
+            { value: value }.merge(v)
+          end
+        else
+          prop_val = [{ value: prop_values }.merge(v)]
+        end
+
+        custom_fields << { id: prop_id, values: prop_val }
       end
 
       custom_fields
