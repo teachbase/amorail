@@ -2,6 +2,14 @@
 
 ## master (unreleased)
 
+## 0.7.1 (2021-09-25)
+
+### Features
+
+- Adds multiple option to property ([@lHydra][])
+
+See spec/support/my_contact.rb and spec/my_contact_spec.rb
+
 ## 0.7.0 (2021-07-16)
 
 ### Features
