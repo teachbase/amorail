@@ -54,7 +54,7 @@ module AmoWebMock
       .to_return(
         status: 200,
         body: File.read('./spec/fixtures/authorize.json'),
-        headers: {}
+        headers: { 'Content-Type' => 'application/json' }
       )
   end
 
@@ -65,8 +65,8 @@ module AmoWebMock
         )
         .to_return(
             status: 200,
-            body: File.read('./spec/fixtures/authorize.json'),
-            headers: {}
+            body: File.read('./spec/fixtures/authorize_refresh_token.json'),
+            headers: { 'Content-Type' => 'application/json' }
         )
   end
 

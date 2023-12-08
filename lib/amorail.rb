@@ -38,7 +38,7 @@ module Amorail
   end
 
   def with_client(client)
-    client = Client.new(client) unless client.is_a?(Client)
+    client = Client.new(**client) unless client.is_a?(Client)
     ClientRegistry.client = client
     yield
   ensure
@@ -61,9 +61,15 @@ module Amorail
   end
 
   class ClientRegistry # :nodoc:
-    extend ActiveSupport::PerThreadRegistry
+    class << self
+      def client=(value)
+        Thread.current["attr_#{name}_client"] = value
+      end
 
-    attr_accessor :client
+      def client
+        Thread.current["attr_#{name}_client"]
+      end
+    end
   end
 
   require 'amorail/railtie' if defined?(Rails)

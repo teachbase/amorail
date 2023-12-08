@@ -38,7 +38,7 @@ module Amorail
         if !access_expired?(key)
           storage[key]
         else
-          {}
+          { refresh_token: storage[key][:refresh_token] }
         end
       end
 

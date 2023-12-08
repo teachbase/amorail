@@ -35,7 +35,7 @@ describe Amorail::StoreAdapters::MemoryStoreAdapter do
     context 'when token is expired' do
       it 'returns blank hash' do
         store.persist_access('secret', 'token', 'refresh_token', Time.now.to_i - 10_000)
-        expect(store.fetch_access('secret')).to eq({})
+        expect(store.fetch_access('secret')).to eq(refresh_token: 'refresh_token')
       end
     end
   end
