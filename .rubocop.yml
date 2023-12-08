@@ -23,10 +23,6 @@ Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*.rb'
 
-Metrics/MethodLength:
-  Exclude:
-    - 'spec/**/*.rb'
-
 Rails/Date:
   Enabled: false
 

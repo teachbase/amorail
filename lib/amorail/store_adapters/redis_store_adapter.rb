@@ -19,7 +19,7 @@ module Amorail
       def fetch_access(secret)
         token = storage.get(access_key(secret))
         refresh_token = storage.get(refresh_key(secret))
-        token.nil? ? {} : { token: token, refresh_token: refresh_token }
+        { token: token, refresh_token: refresh_token }.compact
       end
 
       def persist_access(secret, token, refresh_token, expiration)

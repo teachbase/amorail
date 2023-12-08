@@ -132,4 +132,39 @@ describe Amorail::Client do
       expect(results[2]).to eq 'some_id_3'
     end
   end
+
+  describe '#safe_request' do
+    subject(:safe_request) { client.safe_request(:get, '/private/api/v2/json/accounts/current') }
+
+    let(:response) { instance_double('Faraday::Response', body: {}, status: 200) }
+    let(:client) { described_class.new }
+    let(:access_token) { 'eyJ0eXAiOiJKf2QihCJhbGciOiJSUzI1NiIsImp0aSI6IjMxMT' }
+
+    # We need to refresh the token store before the initial safe_request
+    # to test that it performs authorization
+    before { Amorail.token_store = :memory }
+
+    it 'authorizes the client if there is no access token' do
+      expect { safe_request }.to change { client.access_token }.from(nil).to(start_with(access_token))
+    end
+
+    context 'when access token is expired' do
+      let(:renewed_access_token) { '50d084c7efbd911f0a9d03bb387f3ad4dc092be253' }
+
+      before do
+        Amorail.token_store.persist_access(
+          Amorail.config.client_secret,
+          'old_access_token',
+          'refresh_token',
+          Time.now.to_i - 10
+        )
+      end
+
+      it 'refreshes authorization token' do
+        expect { safe_request }.to change { client.access_token }.from(nil).to(
+          start_with(renewed_access_token)
+        )
+      end
+    end
+  end
 end
