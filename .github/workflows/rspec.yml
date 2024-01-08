@@ -5,19 +5,19 @@ on:
     branches:
       - master
   pull_request:
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby: [2.5, 2.7, 3.0, 3.1]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Ruby 2.5
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.5
-          bundler-cache: true
-          bundler: 1.17.3
-      - name: Build and test
-        run: bundle exec rspec
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Run tests
+      run: bundle exec rspec
