@@ -14,4 +14,3 @@ interaction:
     description: Run specs
     service: ruby
     command: rspec
-

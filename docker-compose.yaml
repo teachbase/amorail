@@ -12,5 +12,3 @@ services:
     working_dir: /app
 volumes:
   bundle:
-
-
