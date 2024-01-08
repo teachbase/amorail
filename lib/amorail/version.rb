@@ -2,5 +2,5 @@
 
 # Amorail version
 module Amorail
-  VERSION = '0.7.1'
+  VERSION = '0.7.2'
 end
