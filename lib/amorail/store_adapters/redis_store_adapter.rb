@@ -61,7 +61,7 @@ module Amorail
       end
 
       def build_redis_url(redis_host: nil, redis_port: nil, redis_db_name: nil)
-        redis_db_name ||= Amorail.config.redis_db_name
+        redis_db_name ||= Amorail.config.redis_db_name.to_s
         return URI.join(Amorail.config.redis_url, redis_db_name).to_s if Amorail.config.redis_url
 
         redis_host ||= Amorail.config.redis_host

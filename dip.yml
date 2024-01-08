@@ -1,0 +1,17 @@
+version: "7.6"
+
+compose:
+  files:
+    - docker-compose.yml
+
+interaction:
+  sh:
+    description: Open a Bash shell within a Rails container (with dependencies up)
+    service: ruby
+    command: /bin/bash
+
+  rspec:
+    description: Run specs
+    service: ruby
+    command: rspec
+

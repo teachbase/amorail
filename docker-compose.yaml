@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  ruby:
+    image: ruby:2.5
+    stdin_open: true
+    tty: true
+    volumes:
+      - /teachbase/.git
+      - .:/app:cached
+      - bundle:/usr/local/bundle
+    working_dir: /app
+volumes:
+  bundle:
+
+
