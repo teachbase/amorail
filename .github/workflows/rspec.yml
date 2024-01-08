@@ -18,6 +18,6 @@ jobs:
         with:
           ruby-version: 2.5
           bundler-cache: true
-          bundler: 1.13.6
+          bundler: 1.17.3
       - name: Build and test
         run: bundle exec rspec
