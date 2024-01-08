@@ -99,7 +99,7 @@ module Amorail
         next if fname.nil?
 
         fname = "#{fname.downcase}="
-        fval = f.fetch('values').pluck('value')
+        fval = f.fetch('values').map { |v| v['value'] }
         send(fname, fval) if respond_to?(fname)
       end
     end
